@@ -48,7 +48,7 @@ function App() {
 
   return (
     <>
-      <BrowserRouter basename="/PreEntrega--Dos-Cazard">
+      <BrowserRouter basename="/PreEntrega-Dos-Cazard">
         <Toaster position="bottom-left" />
         <ScrollToTopOnRefresh />
 
