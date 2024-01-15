@@ -4,19 +4,27 @@ import MainNavBar from "./components/NavBar/MainNavBar";
 import ItemListContainer from "./components/Items/ItemListContainer";
 import Hero from "./components/Hero/Hero";
 import ScrollToTopOnRefresh from "./components/Utils/ScrollToTop";
-import { useEffect, useState, useParams } from "react";
+import { useEffect, useState } from "react";
 import Loader from "./components/Utils/Loader";
 import NavMenu from "./components/NavBar/NavMenu";
 import CategoryListContainer from "./components/Categories/CategoryListContainer";
 import { Box } from "@mui/material";
 import CustomThemeProvider from "./components/Utils/CustomThemeProvider";
 import WhyUs from "./components/WhyUs/WhyUs";
-import ReviewsNotes from "./components/ReviewsNotes/ReviewsNotes";
+
 import Newsletter from "./components/Newsletter/Newsletter";
 import Footer from "./components/Footer/Footer";
 import { Toaster } from "sonner";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ItemDetailContainer from "./components/ItemDetailContainer/ItemDetailContainer";
+import { CartProvider } from "./context/CartContext.jsx";
+import Cart from "./components/Cart/Cart.jsx";
+import Login from "./components/Login/Login.jsx";
+import Register from "./components/Register/Register.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
+
+import Checkout from "./components/Checkout/Checkout.jsx";
+import Profile from "./components/Profile/Profile.jsx";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -47,57 +55,68 @@ function App() {
   }, [isOpen, scrollPosition]);
 
   return (
-    <>
-      <BrowserRouter basename="/PreEntrega-Dos-Cazard">
-        <Toaster position="bottom-left" />
-        <ScrollToTopOnRefresh />
+    <AuthProvider>
+      <CartProvider>
+        <>
+          <CustomThemeProvider>
+            <BrowserRouter basename="/PreEntrega-Dos-Cazard">
+              <Toaster position="bottom-left" />
+              <ScrollToTopOnRefresh />
 
-        {loading ? (
-          <Loader />
-        ) : (
-          <>
-            <CustomThemeProvider>
-              <MainNavBar isOpen={isOpen} toggleMenu={toggleMenu} />
-              {isOpen ? (
-                <NavMenu isOpen={isOpen} toggleMenu={toggleMenu}></NavMenu>
+              {loading ? (
+                <Loader />
               ) : (
-                <Box style={{ padding: "0 10%" }}>
-                  <Routes>
-                    <Route
-                      path="/"
-                      element={
-                        <>
-                          <Hero></Hero>
-                          <CategoryListContainer
-                            greeting={"Aqui van a ir las categorias :D"}
-                          ></CategoryListContainer>
-                          <ItemListContainer
-                            greeting={"Aqui van a ir los items :D"}
-                          />
-                          <WhyUs></WhyUs>
+                <>
+                  <MainNavBar isOpen={isOpen} toggleMenu={toggleMenu} />
+                  {isOpen ? (
+                    <NavMenu isOpen={isOpen} toggleMenu={toggleMenu}></NavMenu>
+                  ) : (
+                    <Box style={{ padding: "0 10%" }}>
+                      <Routes>
+                        <Route
+                          path="/"
+                          element={
+                            <>
+                              <Hero></Hero>
+                              <CategoryListContainer></CategoryListContainer>
+                              <ItemListContainer />
+                              <WhyUs></WhyUs>
 
-                          <Newsletter></Newsletter>
-                        </>
-                      }
-                    />
-                    <Route
-                      path="/category/:category"
-                      element={<ItemListContainer></ItemListContainer>}
-                    />
-                    <Route
-                      path="/item/:idItem"
-                      element={<ItemDetailContainer></ItemDetailContainer>}
-                    />
-                  </Routes>
+                              <Newsletter></Newsletter>
+                            </>
+                          }
+                        />
+                        <Route
+                          path="/category/:category"
+                          element={<ItemListContainer></ItemListContainer>}
+                        />
+                        <Route
+                          path="/item/:idItem"
+                          element={<ItemDetailContainer></ItemDetailContainer>}
+                        />
+                        <Route path="/login" element={<Login></Login>} />
+                        <Route
+                          path="/register"
+                          element={<Register></Register>}
+                        />
+                        <Route path="/cart" element={<Cart></Cart>} />
+                        <Route
+                          path="/checkout"
+                          element={<Checkout></Checkout>}
+                        />
+                        <Route path="/profile" element={<Profile></Profile>} />
+                      </Routes>
 
-                  <Footer></Footer>
-                </Box>
+                      <Footer></Footer>
+                    </Box>
+                  )}
+                </>
               )}
-            </CustomThemeProvider>
-          </>
-        )}
-      </BrowserRouter>
-    </>
+            </BrowserRouter>
+          </CustomThemeProvider>
+        </>
+      </CartProvider>
+    </AuthProvider>
   );
 }
 

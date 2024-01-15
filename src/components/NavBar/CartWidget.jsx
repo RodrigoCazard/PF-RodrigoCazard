@@ -2,8 +2,13 @@ import { useTheme } from "@emotion/react";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
+import { useContext } from "react";
+import CartContext from "../../context/CartContext";
+import { Link } from "react-router-dom";
 
 const CartWidget = () => {
+  const { quantity } = useContext(CartContext);
+
   const theme = useTheme();
 
   const primaryColor = theme.palette.primary.main;
@@ -29,15 +34,19 @@ const CartWidget = () => {
   };
 
   return (
-    <Box sx={styledCartWidget.styledBox}>
+    <Link
+      to={"/cart"}
+      sx={styledCartWidget.styledBox}
+      style={{ textDecoration: "none", color: "black" }}
+    >
       <Badge
-        badgeContent={2}
+        badgeContent={quantity === 0 ? "0" : quantity}
         color="primary"
         sx={{ "& .MuiBadge-badge": { right: 7, top: 5 } }}
       >
         <ShoppingCartOutlinedIcon fontSize="large"></ShoppingCartOutlinedIcon>
       </Badge>
-    </Box>
+    </Link>
   );
 };
 

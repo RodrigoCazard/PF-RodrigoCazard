@@ -9,9 +9,12 @@ import NavWidget from "./NavWidget.jsx";
 import LogoImg from "../../assets/logo.png";
 import PropTypes from "prop-types";
 import { useTheme } from "@emotion/react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 const MainNavBar = ({ isOpen, toggleMenu }) => {
+  const isAuthenticated = useAuth().isAuthenticated();
+
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -97,16 +100,21 @@ const MainNavBar = ({ isOpen, toggleMenu }) => {
         <Box sx={{ display: "flex", gap: "4vw", alignItems: "center" }}>
           <SearchWidget />
           <CartWidget />
-          <AccountCircleOutlinedIcon
-            fontSize="large"
-            sx={{
-              ...styledMainNavBar.styledIcon,
-              display: {
-                xs: "none",
-                sm: "flex",
-              },
-            }}
-          />
+          <Link
+            to={isAuthenticated ? "/profile" : "/login"}
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <AccountCircleOutlinedIcon
+              fontSize="large"
+              sx={{
+                ...styledMainNavBar.styledIcon,
+                display: {
+                  xs: "none",
+                  sm: "flex",
+                },
+              }}
+            />
+          </Link>
         </Box>
       </Box>
     </Box>

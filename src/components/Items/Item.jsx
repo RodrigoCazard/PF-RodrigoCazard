@@ -2,6 +2,7 @@ import { useTheme } from "@emotion/react";
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import Img from "../../assets/icon-image-not-found-free-vector.jpg";
+
 const CategoryColors = {
   desktop: "60, 179, 113",
   laptop: "0, 0, 255",
@@ -9,7 +10,7 @@ const CategoryColors = {
   printer: "255, 0, 0",
 };
 
-const Item = ({ id, category, nombre, precio, img }) => {
+const Item = ({ id, category, name, price, img }) => {
   const theme = useTheme();
 
   const handleClick = () => {
@@ -60,24 +61,29 @@ const Item = ({ id, category, nombre, precio, img }) => {
         ></Box>
       </Link>
       <Typography variant="h4" mb={3}>
-        {nombre}
+        {name}
       </Typography>
       <Box display={"flex"} mt={1}>
-        <Typography
-          sx={{
-            textTransform: "uppercase",
-            bgcolor: `rgba(${CategoryColors[category]},0.2)`,
-            padding: "8px 17px",
-            borderRadius: 10,
-            fontWeight: "bold",
-            color: `rgb(${CategoryColors[category]})`,
-            mr: 3,
-          }}
-          variant="body3"
+        <Link
+          to={`/category/${category}`}
+          style={{ textDecoration: "none", color: "black" }}
         >
-          {category ?? "NO CATEGORY"}
-        </Typography>
-        <Typography variant="h"> ${precio}</Typography>
+          <Typography
+            sx={{
+              textTransform: "uppercase",
+              bgcolor: `rgba(${CategoryColors[category]},0.2)`,
+              padding: "8px 17px",
+              borderRadius: 10,
+              fontWeight: "bold",
+              color: `rgb(${CategoryColors[category]})`,
+              mr: 3,
+            }}
+            variant="body3"
+          >
+            {category ?? "NO CATEGORY"}
+          </Typography>
+        </Link>
+        <Typography variant="h"> ${price}</Typography>
       </Box>
     </Box>
   );

@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import {
   getFirstEightProducts,
@@ -6,27 +6,60 @@ import {
   getProducts,
 } from "../../asyncmock";
 import ItemList from "./ItemList";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { db } from "../../services/config";
 
-const ItemListContainer = ({ greeting }) => {
+import { getDocs, collection, query, doc, where } from "firebase/firestore";
+
+const ItemListContainer = () => {
   const [products, setProducts] = useState([]);
-  const [allProducts, setallProducts] = useState(true);
-
-  const handleAllProducts = () => {
-    setallProducts(!allProducts);
-  };
+  const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const { category } = useParams();
 
   useEffect(() => {
-    const functionProducts = category
-      ? getProductCategories
-      : allProducts
-      ? getFirstEightProducts
-      : getProducts;
+    const fetchData = async () => {
+      try {
+        let q;
+        if (category && category !== "all") {
+          q = query(
+            collection(db, "products"),
+            where("category", "==", category)
+          );
+        } else {
+          q = query(collection(db, "products"));
+        }
 
-    functionProducts(category).then((res) => setProducts(res));
-  }, [category, allProducts]);
+        const querySnapshot = await getDocs(q);
+        const data = querySnapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+
+        if (data.length === 0) {
+          setErrorMessage("There are no products in this category.");
+        } else {
+          setErrorMessage("");
+        }
+
+        setProducts(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+        setErrorMessage("Error loading products.");
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [category]);
+
+  if (loading) {
+    <Box display="flex" justifyContent="center" mt={2}>
+      <CircularProgress />
+    </Box>;
+  }
 
   return (
     <Box component={"main"} mb={"120px"}>
@@ -34,21 +67,58 @@ const ItemListContainer = ({ greeting }) => {
         - Our Products
       </Typography>
       <Typography variant={"h3"} component={"h2"}>
-        Explore out Products
+        Explore our Products
       </Typography>
-      <ItemList products={products}></ItemList>
-      {!category ? (
-        <Box display={"flex"} justifyContent={"center"}>
-          <Button
-            onClick={handleAllProducts}
-            variant="contained"
-            sx={{ padding: "15px 50px", borderRadius: 15, fontSize: "1.2rem" }}
-          >
-            {allProducts ? "View all" : "View less"}
-          </Button>
+      {loading ? (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems={"center"}
+          height={"50vh"}
+        >
+          <CircularProgress />
         </Box>
       ) : (
-        <></>
+        <>
+          {errorMessage ? (
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems={"center"}
+              height={"50vh"}
+            >
+              <Typography variant="body1" color={"primary"}>
+                {errorMessage}
+              </Typography>
+            </Box>
+          ) : (
+            <>
+              <ItemList products={products}></ItemList>
+              {!category || category !== "all" ? (
+                <Link
+                  to="/category/all"
+                  style={{
+                    textDecoration: "none",
+                    color: "black",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    sx={{
+                      padding: "15px 50px",
+                      borderRadius: 15,
+                      fontSize: "1.2rem",
+                    }}
+                  >
+                    Explore all
+                  </Button>
+                </Link>
+              ) : null}
+            </>
+          )}
+        </>
       )}
     </Box>
   );

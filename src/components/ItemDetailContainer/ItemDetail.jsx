@@ -5,6 +5,9 @@ import Img from "../../assets/icon-image-not-found-free-vector.jpg";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useTheme } from "@emotion/react";
+import { useContext } from "react";
+import CartContext from "../../context/CartContext";
+import { Link } from "react-router-dom";
 
 const CategoryColors = {
   desktop: "60, 179, 113",
@@ -14,19 +17,24 @@ const CategoryColors = {
   // Puedes agregar más categorías y colores según sea necesario
 };
 
-const ItemDetail = ({ id, nombre, precio, category, stock }) => {
+const ItemDetail = ({ id, name, price, category, stock }) => {
+  const { cartAdd } = useContext(CartContext);
+
   const [favorite, setFavorite] = useState(false);
 
   const handleFavorite = () => {
     setFavorite(!favorite);
-    console.log("funciona");
+  };
+
+  const handleCartAdd = () => {
+    cartAdd({ id, name, price, category, stock }, count);
   };
 
   const [count, setCount] = useState(1);
 
   const increment = () => {
     if (count == stock) {
-      setCount(stock);
+      setCount(Number(stock));
     } else {
       setCount(count + 1);
     }
@@ -81,24 +89,29 @@ const ItemDetail = ({ id, nombre, precio, category, stock }) => {
         </Typography>
 
         <Typography variant="h2" mb={2}>
-          {nombre}
+          {name}
         </Typography>
         <Box display={"flex"} mt={1} alignItems={"center"}>
-          <Typography
-            sx={{
-              textTransform: "uppercase",
-              fontSize: "1.1rem",
-              bgcolor: `rgba(${CategoryColors[category]},0.2)`,
-              padding: "15px 28px",
-              borderRadius: 10,
-              color: `rgb(${CategoryColors[category]})`,
-              mr: 3,
-            }}
-            variant="body3"
+          <Link
+            to={`/category/${category}`}
+            style={{ textDecoration: "none", color: "black" }}
           >
-            {category ?? "NO CATEGORY"}
-          </Typography>
-          <Typography variant="h"> ${precio}</Typography>
+            <Typography
+              sx={{
+                textTransform: "uppercase",
+                fontSize: "1.1rem",
+                bgcolor: `rgba(${CategoryColors[category]},0.2)`,
+                padding: "15px 28px",
+                borderRadius: 10,
+                color: `rgb(${CategoryColors[category]})`,
+                mr: 3,
+              }}
+              variant="body3"
+            >
+              {category ?? "NO CATEGORY"}
+            </Typography>
+          </Link>
+          <Typography variant="h"> ${price}</Typography>
         </Box>
         <Typography variant="body2" mt={5}>
           Id: <strong style={{ opacity: 1 }}>{id}</strong>
@@ -128,6 +141,7 @@ const ItemDetail = ({ id, nombre, precio, category, stock }) => {
             </p>
           </Box>
           <Button
+            onClick={handleCartAdd}
             variant="contained"
             sx={{
               padding: "15px 50px",
