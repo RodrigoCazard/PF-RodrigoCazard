@@ -14,7 +14,7 @@ const Logout = () => {
 
   return (
     <Button variant="outlined" color="secondary" onClick={handleLogout}>
-      Logouta
+      Logout
     </Button>
   );
 };

@@ -1,7 +1,6 @@
 import { Grid, Button, Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import Img from "../../assets/icon-image-not-found-free-vector.jpg";
-
+import Img from "../../assets/71lZK7nE_oL-removebg.png";
 const Hero = () => {
   const styledHero = {
     styledButton: {
@@ -59,7 +58,7 @@ const Hero = () => {
       <Grid
         item
         xs={12}
-        md={6}
+        md={5}
         paddingLeft={"80px"}
         width={100}
         display={"flex"}
@@ -93,8 +92,8 @@ const Hero = () => {
       <Grid
         item
         xs={12}
-        md={6}
-        padding={"40px"}
+        md={7}
+        padding={"10px"}
         display={"flex"}
         alignItems={"center"}
         justifyContent={"center"}

@@ -1,7 +1,6 @@
 import { useTheme } from "@emotion/react";
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import Img from "../../assets/icon-image-not-found-free-vector.jpg";
 
 const CategoryColors = {
   desktop: "60, 179, 113",
@@ -13,9 +12,6 @@ const CategoryColors = {
 const Item = ({ id, category, name, price, img }) => {
   const theme = useTheme();
 
-  const handleClick = () => {
-    console.info("You clicked the Chip.");
-  };
   const primaryColor = theme.palette.primary.main;
 
   return (
@@ -28,7 +24,7 @@ const Item = ({ id, category, name, price, img }) => {
           position={"relative"}
           mb={5}
           sx={{
-            backgroundImage: `url(${Img})`,
+            backgroundImage: `url(${img})`,
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
@@ -60,7 +56,7 @@ const Item = ({ id, category, name, price, img }) => {
           }}
         ></Box>
       </Link>
-      <Typography variant="h4" mb={3}>
+      <Typography variant="h5" mb={3}>
         {name}
       </Typography>
       <Box display={"flex"} mt={1}>

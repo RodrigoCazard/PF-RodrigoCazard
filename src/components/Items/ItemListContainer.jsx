@@ -93,29 +93,33 @@ const ItemListContainer = () => {
             </Box>
           ) : (
             <>
-              <ItemList products={products}></ItemList>
               {!category || category !== "all" ? (
-                <Link
-                  to="/category/all"
-                  style={{
-                    textDecoration: "none",
-                    color: "black",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Button
-                    variant="contained"
-                    sx={{
-                      padding: "15px 50px",
-                      borderRadius: 15,
-                      fontSize: "1.2rem",
+                <>
+                  <ItemList products={products.slice(0, 8)}></ItemList>
+                  <Link
+                    to="/category/all"
+                    style={{
+                      textDecoration: "none",
+                      color: "black",
+                      display: "flex",
+                      justifyContent: "center",
                     }}
                   >
-                    Explore all
-                  </Button>
-                </Link>
-              ) : null}
+                    <Button
+                      variant="contained"
+                      sx={{
+                        padding: "15px 50px",
+                        borderRadius: 15,
+                        fontSize: "1.2rem",
+                      }}
+                    >
+                      Explore all
+                    </Button>
+                  </Link>
+                </>
+              ) : (
+                <ItemList products={products}></ItemList>
+              )}
             </>
           )}
         </>

@@ -11,7 +11,7 @@ const Cart = () => {
     return (
       <>
         <h2>No hay productos en el carrito.</h2>
-        <Link to="/">Ver Productos</Link>
+        <Link to="/category/all">Ver Productos</Link>
       </>
     );
   }

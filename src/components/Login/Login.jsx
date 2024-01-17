@@ -24,10 +24,11 @@ const Login = () => {
     <Paper
       elevation={3}
       style={{
-        maxWidth: "300px",
+        maxWidth: "600px",
         padding: "20px",
         margin: "auto",
         marginTop: "50px",
+        marginBottom: "50px",
       }}
     >
       <Typography variant="h5" align="center" gutterBottom>

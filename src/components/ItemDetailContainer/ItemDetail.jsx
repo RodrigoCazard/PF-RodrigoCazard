@@ -1,6 +1,5 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import React, { useState } from "react";
-import Img from "../../assets/icon-image-not-found-free-vector.jpg";
 
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -14,10 +13,9 @@ const CategoryColors = {
   laptop: "0, 0, 255",
   mobilePhone: "255, 165, 0",
   printer: "255, 0, 0",
-  // Puedes agregar más categorías y colores según sea necesario
 };
 
-const ItemDetail = ({ id, name, price, category, stock }) => {
+const ItemDetail = ({ id, name, price, category, stock, img }) => {
   const { cartAdd } = useContext(CartContext);
 
   const [favorite, setFavorite] = useState(false);
@@ -56,7 +54,7 @@ const ItemDetail = ({ id, name, price, category, stock }) => {
       <Grid item sm={12} lg={6} margin={"20px 0px 150px"}>
         <Box textAlign={"center"}>
           <img
-            src={Img}
+            src={img}
             alt=""
             width={"60%"}
             height={"auto"}

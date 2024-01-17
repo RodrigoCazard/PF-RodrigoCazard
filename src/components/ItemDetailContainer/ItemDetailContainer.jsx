@@ -3,14 +3,15 @@ import { useParams } from "react-router-dom";
 import { getUnProducto } from "../../asyncmock";
 import ItemDetail from "./ItemDetail";
 import { db } from "../../services/config";
-
 import { collection, doc, getDoc } from "firebase/firestore";
-import { Box, CircularProgress } from "@mui/material";
-("firebase/firestore");
+import { Box, CircularProgress, Typography } from "@mui/material";
+
 const ItemDetailContainer = () => {
-  const [product, setProduct] = useState([]);
-  const { idItem } = useParams();
+  const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [productNotFound, setProductNotFound] = useState(false);
+
+  const { idItem } = useParams();
 
   useEffect(() => {
     const getProductById = async () => {
@@ -24,7 +25,7 @@ const ItemDetailContainer = () => {
             id: docSnap.id,
           });
         } else {
-          console.log("No se encontró el producto con el ID especificado");
+          setProductNotFound(true);
         }
       } catch (error) {
         console.error("Error al obtener el producto:", error);
@@ -58,7 +59,16 @@ const ItemDetailContainer = () => {
           <ItemDetail {...product}></ItemDetail>
         </div>
       ) : (
-        <p>No se encontró el producto</p>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems={"center"}
+          height={"50vh"}
+        >
+          <Typography variant="body1" color={"primary"}>
+            {productNotFound ? "No product was found with that id" : ""}
+          </Typography>
+        </Box>
       )}
     </div>
   );
