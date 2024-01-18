@@ -1,6 +1,8 @@
 import { useTheme } from "@emotion/react";
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/system";
 
 const CategoryColors = {
   desktop: "60, 179, 113",
@@ -8,14 +10,21 @@ const CategoryColors = {
   mobilePhone: "255, 165, 0",
   printer: "255, 0, 0",
 };
-
+const LightTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    boxShadow: theme.shadows[1],
+    fontSize: 20,
+  },
+}));
 const Item = ({ id, category, name, price, img }) => {
   const theme = useTheme();
 
   const primaryColor = theme.palette.primary.main;
 
   return (
-    <Box>
+    <Box maxHeight={800}>
       <Link to={`/item/${id}`}>
         <Box
           bgcolor={"rgba(0,0,0,0.03)"}
@@ -56,9 +65,19 @@ const Item = ({ id, category, name, price, img }) => {
           }}
         ></Box>
       </Link>
-      <Typography variant="h5" mb={3}>
-        {name}
-      </Typography>
+      <LightTooltip title={name} arrow>
+        <Typography
+          variant="h5"
+          mb={3}
+          sx={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {name}
+        </Typography>
+      </LightTooltip>
       <Box display={"flex"} mt={1}>
         <Link
           to={`/category/${category}`}

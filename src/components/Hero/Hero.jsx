@@ -1,6 +1,7 @@
 import { Grid, Button, Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Img from "../../assets/71lZK7nE_oL-removebg.png";
+import { Link } from "react-router-dom";
 const Hero = () => {
   const styledHero = {
     styledButton: {
@@ -74,20 +75,31 @@ const Hero = () => {
             We Offer the Best Products for you
           </Typography>
         </Box>
-        <Button
-          disableElevation
-          size="large"
-          variant="contained"
-          sx={{
-            fontWeight: "bold",
-            fontSize: "1.1rem",
-            borderRadius: 20,
-            minWidth: "100px",
-            minHeight: "60px",
+        <Link
+          to="/category/all"
+          style={{
+            textDecoration: "none",
+            color: "white",
+            display: "flex",
+            justifyContent: "center",
           }}
         >
-          Shop now
-        </Button>
+          <Button
+            disableElevation
+            size="large"
+            fullWidth
+            variant="contained"
+            sx={{
+              fontWeight: "bold",
+              fontSize: "1.1rem",
+              borderRadius: 20,
+              minWidth: "100px",
+              minHeight: "60px",
+            }}
+          >
+            Shop now
+          </Button>
+        </Link>
       </Grid>
       <Grid
         item

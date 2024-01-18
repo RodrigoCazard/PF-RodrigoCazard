@@ -1,12 +1,13 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Breadcrumbs, Button, Grid, Typography } from "@mui/material";
 import React, { useState } from "react";
-
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useTheme } from "@emotion/react";
 import { useContext } from "react";
 import CartContext from "../../context/CartContext";
 import { Link } from "react-router-dom";
+import styled from "@emotion/styled";
 
 const CategoryColors = {
   desktop: "60, 179, 113",
@@ -25,7 +26,7 @@ const ItemDetail = ({ id, name, price, category, stock, img }) => {
   };
 
   const handleCartAdd = () => {
-    cartAdd({ id, name, price, category, stock }, count);
+    cartAdd({ id, name, price, category, stock, img }, count);
   };
 
   const [count, setCount] = useState(1);
@@ -49,131 +50,156 @@ const ItemDetail = ({ id, name, price, category, stock, img }) => {
 
   const primaryColor = theme.palette.primary.main;
 
+  const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: black;
+    opacity: 0.6;
+
+    &:hover {
+      text-decoration: underline;
+      opacity: 1;
+      color: ${primaryColor};
+    }
+  `;
+
   return (
-    <Grid container>
-      <Grid item sm={12} lg={6} margin={"20px 0px 150px"}>
-        <Box textAlign={"center"}>
-          <img
-            src={img}
-            alt=""
-            width={"60%"}
-            height={"auto"}
-            style={{
-              objectFit: "contain",
-              borderRadius: 50,
-            }}
-          />
-        </Box>
-      </Grid>
-
-      <Grid
-        item
-        sm={12}
-        lg={6}
-        width={"100%"}
-        margin={"20px 0px 150px"}
-        display={"flex"}
-        flexDirection={"column"}
-        justifyContent={"center"}
-        alignItems={{ sm: "center", lg: "flex-start" }}
+    <>
+      <Breadcrumbs
+        sx={{ margin: "20px 0 40px 0" }}
+        separator={<NavigateNextIcon fontSize="small" />}
+        aria-label="breadcrumb"
       >
-        <Typography
-          color={"primary"}
-          component={"p"}
-          mb={1}
-          sx={{ fontSize: "20px" }}
-        >
-          - Selling Fast
-        </Typography>
-
-        <Typography variant="h2" mb={2}>
-          {name}
-        </Typography>
-        <Box display={"flex"} mt={1} alignItems={"center"}>
-          <Link
-            to={`/category/${category}`}
-            style={{ textDecoration: "none", color: "black" }}
-          >
-            <Typography
-              sx={{
-                textTransform: "uppercase",
-                fontSize: "1.1rem",
-                bgcolor: `rgba(${CategoryColors[category]},0.2)`,
-                padding: "15px 28px",
-                borderRadius: 10,
-                color: `rgb(${CategoryColors[category]})`,
-                mr: 3,
+        <StyledLink to="/">Home page</StyledLink>
+        <StyledLink to={`/category/${category}`}>
+          {category?.charAt(0).toUpperCase() + category?.slice(1)}
+        </StyledLink>
+        <Typography color="text.primary">{name}</Typography>
+      </Breadcrumbs>
+      <Grid container>
+        <Grid item sm={12} lg={6} margin={"20px 0px 150px"}>
+          <Box textAlign={"center"}>
+            <img
+              src={img}
+              alt=""
+              width={"60%"}
+              height={"auto"}
+              style={{
+                objectFit: "contain",
+                borderRadius: 50,
               }}
-              variant="body3"
-            >
-              {category ?? "NO CATEGORY"}
-            </Typography>
-          </Link>
-          <Typography variant="h"> ${price}</Typography>
-        </Box>
-        <Typography variant="body2" mt={5}>
-          Id: <strong style={{ opacity: 1 }}>{id}</strong>
-        </Typography>
-        <Typography variant="body2" mt={1} mb={5}>
-          Stock: {stock}
-        </Typography>
-        <Box display={"flex"}>
-          <Box
-            mr={2}
-            display={"flex"}
-            justifyContent={"space-between"}
-            alignItems={"center"}
-            gap={6}
-            borderRadius={"50px"}
-            bgcolor={"rgba(0,0,0,0.02)"}
-            padding={"10px 20px"}
-            border={1}
-          >
-            <p onClick={decrement} style={{ cursor: "pointer" }}>
-              -
-            </p>
-            <p>{count}</p>
+            />
+          </Box>
+        </Grid>
 
-            <p onClick={increment} style={{ cursor: "pointer" }}>
-              +
-            </p>
-          </Box>
-          <Button
-            onClick={handleCartAdd}
-            variant="contained"
-            sx={{
-              padding: "15px 50px",
-              borderRadius: 15,
-              fontSize: "1.2rem",
-              marginRight: 2,
-            }}
+        <Grid
+          item
+          sm={12}
+          lg={6}
+          width={"100%"}
+          margin={"20px 0px 150px"}
+          display={"flex"}
+          flexDirection={"column"}
+          justifyContent={"center"}
+          alignItems={{ sm: "center", lg: "flex-start" }}
+        >
+          <Typography
+            color={"primary"}
+            component={"p"}
+            mb={1}
+            sx={{ fontSize: "20px" }}
           >
-            Add to cart
-          </Button>
-          <Box
-            onClick={handleFavorite}
-            sx={{
-              width: 60,
-              height: 60,
-              border: 2,
-              display: "grid",
-              placeItems: "center",
-              padding: 1,
-              borderRadius: "50%",
-              cursor: "pointer",
-            }}
-          >
-            {favorite ? (
-              <FavoriteIcon fontSize="large" sx={{ color: primaryColor }}>
-                {" "}
-              </FavoriteIcon>
-            ) : (
-              <FavoriteBorderIcon fontSize="large"></FavoriteBorderIcon>
-            )}
+            - Selling Fast
+          </Typography>
+
+          <Typography variant="h2" mb={2}>
+            {name}
+          </Typography>
+          <Box display={"flex"} mt={1} alignItems={"center"}>
+            <Link
+              to={`/category/${category}`}
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <Typography
+                sx={{
+                  textTransform: "uppercase",
+                  fontSize: "1.1rem",
+                  bgcolor: `rgba(${CategoryColors[category]},0.2)`,
+                  padding: "15px 28px",
+                  borderRadius: 10,
+                  color: `rgb(${CategoryColors[category]})`,
+                  mr: 3,
+                }}
+                variant="body3"
+              >
+                {category ?? "NO CATEGORY"}
+              </Typography>
+            </Link>
+            <Typography variant="h"> ${price}</Typography>
           </Box>
-        </Box>
+          <Typography variant="body2" mt={5}>
+            Id: <strong style={{ opacity: 1 }}>{id}</strong>
+          </Typography>
+          <Typography variant="body2" mt={1} mb={5}>
+            Stock: {stock}
+          </Typography>
+          <Box display={"flex"}>
+            <Box
+              mr={2}
+              display={"flex"}
+              justifyContent={"space-between"}
+              alignItems={"center"}
+              gap={6}
+              borderRadius={"50px"}
+              bgcolor={"rgba(0,0,0,0.02)"}
+              padding={"10px 20px"}
+              border={1}
+            >
+              <p onClick={decrement} style={{ cursor: "pointer" }}>
+                -
+              </p>
+              <p>{count}</p>
+
+              <p onClick={increment} style={{ cursor: "pointer" }}>
+                +
+              </p>
+            </Box>
+            <Button
+              onClick={handleCartAdd}
+              variant="contained"
+              sx={{
+                padding: "15px 50px",
+                borderRadius: 15,
+                fontSize: "1.2rem",
+                marginRight: 2,
+              }}
+            >
+              Add to cart
+            </Button>
+            <Box
+              onClick={handleFavorite}
+              sx={{
+                width: 60,
+                height: 60,
+                border: 2,
+                display: "grid",
+                placeItems: "center",
+                padding: 1,
+                borderRadius: "50%",
+                cursor: "pointer",
+              }}
+            >
+              {favorite ? (
+                <FavoriteIcon fontSize="large" sx={{ color: primaryColor }}>
+                  {" "}
+                </FavoriteIcon>
+              ) : (
+                <FavoriteBorderIcon fontSize="large"></FavoriteBorderIcon>
+              )}
+            </Box>
+          </Box>
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 };
 

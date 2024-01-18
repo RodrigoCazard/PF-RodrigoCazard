@@ -9,6 +9,8 @@ import {
   Box,
   InputLabel,
   FormControlLabel,
+  Backdrop,
+  CircularProgress,
 } from "@mui/material";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
@@ -24,7 +26,9 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const handleLogin = async () => {
+    setLoading(true);
     const auth = getAuth();
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -43,6 +47,8 @@ const Login = () => {
           "Formato de correo electrónico inválido. Por favor, ingresa un correo válido.";
       }
       toast.error(errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -94,6 +100,14 @@ const Login = () => {
   };
   return (
     <Box>
+      {loading && (
+        <Backdrop
+          open={loading}
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        >
+          <CircularProgress color="primary" />
+        </Backdrop>
+      )}
       <Breadcrumbs
         sx={{ margin: "20px 0 40px 0" }}
         separator={<NavigateNextIcon fontSize="small" />}
@@ -193,7 +207,10 @@ const Login = () => {
             color="warning"
             sx={{
               borderRadius: 20,
-
+              "&:hover, &:focus": {
+                border: "2px solid #000",
+              },
+              border: "2px solid rgba(0,0,0,0.1)",
               padding: "12px 22px",
               fontSize: 18,
               fontWeight: "bold",

@@ -99,7 +99,7 @@ const MainNavBar = ({ isOpen, toggleMenu }) => {
         </Link>
         <Box sx={{ display: "flex", gap: "4vw", alignItems: "center" }}>
           <SearchWidget />
-          <CartWidget />
+          <CartWidget scrolled={scrolled} />
           <Link
             to={isAuthenticated ? "/profile" : "/login"}
             style={{ textDecoration: "none", color: "black" }}

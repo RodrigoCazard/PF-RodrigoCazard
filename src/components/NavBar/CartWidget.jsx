@@ -1,58 +1,59 @@
+import React, { useContext, useState } from "react";
 import { useTheme } from "@emotion/react";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
-import { useContext, useState } from "react";
-import CartContext from "../../context/CartContext";
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import CartOverlay from "../Cart/CartOverlay";
+import CartContext from "../../context/CartContext";
 
-const CartWidget = () => {
-  const [isCartVisible, setCartVisibility] = useState(false);
+const StyledLink = styled(Link)`
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  opacity: 0.8;
+  color: black;
 
-  const handleCartClick = () => {
-    setCartVisibility(!isCartVisible);
-  };
+  &.overlay-visible {
+    opacity: 1;
+    color: ${(props) => props.primaryColor};
+    transform: scale(1.2);
 
+    .MuiBadge-badge {
+      transform: translate(1px) scale(0.9);
+      opacity: 0;
+      font-weight: bold;
+      transition: all 0.2s linear;
+    }
+  }
+`;
+
+const CartWidget = ({ scrolled }) => {
+  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const { quantity } = useContext(CartContext);
 
-  const handleToggle = () => {
-    handleCartClick();
-  };
-
   const theme = useTheme();
-
   const primaryColor = theme.palette.primary.main;
 
-  const StyledLink = styled(Link)`
-    display: inline-block;
-    cursor: pointer;
-    transition: all 0.5s ease;
-    opacity: 0.8;
-    color: black;
+  const handleMouseEnter = () => {
+    setIsOverlayVisible(true);
+  };
 
-    &:hover {
-      opacity: 1;
-      color: ${primaryColor};
-      transform: scale(1.2);
-
-      .MuiBadge-badge {
-        transform: translate(1px) scale(0.9);
-        opacity: 0;
-        font-weight: bold;
-        transition: all 0.2s linear;
-      }
-    }
-  `;
+  const handleMouseLeave = () => {
+    setTimeout(() => {
+      setIsOverlayVisible(false);
+    }, 200);
+  };
 
   return (
-    <Box>
-      {isCartVisible && <CartOverlay></CartOverlay>}
+    <Box className="cart-widget">
       <StyledLink
         to={"/cart"}
-        onMouseEnter={handleToggle}
-        onMouseLeave={handleToggle}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        primaryColor={primaryColor}
+        className={isOverlayVisible ? "overlay-visible" : ""}
       >
         <Badge
           badgeContent={quantity === 0 ? "0" : quantity}
@@ -64,6 +65,8 @@ const CartWidget = () => {
           </ShoppingCartOutlinedIcon>
         </Badge>
       </StyledLink>
+
+      <CartOverlay scrolled={scrolled} isVisible={isOverlayVisible} />
     </Box>
   );
 };

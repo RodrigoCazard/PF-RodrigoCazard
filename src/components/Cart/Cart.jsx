@@ -2,7 +2,7 @@ import { useContext } from "react";
 import CartContext from "../../context/CartContext";
 import { Link } from "react-router-dom";
 import CartItem from "../ CartItem/CartItem";
-import { Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 const Cart = () => {
   const { cart, cartClear, total, quantity } = useContext(CartContext);
@@ -25,8 +25,12 @@ const Cart = () => {
           {...prod.item}
         ></CartItem>
       ))}
-      <h3>Total: ${total}</h3>
-      <h3>Total Amount: {quantity}</h3>
+      <Box display={"flex"} justifyContent={"space-between"}>
+        <Typography variant="body2">Total: </Typography>
+        <Typography variant="body2"> ${total}</Typography>
+      </Box>
+
+      <Typography>Total Amount: {quantity}</Typography>
       <Button onClick={() => cartClear()}>Empty Cart</Button>
       <Link to="/checkout">Finalizar compra</Link>
     </div>

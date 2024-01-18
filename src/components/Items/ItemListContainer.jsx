@@ -142,6 +142,7 @@ const ItemListContainer = () => {
                       <Button
                         variant="contained"
                         sx={{
+                          marginTop: 4,
                           padding: "15px 50px",
                           borderRadius: 15,
                           fontSize: "1.2rem",
