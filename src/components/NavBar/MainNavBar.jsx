@@ -61,7 +61,7 @@ const MainNavBar = ({ isOpen, toggleMenu }) => {
       display: "inline-block",
       cursor: "pointer",
       "&:hover": {
-        transform: "scale(1.1)",
+        transform: "scale(1.2)",
         opacity: 1,
         color: primaryColor,
       },
@@ -119,11 +119,6 @@ const MainNavBar = ({ isOpen, toggleMenu }) => {
       </Box>
     </Box>
   );
-};
-
-MainNavBar.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  toggleMenu: PropTypes.func.isRequired,
 };
 
 export default MainNavBar;

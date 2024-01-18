@@ -30,7 +30,7 @@ const CategoryListContainer = () => {
   });
 
   return (
-    <Box component={"section"} my={"120px"}>
+    <Box component={"section"} marginY={"120px"}>
       <Typography variant="body1" color={"primary"} component={"p"} mb={1}>
         - The Categories
       </Typography>

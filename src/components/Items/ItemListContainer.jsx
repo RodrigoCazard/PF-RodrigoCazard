@@ -1,15 +1,19 @@
-import { Box, Button, CircularProgress, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
 import {
-  getFirstEightProducts,
-  getProductCategories,
-  getProducts,
-} from "../../asyncmock";
+  Box,
+  Breadcrumbs,
+  Button,
+  CircularProgress,
+  Typography,
+} from "@mui/material";
+import { useEffect, useState } from "react";
+
 import ItemList from "./ItemList";
 import { Link, useParams } from "react-router-dom";
 import { db } from "../../services/config";
-
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import { useTheme } from "@emotion/react";
 import { getDocs, collection, query, doc, where } from "firebase/firestore";
+import styled from "@emotion/styled";
 
 const ItemListContainer = () => {
   const [products, setProducts] = useState([]);
@@ -17,6 +21,21 @@ const ItemListContainer = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const { category } = useParams();
+
+  const theme = useTheme();
+  const primaryColor = theme.palette.primary.main;
+
+  const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: black;
+    opacity: 0.6;
+
+    &:hover {
+      text-decoration: underline;
+      opacity: 1;
+      color: ${primaryColor};
+    }
+  `;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,69 +81,85 @@ const ItemListContainer = () => {
   }
 
   return (
-    <Box component={"main"} mb={"120px"}>
-      <Typography variant="body1" color={"primary"} component={"p"} mb={1}>
-        - Our Products
-      </Typography>
-      <Typography variant={"h3"} component={"h2"}>
-        Explore our Products
-      </Typography>
-      {loading ? (
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems={"center"}
-          height={"50vh"}
+    <>
+      {category ? (
+        <Breadcrumbs
+          sx={{ margin: "20px 0 40px 0" }}
+          separator={<NavigateNextIcon fontSize="small" />}
+          aria-label="breadcrumb"
         >
-          <CircularProgress />
-        </Box>
-      ) : (
-        <>
-          {errorMessage ? (
-            <Box
-              display="flex"
-              justifyContent="center"
-              alignItems={"center"}
-              height={"50vh"}
-            >
-              <Typography variant="body1" color={"primary"}>
-                {errorMessage}
-              </Typography>
-            </Box>
-          ) : (
-            <>
-              {!category || category !== "all" ? (
-                <>
-                  <ItemList products={products.slice(0, 8)}></ItemList>
-                  <Link
-                    to="/category/all"
-                    style={{
-                      textDecoration: "none",
-                      color: "black",
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Button
-                      variant="contained"
-                      sx={{
-                        padding: "15px 50px",
-                        borderRadius: 15,
-                        fontSize: "1.2rem",
+          <StyledLink to="/">Home page</StyledLink>
+          <StyledLink to="/category/all">Category</StyledLink>
+          <Typography color="text.primary">
+            {category?.charAt(0).toUpperCase() + category?.slice(1)}
+          </Typography>
+        </Breadcrumbs>
+      ) : null}
+
+      <Box component={"main"} mb={"120px"}>
+        <Typography variant="body1" color={"primary"} component={"p"} mb={1}>
+          - Our Products
+        </Typography>
+        <Typography variant={"h3"} component={"h2"}>
+          Explore our Products
+        </Typography>
+        {loading ? (
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems={"center"}
+            height={"50vh"}
+          >
+            <CircularProgress />
+          </Box>
+        ) : (
+          <>
+            {errorMessage ? (
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems={"center"}
+                height={"50vh"}
+              >
+                <Typography variant="body1" color={"primary"}>
+                  {errorMessage}
+                </Typography>
+              </Box>
+            ) : (
+              <>
+                {!category || category !== "all" ? (
+                  <>
+                    <ItemList products={products.slice(0, 8)}></ItemList>
+                    <Link
+                      to="/category/all"
+                      style={{
+                        textDecoration: "none",
+                        color: "black",
+                        display: "flex",
+                        justifyContent: "center",
                       }}
                     >
-                      Explore all
-                    </Button>
-                  </Link>
-                </>
-              ) : (
-                <ItemList products={products}></ItemList>
-              )}
-            </>
-          )}
-        </>
-      )}
-    </Box>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          padding: "15px 50px",
+                          borderRadius: 15,
+                          fontSize: "1.2rem",
+                        }}
+                      >
+                        Explore all
+                      </Button>
+                    </Link>
+                  </>
+                ) : (
+                  <ItemList products={products}></ItemList>
+                )}
+              </>
+            )}
+          </>
+        )}
+      </Box>
+    </>
   );
 };
 

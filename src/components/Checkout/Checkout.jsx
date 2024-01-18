@@ -19,16 +19,17 @@ import {
   Typography,
 } from "@mui/material";
 import CartContext from "../../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   const { isAuthenticated, user } = useAuth();
-  const { cart, total, quantity } = useContext(CartContext);
+  const { cart, total, quantity, cartClear } = useContext(CartContext);
   const [userData, setUserData] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const q = query(collection(db, "users"), where("uid", "==", user.uid));
+        const q = query(collection(db, "users"), where("uid", "==", user?.uid));
         const docSnap = await getDocs(q);
 
         const data = docSnap.docs.map((doc) => ({
@@ -49,7 +50,7 @@ const Checkout = () => {
     if (isAuthenticated()) {
       fetchUserData();
     }
-  }, [user.uid, isAuthenticated]);
+  }, [user?.uid, isAuthenticated]);
 
   const handlePurchase = async () => {
     if (!isAuthenticated()) {
@@ -65,12 +66,12 @@ const Checkout = () => {
       console.log(user);
       const docRef = await addDoc(purchasesCollection, {
         userData: {
-          id: user.uid,
-          userName: user.displayName,
-          userPhone: userData.phone,
-          userAddress: userData.address,
-          userEmail: user.email,
-          userCountry: userData.country,
+          id: user?.uid,
+          userName: user?.displayName,
+          userPhone: userData?.phone,
+          userAddress: userData?.address,
+          userEmail: user?.email,
+          userCountry: userData?.country,
         },
         products: cart.map((product) => ({
           id: product.item.id,
@@ -82,8 +83,10 @@ const Checkout = () => {
         timestamp: serverTimestamp(),
       });
 
+      cartClear();
+      navigate("/");
+      window.scrollTo(0, 0);
       console.log("Compra realizada con éxito. Ticket creado:", docRef.id);
-      alert("Compra realizada con éxito. Ticket creado:", docRef.id);
 
       // Limpiar el carrito después de la compra
       // Puedes agregar una función para limpiar el carrito en tu contexto

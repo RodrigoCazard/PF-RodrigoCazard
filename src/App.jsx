@@ -26,6 +26,8 @@ import { AuthProvider } from "./context/AuthContext.jsx";
 import Checkout from "./components/Checkout/Checkout.jsx";
 import Profile from "./components/Profile/Profile.jsx";
 
+import ScrollTopRoute from "./components/Utils/ScrollTopRoute.jsx";
+
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -60,18 +62,29 @@ function App() {
         <>
           <CustomThemeProvider>
             <BrowserRouter basename="/PreEntrega-Dos-Cazard">
-              <Toaster position="bottom-left" />
               <ScrollToTopOnRefresh />
+              <Toaster
+                position="bottom-left"
+                richColors
+                offset="64px"
+                closeButton
+                duration={2200}
+                toastOptions={{
+                  style: { fontSize: "1.2rem" },
+                }}
+              />
 
               {loading ? (
                 <Loader />
               ) : (
                 <>
                   <MainNavBar isOpen={isOpen} toggleMenu={toggleMenu} />
+
                   {isOpen ? (
                     <NavMenu isOpen={isOpen} toggleMenu={toggleMenu}></NavMenu>
                   ) : (
                     <Box style={{ padding: "0 10%" }}>
+                      <ScrollTopRoute />
                       <Routes>
                         <Route
                           path="/"

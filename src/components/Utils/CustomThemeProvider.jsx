@@ -12,6 +12,9 @@ const CustomThemeProvider = ({ children }) => {
       secondary: {
         main: green[500],
       },
+      warning: {
+        main: "rgba(0,0,0,0.9)",
+      },
     },
     breakpoints: {
       values: {
