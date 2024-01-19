@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../services/config";
 import {
+  Breadcrumbs,
   Button,
   List,
   ListItem,
@@ -19,7 +20,10 @@ import {
   Typography,
 } from "@mui/material";
 import CartContext from "../../context/CartContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import styled from "@emotion/styled";
+import { useTheme } from "@emotion/react";
 
 const Checkout = () => {
   const { isAuthenticated, user } = useAuth();
@@ -97,8 +101,31 @@ const Checkout = () => {
     }
   };
 
+  const theme = useTheme();
+  const primaryColor = theme.palette.primary.main;
+
+  const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: black;
+    opacity: 0.6;
+
+    &:hover {
+      text-decoration: underline;
+      opacity: 1;
+      color: ${primaryColor};
+    }
+  `;
+
   return (
     <div>
+      <Breadcrumbs
+        sx={{ margin: "20px 0 40px 0" }}
+        separator={<NavigateNextIcon fontSize="small" />}
+        aria-label="breadcrumb"
+      >
+        <StyledLink to="/">Home page</StyledLink>
+        <Typography color="text.primary">Checkout</Typography>
+      </Breadcrumbs>
       {isAuthenticated() ? (
         <>
           <h2>Resumen de Compra:</h2>

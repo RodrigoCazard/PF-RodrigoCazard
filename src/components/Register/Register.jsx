@@ -2,8 +2,9 @@ import React, { useState, useMemo } from "react";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { MuiTelInput } from "mui-tel-input";
 import Select from "react-select";
+import { PhoneInput } from "react-international-phone";
+import "react-international-phone/style.css";
 
 import { toast } from "sonner";
 
@@ -53,7 +54,10 @@ const Register = () => {
   };
   const styleIcon = {
     backgroundColor: "white",
-    opacity: 0.8,
+    opacity: 0.4,
+    "&:hover": {
+      opacity: 0.8,
+    },
     position: "absolute",
     right: "20px",
     top: "22%",
@@ -189,6 +193,11 @@ const Register = () => {
     border: isFocused.country
       ? "2px solid #9c27b0"
       : "2px solid rgba(0,0,0,0.1)",
+    "&:hover": {
+      border: isFocused.country
+        ? "2px solid #9c27b0"
+        : "2px solid rgba(0,0,0,0.1)",
+    },
   };
   const inputConfirmPasswordStyle = {
     border: isFocused.confirmPassword
@@ -254,7 +263,7 @@ const Register = () => {
         justifyContent={"center"}
         alignItems={"center"}
         flexDirection={"column"}
-        width={{ xs: "100%", sm: "80%", md: "60%", lg: "55%", xl: "50%" }}
+        width={{ xs: "100%", sm: "80%", md: "60%", lg: "40%", xl: "40%" }}
       >
         <Box width={"100%"} mx="auto">
           <Typography variant="body2" sx={{ letterSpacing: "1px" }} mb={3}>
@@ -292,14 +301,40 @@ const Register = () => {
           <Typography variant="body2" sx={{ letterSpacing: "1px" }} mb={3}>
             Phone number
           </Typography>
-          <MuiTelInput
-            placeholder="Enter phone number"
+
+          <PhoneInput
+            defaultCountry="uy"
+            placeholder="Phone number"
             value={phone}
+            hideDropdown
+            countrySelectorStyleProps={{
+              style: {
+                marginLeft: 20,
+                display: "flex",
+
+                alignItems: "center",
+              },
+              buttonStyle: {
+                border: 0,
+              },
+            }}
+            style={{
+              height: "65px",
+              marginBottom: "50px",
+              ...inputPhoneStyle,
+              transition: "all 0.5s ease",
+              borderRadius: 40,
+            }}
+            inputStyle={{
+              border: "0",
+              height: "61px",
+              ...inputStyle,
+              paddingLeft: 5,
+            }}
             onChange={(value) => setPhone(value)}
-            style={{ ...inputStyle, ...inputPhoneStyle }}
             onFocus={() => handleFocus("phone")}
             onBlur={() => handleBlur("phone")}
-          />
+          ></PhoneInput>
         </Box>
 
         <Box width={"100%"} mx="auto">
@@ -334,19 +369,30 @@ const Register = () => {
                 ...base,
                 fontSize: "20px",
               }),
-
-              control: (provided) => ({
-                ...provided,
+              clearIndicator: (base) => ({
+                ...base,
+                color: "rgba(0,0,0,0.2)",
+                "&:hover": {
+                  color: "rgba(0,0,0,0.9)",
+                },
+              }),
+              dropdownIndicator: (base) => ({
+                ...base,
+                color: "rgba(0,0,0,0.2)",
+                "&:hover": {
+                  color: "rgba(0,0,0,0.9)",
+                },
+              }),
+              control: (base) => ({
+                ...base,
                 ...inputStyle,
                 cursor: "pointer",
 
-                "&:hover": {
-                  border: "2px solid rgba(0,0,0,0.1)",
-                },
-                transition: "all 0.5s ease",
                 border: "2px solid rgba(0,0,0,0.1)",
-                padding: "10px",
+                transition: "all 0.5s ease",
+
                 ...inputCountryStyle,
+                padding: "10px",
               }),
             }}
           />
@@ -446,19 +492,10 @@ const Register = () => {
             variant="contained"
             onClick={handleRegister}
             sx={{
-              padding: "10px 50px",
+              padding: "10px 75px",
               fontWeight: "bold",
               fontSize: "1.1rem",
               borderRadius: 20,
-              [theme.breakpoints.down("md")]: {
-                width: "200px",
-              },
-              [theme.breakpoints.up("md")]: {
-                width: "230px",
-              },
-              [theme.breakpoints.up("lg")]: {
-                width: "300px",
-              },
 
               height: "60px",
             }}
@@ -475,17 +512,8 @@ const Register = () => {
                   border: "2px solid #000",
                 },
                 border: "2px solid rgba(0,0,0,0.1)",
-                [theme.breakpoints.down("md")]: {
-                  width: "200px",
-                },
-                [theme.breakpoints.up("md")]: {
-                  width: "230px",
-                },
-                [theme.breakpoints.up("lg")]: {
-                  width: "300px",
-                },
 
-                padding: "12px 22px",
+                padding: "10px 75px",
                 fontSize: 18,
                 fontWeight: "bold",
                 letterSpacing: 1,

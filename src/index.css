@@ -43,3 +43,10 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+:root {
+  --react-international-phone-country-selector-background-color-hover: none;
+  --react-international-phone-country-selector-arrow-size: 6px;
+  --react-international-phone-dropdown-item-font-size: 20px;
+  --react-international-phone-dropdown-item-height: 45px;
+}

@@ -61,8 +61,11 @@ const Login = () => {
   };
 
   const styleIcon = {
+    "&:hover": {
+      opacity: 0.8,
+    },
     backgroundColor: "white",
-    opacity: 0.8,
+    opacity: 0.4,
     position: "absolute",
     right: "20px",
     top: "22%",
@@ -231,35 +234,37 @@ const Login = () => {
         <Box
           mt={4}
           display={"flex"}
-          justifyContent={"space-between"}
+          flexWrap={"wrap"}
+          gap={2}
+          justifyContent={{ xs: "center", sm: "space-between" }}
           alignItems={"center"}
           width={"100%"}
         >
-          <Button
-            color="warning"
-            sx={{
-              borderRadius: 20,
-              "&:hover, &:focus": {
-                border: "2px solid #000",
-              },
-              border: "2px solid rgba(0,0,0,0.1)",
-              padding: "12px 22px",
-              fontSize: 18,
-              fontWeight: "bold",
-              letterSpacing: 1,
-            }}
-            variant="outlined"
+          {" "}
+          <Link
+            to={"/register"}
+            style={{ textDecoration: "none", color: "black" }}
           >
-            <Link
-              to={"/register"}
-              style={{ textDecoration: "none", color: "black" }}
+            <Button
+              color="warning"
+              sx={{
+                borderRadius: 20,
+                "&:hover, &:focus": {
+                  border: "2px solid #000",
+                },
+                border: "2px solid rgba(0,0,0,0.1)",
+                padding: "12px 22px",
+                fontSize: 18,
+                fontWeight: "bold",
+                letterSpacing: 1,
+              }}
+              variant="outlined"
             >
               <Typography variant="body2"> Create account</Typography>
-            </Link>
-          </Button>
+            </Button>
+          </Link>
           <StyledLink
             style={{
-              paddingRight: "20px",
               fontSize: "1.5rem",
             }}
           >
