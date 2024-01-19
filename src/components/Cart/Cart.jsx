@@ -23,7 +23,10 @@ const Cart = () => {
           quantityProp={prod.quantity}
           key={prod.item.id}
           {...prod.item}
-        ></CartItem>
+          buttons
+        >
+          {" "}
+        </CartItem>
       ))}
       <Box display={"flex"} justifyContent={"space-between"}>
         <Typography variant="body2">Total: </Typography>

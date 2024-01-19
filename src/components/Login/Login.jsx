@@ -20,8 +20,11 @@ import styled from "@emotion/styled";
 import Checkbox from "@mui/material/Checkbox";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
-import { Toaster, toast } from "sonner";
-import { AuthErrorCodes } from "firebase/auth";
+import { toast } from "sonner";
+
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,7 +40,6 @@ const Login = () => {
 
       navigate("/profile");
     } catch (error) {
-      console.log(error.code);
       let errorMessage = "Error de inicio de sesión";
       if (error.code === "auth/invalid-credential") {
         errorMessage =
@@ -50,6 +52,22 @@ const Login = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const [showPassword, setShowPassword] = useState(true);
+
+  const handleSetShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const styleIcon = {
+    backgroundColor: "white",
+    opacity: 0.8,
+    position: "absolute",
+    right: "20px",
+    top: "22%",
+    transform: "translateY(-25%)",
+    cursor: "pointer",
   };
 
   const theme = useTheme();
@@ -153,16 +171,30 @@ const Login = () => {
           <Typography variant="body2" sx={{ letterSpacing: "1px" }} mb={3}>
             Password
           </Typography>
-          <input
-            label="Contraseña"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-            type="password"
-            placeholder="Your Password"
-            style={{ ...inputStyle, ...inputPasswordStyle }}
-            onFocus={() => handleFocus("password")}
-            onBlur={() => handleBlur("password")}
-          />
+          <div style={{ position: "relative" }}>
+            <input
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              type={showPassword ? "password" : "text"}
+              placeholder="Your password"
+              style={{
+                ...inputStyle,
+                ...inputPasswordStyle,
+                paddingRight: "45px",
+              }}
+              onFocus={() => handleFocus("password")}
+              onBlur={() => handleBlur("password")}
+            />
+
+            {showPassword ? (
+              <VisibilityIcon sx={styleIcon} onClick={handleSetShowPassword} />
+            ) : (
+              <VisibilityOffIcon
+                sx={styleIcon}
+                onClick={handleSetShowPassword}
+              />
+            )}
+          </div>
         </Box>
         <FormControlLabel
           sx={{ marginTop: "-30px", marginRight: "auto" }}

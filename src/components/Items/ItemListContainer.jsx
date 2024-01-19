@@ -12,7 +12,7 @@ import { Link, useParams } from "react-router-dom";
 import { db } from "../../services/config";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { useTheme } from "@emotion/react";
-import { getDocs, collection, query, doc, where } from "firebase/firestore";
+import { getDocs, collection, query, where } from "firebase/firestore";
 import styled from "@emotion/styled";
 
 const ItemListContainer = () => {

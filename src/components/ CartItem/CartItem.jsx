@@ -4,7 +4,7 @@ import { useContext } from "react";
 import CartContext from "../../context/CartContext";
 import ClearIcon from "@mui/icons-material/Clear";
 
-const CartItem = ({ img, id, name, price, quantityProp }) => {
+const CartItem = ({ img, id, name, price, quantityProp, buttons }) => {
   const { cartRemove } = useContext(CartContext);
 
   const handleCartRemove = () => {
@@ -34,7 +34,11 @@ const CartItem = ({ img, id, name, price, quantityProp }) => {
             {quantityProp} x ${price}
           </Typography>
         </Box>
-
+        {buttons && (
+          <div>
+            <Button>+</Button>a<Button>_</Button>
+          </div>
+        )}
         <IconButton
           onClick={handleCartRemove}
           disableElevation

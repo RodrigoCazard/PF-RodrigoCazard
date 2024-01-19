@@ -5,6 +5,7 @@ import ItemDetail from "./ItemDetail";
 import { db } from "../../services/config";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { Box, CircularProgress, Typography } from "@mui/material";
+import { useTheme } from "@emotion/react";
 
 const ItemDetailContainer = () => {
   const [product, setProduct] = useState(null);
@@ -13,6 +14,9 @@ const ItemDetailContainer = () => {
 
   const { idItem } = useParams();
 
+  const theme = useTheme();
+
+  const primaryColor = theme.palette.primary.main;
   useEffect(() => {
     const getProductById = async () => {
       try {
