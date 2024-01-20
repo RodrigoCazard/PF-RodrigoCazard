@@ -106,7 +106,7 @@ const CartItem = ({ img, id, name, price, quantityProp, stock, variant }) => {
               height: "40px",
               width: "40px",
               my: "auto",
-              ml: 2,
+              ml: "auto",
               "&:hover, &:focus": {
                 border: "2px solid #000",
               },

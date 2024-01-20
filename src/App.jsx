@@ -1,6 +1,7 @@
 import "./App.css";
 import MainNavBar from "./components/NavBar/MainNavBar";
 
+import "./transitionStyles.css";
 import ItemListContainer from "./components/Items/ItemListContainer";
 import Hero from "./components/Hero/Hero";
 import ScrollToTopOnRefresh from "./components/Utils/ScrollToTop";
@@ -61,7 +62,7 @@ function App() {
       <CartProvider>
         <>
           <CustomThemeProvider>
-            <BrowserRouter basename="/PreEntrega-Dos-Cazard">
+            <BrowserRouter>
               <ScrollToTopOnRefresh />
               <Toaster
                 position="bottom-left"
@@ -85,6 +86,7 @@ function App() {
                   ) : (
                     <Box style={{ padding: "0 10%" }}>
                       <ScrollTopRoute />
+
                       <Routes>
                         <Route
                           path="/"

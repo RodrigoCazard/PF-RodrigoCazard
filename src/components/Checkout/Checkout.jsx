@@ -25,12 +25,16 @@ import { Link, useNavigate } from "react-router-dom";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
+import { toast } from "sonner";
+import Profile from "../Profile/Profile";
+import CartPreview from "../Cart/CartPreview";
 
 const Checkout = () => {
   const { isAuthenticated, user } = useAuth();
   const { cart, total, quantity, cartClear } = useContext(CartContext);
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -59,7 +63,8 @@ const Checkout = () => {
 
   const handlePurchase = async () => {
     if (!isAuthenticated()) {
-      alert("Debes iniciar sesión para realizar la compra.");
+      toast.error("You must log in to make a purchase");
+      navigate("/login");
       return;
     }
 
@@ -120,62 +125,25 @@ const Checkout = () => {
         aria-label="breadcrumb"
       >
         <StyledLink to="/">Home page</StyledLink>
+        <StyledLink to="/cart">Cart</StyledLink>
         <Typography color="text.primary">Checkout</Typography>
       </Breadcrumbs>
 
       {isAuthenticated() ? (
         <>
-          <h2>Resumen de Compra:</h2>
-
-          {/* Información del usuario */}
-          <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
-            <Typography variant="h5" gutterBottom>
-              Información del Usuario
-            </Typography>
-            <List>
-              <ListItem>
-                <ListItemText
-                  primary={`Nombre: ${user.displayName || "No disponible"}`}
-                />
-              </ListItem>
-              <ListItem>
-                <ListItemText
-                  primary={`Email: ${user.email || "No disponible"}`}
-                />
-              </ListItem>
-              {/* ... otras propiedades del usuario que quieras mostrar ... */}
-            </List>
-          </Paper>
-
-          {/* Información del carrito */}
-          <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
-            <Typography variant="h5" gutterBottom>
-              Productos en el Carrito
-            </Typography>
-            <List>
-              {cart.map((product) => (
-                <ListItem key={product.item.id}>
-                  <ListItemText
-                    primary={`Producto: ${product.item.name}`}
-                    secondary={`Cantidad: ${product.quantity}`}
-                  />
-                </ListItem>
-              ))}
-            </List>
-          </Paper>
-
-          {/* Información del total y botón para realizar la compra */}
-          <Paper elevation={3} sx={{ padding: 2 }}>
-            <Typography variant="h5" gutterBottom>
-              Total de la Compra
-            </Typography>
-            <Typography variant="subtitle1" gutterBottom>
-              Total: ${total}
-            </Typography>
-            <Button sx={{ height: 50 }} onClick={handlePurchase}>
-              Realizar Compra
-            </Button>
-          </Paper>
+          <Box display={"flex"} gap={20} marginY={10}>
+            <Box width={"50%"}>
+              <Profile></Profile>
+            </Box>
+            <Box
+              padding={"20px 50px"}
+              width={"50%"}
+              border={"2px solid rgba(0,0,0,0.1)"}
+              borderRadius={15}
+            >
+              <CartPreview checkoutDisable={true} />
+            </Box>
+          </Box>
         </>
       ) : (
         <h2>Debes iniciar sesión para acceder al checkout.</h2>

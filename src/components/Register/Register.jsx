@@ -31,7 +31,7 @@ import { db } from "../../services/config";
 import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -48,6 +48,8 @@ const Register = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(true);
 
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const changeHandler = (country) => {
     setCountry(country);
@@ -74,14 +76,14 @@ const Register = () => {
     try {
       const userCollectionRef = collection(db, "users");
       await addDoc(userCollectionRef, userData);
-      console.log("Usuario agregado a Firestore");
     } catch (error) {
-      console.error("Error al agregar usuario a Firestore:", error);
+      console.error("Error adding user to Firestore:", error);
     }
   };
 
   const handleRegister = async () => {
     setLoading(true);
+
     if (
       !displayName ||
       !email ||
@@ -91,17 +93,17 @@ const Register = () => {
       !password ||
       !confirmPassword
     ) {
-      toast.error("Por favor, completa todos los campos.");
+      toast.error("Please complete all fields.");
       setLoading(false);
       return;
     }
     if (password !== confirmPassword) {
-      toast.error("Las contraseñas no coinciden");
+      toast.error("Passwords do not match");
       setLoading(false);
       return;
     }
     if (!termsAndConditionsChecked) {
-      toast.error("Debes aceptar los términos y condiciones.");
+      toast.error("You must accept the terms and conditions.");
       setLoading(false);
       return;
     }
@@ -129,24 +131,23 @@ const Register = () => {
 
       await addUserToFirestore(userData);
 
-      toast.success("Inicio exitoso");
+      toast.success("Successful registration");
     } catch (error) {
       console.log(error.message);
-      let errorMessage = "Error de inicio de sesión";
+      let errorMessage = "Login error";
       if (error.code === "auth/invalid-email") {
-        errorMessage =
-          "Formato de correo electrónico inválido. Por favor, ingresa un correo válido.";
+        errorMessage = "Invalid email format. Please enter a valid email.";
       }
       if (error.code === "auth/email-already-in-use") {
-        errorMessage = "Repetido perro";
+        errorMessage = "Email already in use";
       }
 
       toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
+    navigate("/profile");
   };
-
   const theme = useTheme();
   const primaryColor = theme.palette.primary.main;
 
@@ -273,7 +274,8 @@ const Register = () => {
             type="text"
             value={displayName}
             onChange={(e) => {
-              const inputValue = e.target.value.replace(/[^A-Za-z]/g, "");
+              const inputValue = e.target.value.replace(/[^A-Za-z ]/g, "");
+
               setDisplayName(inputValue);
             }}
             placeholder="Full name"

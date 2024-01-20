@@ -57,7 +57,7 @@ const CartOverlay = ({ scrolled, isVisible }) => {
         className="cart-overlay"
         sx={{ overflowY: "auto" }}
       >
-        <CartPreview />
+        <CartPreview checkoutDisable={false} />
       </Box>
     </Box>
   );

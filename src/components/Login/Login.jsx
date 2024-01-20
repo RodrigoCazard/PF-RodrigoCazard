@@ -32,22 +32,30 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const handleLogin = async () => {
     setLoading(true);
+    if (!email) {
+      toast.error("Please enter an email.");
+      setLoading(false);
+      return;
+    }
+
     const auth = getAuth();
     try {
       await signInWithEmailAndPassword(auth, email, password);
 
-      toast.success("Inicio exitoso");
+      toast.success("Successful login");
 
       navigate("/profile");
     } catch (error) {
-      let errorMessage = "Error de inicio de sesión";
+      let errorMessage = "Login error";
       if (error.code === "auth/invalid-credential") {
-        errorMessage =
-          "Usuario no encontrado. Por favor, verifica tus credenciales.";
+        errorMessage = "User not found. Please check your credentials";
       } else if (error.code === "auth/invalid-email") {
+        errorMessage = "Invalid email format. Please enter a valid email";
+      } else if (error.code === "auth/too-many-requests") {
         errorMessage =
-          "Formato de correo electrónico inválido. Por favor, ingresa un correo válido.";
+          "Access to this account has been temporarily disabled due to many failed login attempts.";
       }
+
       toast.error(errorMessage);
     } finally {
       setLoading(false);

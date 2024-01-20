@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import ItemDetail from "./ItemDetail";
 import { db } from "../../services/config";
 import { collection, doc, getDoc } from "firebase/firestore";
-import { Box, CircularProgress, Typography } from "@mui/material";
-import { useTheme } from "@emotion/react";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 
 const ItemDetailContainer = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [productNotFound, setProductNotFound] = useState(false);
 
   const { idItem } = useParams();
 
-  const theme = useTheme();
-
-  const primaryColor = theme.palette.primary.main;
   useEffect(() => {
     const getProductById = async () => {
       try {
@@ -28,8 +23,6 @@ const ItemDetailContainer = () => {
             ...docSnap.data(),
             id: docSnap.id,
           });
-        } else {
-          setProductNotFound(true);
         }
       } catch (error) {
         console.error("Error al obtener el producto:", error);
@@ -64,14 +57,25 @@ const ItemDetailContainer = () => {
         </div>
       ) : (
         <Box
-          display="flex"
-          justifyContent="center"
+          display={"flex"}
+          flexDirection={"column"}
           alignItems={"center"}
-          height={"50vh"}
+          gap={4}
+          my={27}
         >
-          <Typography variant="body1" color={"primary"}>
-            {productNotFound ? "No product was found with that id" : ""}
+          <Typography variant="h3">
+            No product was found with that id
           </Typography>
+          <Link to="/category/all">
+            {" "}
+            <Button
+              variant="contained"
+              disableElevation
+              sx={{ borderRadius: 15, padding: "20px 50px", fontSize: "20px" }}
+            >
+              Explore products
+            </Button>
+          </Link>
         </Box>
       )}
     </div>

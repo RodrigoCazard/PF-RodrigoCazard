@@ -36,62 +36,58 @@ const Profile = () => {
     if (isAuthenticated()) {
       fetchUserData();
     }
-  }, [user.uid, isAuthenticated]);
+  }, [user?.uid, isAuthenticated]);
 
-  return (
-    isAuthenticated() && (
-      <Paper
-        elevation={3}
-        style={{
-          maxWidth: "800px",
-          padding: "20px",
-          margin: "auto",
-          marginBottom: "50px",
-          marginTop: "50px",
-        }}
-      >
-        <Typography variant="h5" align="center" gutterBottom>
-          Perfil de Usuario
-        </Typography>
-        {loading ? (
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems={"center"}
-            height={"30vh"}
-          >
-            <CircularProgress />
-          </Box>
-        ) : (
-          <>
-            <Typography variant="body1" gutterBottom>
-              Nombre: {userData?.displayName.split(" ")[0] || "No disponible"}
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              Apellido:{" "}
-              {userData?.displayName.split(" ").slice(1).join(" ") ||
-                "No disponible"}
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              Email: {userData?.email || "No disponible"}
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              Teléfono: {userData?.phone || "No disponible"}
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              Dirección: {userData?.address || "No disponible"}
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              País: {userData?.country || "No disponible"}
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              UID: {user?.uid}
-            </Typography>
-          </>
-        )}
-        <Logout></Logout>
-      </Paper>
-    )
+  return isAuthenticated() ? (
+    <Paper
+      elevation={3}
+      style={{
+        maxWidth: "800px",
+        padding: "20px",
+        margin: "auto",
+        marginBottom: "50px",
+        marginTop: "50px",
+      }}
+    >
+      <Typography variant="h5" align="center" gutterBottom>
+        Perfil de Usuario
+      </Typography>
+      {loading ? (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems={"center"}
+          height={"30vh"}
+        >
+          <CircularProgress />
+        </Box>
+      ) : (
+        <>
+          <Typography variant="body1" gutterBottom>
+            Full Name: {userData?.displayName || "Not available"}
+          </Typography>
+
+          <Typography variant="body1" gutterBottom>
+            Email: {userData?.email || "Not available"}
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            Phone: {userData?.phone || "Not available"}
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            Address: {userData?.address || "Not available"}
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            Country: {userData?.country.label || "Not available"}
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            UID: {user?.uid}
+          </Typography>
+        </>
+      )}
+      <Logout></Logout>
+    </Paper>
+  ) : (
+    <p>No hay usuario logeado</p>
   );
 };
 

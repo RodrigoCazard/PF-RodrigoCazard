@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import CartItem from "../ CartItem/CartItem";
 import { Box, Button, Typography } from "@mui/material";
 
-const CartPreview = () => {
+const CartPreview = ({ checkoutDisable }) => {
   const { cart, cartClear, total, quantity } = useContext(CartContext);
 
   if (quantity === 0) {
@@ -47,24 +47,31 @@ const CartPreview = () => {
         <Typography variant="body1">Total: </Typography>
         <Typography variant="body1"> ${total}</Typography>
       </Box>
+
       <Box display={"flex"} justifyContent={"space-between"} gap={2}>
-        <Link style={{ textDecoration: "none", color: "black" }} to="/checkout">
-          <Button
-            disableElevation
-            disableRipple
-            variant="contained"
-            sx={{
-              padding: "10px 50px",
-              fontWeight: "bold",
-              fontSize: "1.1rem",
-              borderRadius: 20,
-              minWidth: "200px",
-              height: "60px",
-            }}
+        {!checkoutDisable && (
+          <Link
+            style={{ textDecoration: "none", color: "black" }}
+            to="/checkout"
           >
-            Checkout
-          </Button>
-        </Link>
+            <Button
+              disableElevation
+              disableRipple
+              variant="contained"
+              sx={{
+                padding: "10px 50px",
+                fontWeight: "bold",
+                fontSize: "1.1rem",
+                borderRadius: 20,
+                minWidth: "200px",
+                height: "60px",
+              }}
+            >
+              Checkout
+            </Button>
+          </Link>
+        )}
+
         <Link style={{ textDecoration: "none", color: "black" }} to="/cart">
           <Button
             color="warning"

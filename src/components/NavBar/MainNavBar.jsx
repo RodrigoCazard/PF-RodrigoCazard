@@ -52,7 +52,7 @@ const MainNavBar = ({ isOpen, toggleMenu }) => {
       zIndex: 1000,
       transition: "background-color 0.3s, padding 0.3s, box-shadow 0.3s",
       backgroundColor: "white",
-      padding: scrolled ? "10px 8%" : "30px 8%",
+      padding: scrolled ? "10px 10%" : "30px 10%",
       boxShadow: scrolled ? "0px 2px 5px rgba(0, 0, 0, 0.1)" : "none",
     },
     styledIcon: {

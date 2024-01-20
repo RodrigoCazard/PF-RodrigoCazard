@@ -116,14 +116,27 @@ const ItemListContainer = () => {
           <>
             {errorMessage ? (
               <Box
-                display="flex"
-                justifyContent="center"
+                display={"flex"}
+                flexDirection={"column"}
                 alignItems={"center"}
-                height={"50vh"}
+                gap={4}
+                my={27}
               >
-                <Typography variant="body1" color={"primary"}>
-                  {errorMessage}
-                </Typography>
+                <Typography variant="h3">{errorMessage}</Typography>
+                <Link to="/category/all">
+                  {" "}
+                  <Button
+                    variant="contained"
+                    disableElevation
+                    sx={{
+                      borderRadius: 15,
+                      padding: "20px 50px",
+                      fontSize: "20px",
+                    }}
+                  >
+                    Explore products
+                  </Button>
+                </Link>
               </Box>
             ) : (
               <>
