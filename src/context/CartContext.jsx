@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 
 export const CartContext = createContext({
   cart: [],
@@ -10,6 +10,26 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
   const [quantity, setQuantity] = useState(0);
+
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    const storedQuantity = storedCart.reduce(
+      (acc, item) => acc + item.quantity,
+      0
+    );
+    const storedTotal = storedCart.reduce(
+      (acc, item) => acc + item.item.price * item.quantity,
+      0
+    );
+
+    setCart(storedCart);
+    setQuantity(storedQuantity);
+    setTotal(storedTotal);
+  }, []);
+
+  const saveCartToLocalStorage = (cartData) => {
+    localStorage.setItem("cart", JSON.stringify(cartData));
+  };
 
   console.log(cart);
   console.log(total);
@@ -34,6 +54,7 @@ export const CartProvider = ({ children }) => {
 
       setCart(newCart);
     }
+    saveCartToLocalStorage(cart);
   };
 
   const cartRemove = (id) => {
@@ -45,14 +66,29 @@ export const CartProvider = ({ children }) => {
     setTotal(
       (prev) => prev - deleteProduct.item.price * deleteProduct.quantity
     );
+    saveCartToLocalStorage(cart);
   };
 
   const cartClear = () => {
     setCart([]);
     setQuantity(0);
     setTotal(0);
+    saveCartToLocalStorage(cart);
   };
 
+  const cartUpdate = (item, quantity) => {
+    const newCart = cart.map((prod) => {
+      if (prod.item.id === item.id) {
+        setTotal((prev) => prev + item.price * quantity);
+        setQuantity((prev) => prev + quantity);
+        return { ...prod, quantity: prod.quantity + quantity };
+      } else {
+        return prod;
+      }
+    });
+    setCart(newCart);
+    saveCartToLocalStorage(cart);
+  };
   return (
     <CartContext.Provider
       value={{
@@ -62,6 +98,7 @@ export const CartProvider = ({ children }) => {
         cartAdd,
         cartRemove,
         cartClear,
+        cartUpdate,
       }}
     >
       {children}

@@ -8,6 +8,7 @@ import { useContext } from "react";
 import CartContext from "../../context/CartContext";
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
+import Counter from "../Counter/Counter";
 
 const CategoryColors = {
   desktop: "60, 179, 113",
@@ -70,10 +71,16 @@ const ItemDetail = ({ id, name, price, category, stock, img }) => {
         aria-label="breadcrumb"
       >
         <StyledLink to="/">Home page</StyledLink>
+        <StyledLink to={`/category/all`}>Category</StyledLink>
         <StyledLink to={`/category/${category}`}>
           {category?.charAt(0).toUpperCase() + category?.slice(1)}
         </StyledLink>
-        <Typography color="text.primary">{name}</Typography>
+        <Typography color="text.primary">
+          {name
+            .match(/[\w'-]+/g)
+            .slice(0, 3)
+            .join(" ")}
+        </Typography>
       </Breadcrumbs>
       <Grid container>
         <Grid item sm={12} lg={6} margin={"20px 0px 150px"}>
@@ -142,27 +149,17 @@ const ItemDetail = ({ id, name, price, category, stock, img }) => {
           <Typography variant="body2" mt={1} mb={5}>
             Stock: {stock}
           </Typography>
-          <Box display={"flex"}>
-            <Box
-              mr={2}
-              display={"flex"}
-              justifyContent={"space-between"}
-              alignItems={"center"}
-              gap={6}
-              borderRadius={"50px"}
-              bgcolor={"rgba(0,0,0,0.02)"}
-              padding={"10px 20px"}
-              border={1}
-            >
-              <p onClick={decrement} style={{ cursor: "pointer" }}>
-                -
-              </p>
-              <p>{count}</p>
-
-              <p onClick={increment} style={{ cursor: "pointer" }}>
-                +
-              </p>
-            </Box>
+          <Box
+            display={"flex"}
+            flexWrap={"wrap"}
+            gap={2}
+            justifyContent={"center"}
+          >
+            <Counter
+              count={count}
+              increment={increment}
+              decrement={decrement}
+            ></Counter>
             <Button
               onClick={handleCartAdd}
               variant="contained"

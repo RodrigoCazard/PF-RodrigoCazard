@@ -390,7 +390,7 @@ const Register = () => {
 
                 border: "2px solid rgba(0,0,0,0.1)",
                 transition: "all 0.5s ease",
-
+                boxShadow: "none",
                 ...inputCountryStyle,
                 padding: "10px",
               }),

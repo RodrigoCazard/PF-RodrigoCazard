@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CartPreview from "./CartPreview";
-import { Box } from "@mui/material";
+import { Box, Hidden } from "@mui/material";
 
 const CartOverlay = ({ scrolled, isVisible }) => {
   const [overlayStyle, setOverlayStyle] = useState({
@@ -48,12 +48,14 @@ const CartOverlay = ({ scrolled, isVisible }) => {
       }}
     >
       <Box
+        maxHeight={"80vh"}
         bgcolor={"white"}
         borderRadius={7}
         border="1px solid rgba(0,0,0,0.1)"
         paddingX={5}
         paddingY={3}
         className="cart-overlay"
+        sx={{ overflowY: "auto" }}
       >
         <CartPreview />
       </Box>

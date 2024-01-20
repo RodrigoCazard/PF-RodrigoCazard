@@ -1,14 +1,33 @@
 import { Box, Button, IconButton, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useContext } from "react";
 import CartContext from "../../context/CartContext";
 import ClearIcon from "@mui/icons-material/Clear";
+import Counter from "../Counter/Counter";
+import { Link } from "react-router-dom";
 
-const CartItem = ({ img, id, name, price, quantityProp, buttons }) => {
+const CartItem = ({ img, id, name, price, quantityProp, stock, variant }) => {
   const { cartRemove } = useContext(CartContext);
 
   const handleCartRemove = () => {
     cartRemove(id);
+  };
+
+  const [count, setCount] = useState(quantityProp);
+
+  const increment = () => {
+    if (count > stock - 1) {
+      setCount(Number(stock));
+    } else {
+      setCount(count + 1);
+    }
+  };
+  const decrement = () => {
+    if (count === 1) {
+      setCount(1);
+    } else {
+      setCount(count - 1);
+    }
   };
 
   return (
@@ -17,50 +36,87 @@ const CartItem = ({ img, id, name, price, quantityProp, buttons }) => {
         <img
           src={img}
           alt=""
-          width={"100px"}
+          width={variant ? "200px" : "100px"}
           style={{ objectFit: "contain" }}
         />
+
         <Box
           display={"flex"}
           flexDirection={"column"}
-          justifyContent={"space-around"}
+          justifyContent={"space-between"}
           paddingY={3}
+          paddingBottom={variant ? 0 : 3}
           mx={3}
         >
-          <Typography fontWeight={"bold"} variant="subtitle1" width={"250px"}>
-            {name}
-          </Typography>
-          <Typography variant="subtitle1">
+          {" "}
+          <Link
+            to={`/item/${id}`}
+            style={{ textDecoration: "none", color: "rgba(0,0,0,0.9)" }}
+          >
+            <Typography
+              fontWeight={"bold"}
+              variant={variant ? "body1" : "subtitle1"}
+              width={variant ? "100%" : "250px"}
+            >
+              {name}
+            </Typography>
+          </Link>
+          <Typography variant={variant ? "subtitule1" : "subtitle2"}>
             {quantityProp} x ${price}
           </Typography>
+          {variant && (
+            <Box display={"flex"}>
+              <Box height={"100%"}>
+                <Counter
+                  count={count}
+                  increment={increment}
+                  decrement={decrement}
+                />
+              </Box>
+              <IconButton
+                onClick={handleCartRemove}
+                disableElevation
+                disableRipple
+                sx={{
+                  color: "black",
+                  border: "2px solid rgba(0,0,0,0.1)",
+                  transition: "border 0.3s, color 0.3s",
+                  height: "60px",
+                  width: "60px",
+
+                  "&:hover, &:focus": {
+                    border: "2px solid #000",
+                  },
+                }}
+              >
+                <ClearIcon fontSize={"large"} />
+              </IconButton>
+            </Box>
+          )}
         </Box>
-        {buttons && (
-          <div>
-            <Button>+</Button>a<Button>_</Button>
-          </div>
+        {!variant && (
+          <IconButton
+            onClick={handleCartRemove}
+            disableElevation
+            disableRipple
+            sx={{
+              color: "black",
+              border: "2px solid rgba(0,0,0,0.01)",
+              transition: "border 0.3s, color 0.3s",
+              height: "40px",
+              width: "40px",
+              my: "auto",
+              ml: 2,
+              "&:hover, &:focus": {
+                border: "2px solid #000",
+              },
+            }}
+          >
+            <ClearIcon />
+          </IconButton>
         )}
-        <IconButton
-          onClick={handleCartRemove}
-          disableElevation
-          disableRipple
-          sx={{
-            color: "black",
-            border: "2px solid rgba(0,0,0,0.1)",
-            transition: "border 0.3s, color 0.3s",
-            height: "40px",
-            width: "40px",
-            marginY: "auto",
-            marginLeft: "auto",
-            "&:hover, &:focus": {
-              border: "2px solid #000",
-            },
-          }}
-        >
-          <ClearIcon />
-        </IconButton>
       </Box>
     </>
   );
 };
-
 export default CartItem;

@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../services/config";
 import {
+  Box,
   Breadcrumbs,
   Button,
   List,
@@ -91,11 +92,6 @@ const Checkout = () => {
       navigate("/");
       window.scrollTo(0, 0);
       console.log("Compra realizada con éxito. Ticket creado:", docRef.id);
-
-      // Limpiar el carrito después de la compra
-      // Puedes agregar una función para limpiar el carrito en tu contexto
-      // Por ejemplo, si tienes una función clearCart en tu contexto, podrías llamar a:
-      // clearCart();
     } catch (error) {
       console.error("Error al realizar la compra", error.message);
     }
@@ -126,6 +122,7 @@ const Checkout = () => {
         <StyledLink to="/">Home page</StyledLink>
         <Typography color="text.primary">Checkout</Typography>
       </Breadcrumbs>
+
       {isAuthenticated() ? (
         <>
           <h2>Resumen de Compra:</h2>
