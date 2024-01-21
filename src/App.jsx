@@ -62,7 +62,7 @@ function App() {
       <CartProvider>
         <>
           <CustomThemeProvider>
-            <BrowserRouter>
+            <BrowserRouter basename="PreEntrega-Dos-Cazard">
               <ScrollToTopOnRefresh />
               <Toaster
                 position="bottom-left"
@@ -116,7 +116,7 @@ function App() {
                         />
                         <Route path="/cart" element={<Cart></Cart>} />
                         <Route
-                          path="/checkout"
+                          path="/cart/checkout"
                           element={<Checkout></Checkout>}
                         />
                         <Route path="/profile" element={<Profile></Profile>} />

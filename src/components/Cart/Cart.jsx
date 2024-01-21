@@ -99,8 +99,6 @@ const Cart = () => {
               position={"sticky"}
               width="65%"
               paddingRight="16px"
-              // height={"65vh"}
-              // sx={{ overflowY: "auto" }}
               display={"flex"}
               flexDirection={"column"}
               gap={6}
@@ -128,7 +126,7 @@ const Cart = () => {
               borderRadius={15}
             >
               <Typography
-                variant="body1"
+                variant="h4"
                 sx={{ fontWeight: "bold", marginBottom: "45px" }}
               >
                 {" "}
@@ -167,7 +165,7 @@ const Cart = () => {
 
               <Link
                 style={{ textDecoration: "none", color: "black" }}
-                to="/checkout"
+                to="/cart/checkout"
               >
                 <Button
                   disableElevation

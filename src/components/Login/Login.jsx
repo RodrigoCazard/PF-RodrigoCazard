@@ -25,7 +25,7 @@ import { toast } from "sonner";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
-const Login = () => {
+const Login = ({ variant }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -43,8 +43,9 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, email, password);
 
       toast.success("Successful login");
-
-      navigate("/profile");
+      if (!variant) {
+        navigate("/profile");
+      }
     } catch (error) {
       let errorMessage = "Login error";
       if (error.code === "auth/invalid-credential") {
@@ -128,7 +129,7 @@ const Login = () => {
       : "2px solid rgba(0,0,0,0.1)",
   };
   return (
-    <Box>
+    <>
       {loading && (
         <Backdrop
           open={loading}
@@ -137,22 +138,33 @@ const Login = () => {
           <CircularProgress color="primary" />
         </Backdrop>
       )}
-      <Breadcrumbs
-        sx={{ margin: "20px 0 40px 0" }}
-        separator={<NavigateNextIcon fontSize="small" />}
-        aria-label="breadcrumb"
-      >
-        <StyledLink to="/">Home page</StyledLink>
-        <Typography color="text.primary">Login</Typography>
-      </Breadcrumbs>
-      <Box>
-        <Typography variant="body1" color={"primary"} component={"p"} mb={1}>
-          - Login
-        </Typography>
-        <Typography variant="h3" component="h2">
-          Login to Your Account
-        </Typography>
-      </Box>
+      {!variant && (
+        <>
+          {" "}
+          <Breadcrumbs
+            sx={{ margin: "20px 0 40px 0" }}
+            separator={<NavigateNextIcon fontSize="small" />}
+            aria-label="breadcrumb"
+          >
+            <StyledLink to="/">Home page</StyledLink>
+            <Typography color="text.primary">Login</Typography>
+          </Breadcrumbs>
+          <Box>
+            <Typography
+              variant="body1"
+              color={"primary"}
+              component={"p"}
+              mb={1}
+            >
+              - Login
+            </Typography>
+            <Typography variant="h3" component="h2">
+              Login to Your Account
+            </Typography>
+          </Box>
+        </>
+      )}
+
       <Box
         marginTop={10}
         marginBottom={17}
@@ -161,7 +173,11 @@ const Login = () => {
         justifyContent={"center"}
         alignItems={"center"}
         flexDirection={"column"}
-        width={{ xs: "100%", sm: "80%", md: "60%", lg: "40%", xl: "40%" }}
+        width={
+          !variant
+            ? { xs: "100%", sm: "80%", md: "60%", lg: "40%", xl: "40%" }
+            : "100%"
+        }
       >
         <Box width={"100%"} mx="auto">
           <Typography variant="body2" sx={{ letterSpacing: "1px" }} mb={3}>
@@ -280,7 +296,7 @@ const Login = () => {
           </StyledLink>
         </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 

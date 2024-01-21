@@ -52,7 +52,7 @@ const CartPreview = ({ checkoutDisable }) => {
         {!checkoutDisable && (
           <Link
             style={{ textDecoration: "none", color: "black" }}
-            to="/checkout"
+            to="/cart/checkout"
           >
             <Button
               disableElevation
@@ -72,7 +72,16 @@ const CartPreview = ({ checkoutDisable }) => {
           </Link>
         )}
 
-        <Link style={{ textDecoration: "none", color: "black" }} to="/cart">
+        <Link
+          style={{
+            textDecoration: "none",
+            color: "black",
+            width: "100%",
+
+            marginTop: checkoutDisable ? "45px" : 0,
+          }}
+          to="/cart"
+        >
           <Button
             color="warning"
             sx={{
@@ -82,7 +91,7 @@ const CartPreview = ({ checkoutDisable }) => {
                 border: "2px solid #000",
               },
               border: "2px solid rgba(0,0,0,0.1)",
-              minWidth: "200px",
+              minWidth: "100%",
               padding: "12px 22px",
               fontSize: 18,
               fontWeight: "bold",

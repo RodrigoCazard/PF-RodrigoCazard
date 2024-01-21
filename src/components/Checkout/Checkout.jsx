@@ -28,6 +28,7 @@ import { useTheme } from "@emotion/react";
 import { toast } from "sonner";
 import Profile from "../Profile/Profile";
 import CartPreview from "../Cart/CartPreview";
+import Login from "../Login/Login";
 
 const Checkout = () => {
   const { isAuthenticated, user } = useAuth();
@@ -128,26 +129,62 @@ const Checkout = () => {
         <StyledLink to="/cart">Cart</StyledLink>
         <Typography color="text.primary">Checkout</Typography>
       </Breadcrumbs>
-
-      {isAuthenticated() ? (
-        <>
-          <Box display={"flex"} gap={20} marginY={10}>
-            <Box width={"50%"}>
-              <Profile></Profile>
-            </Box>
-            <Box
-              padding={"20px 50px"}
-              width={"50%"}
-              border={"2px solid rgba(0,0,0,0.1)"}
-              borderRadius={15}
-            >
-              <CartPreview checkoutDisable={true} />
-            </Box>
+      <Box>
+        <Typography variant="body1" color={"primary"} component={"p"} mb={1}>
+          - Almost There
+        </Typography>
+        <Typography variant="h3" component="h2">
+          Checkout
+        </Typography>
+      </Box>
+      <>
+        <Box display={"flex"} gap={7} marginY={10}>
+          <Box width="60%">
+            {isAuthenticated() ? (
+              <Profile />
+            ) : (
+              <Box
+                padding={"40px 80px"}
+                border={"2px solid rgba(0,0,0,0.1)"}
+                borderRadius={15}
+              >
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontWeight: "bold",
+                    marginBottom: "40px",
+                  }}
+                >
+                  {" "}
+                  Login
+                </Typography>
+                <Login variant />
+              </Box>
+            )}
           </Box>
-        </>
-      ) : (
-        <h2>Debes iniciar sesión para acceder al checkout.</h2>
-      )}
+
+          <Box
+            padding={"40px 80px"}
+            width={"40%"}
+            height={"fit-content"}
+            border={"2px solid rgba(0,0,0,0.1)"}
+            borderRadius={15}
+          >
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: "bold",
+                marginBottom: "40px",
+              }}
+            >
+              {" "}
+              My Cart
+            </Typography>
+
+            <CartPreview checkoutDisable={true} />
+          </Box>
+        </Box>
+      </>
     </div>
   );
 };

@@ -39,19 +39,11 @@ const Profile = () => {
   }, [user?.uid, isAuthenticated]);
 
   return isAuthenticated() ? (
-    <Paper
-      elevation={3}
-      style={{
-        maxWidth: "800px",
-        padding: "20px",
-        margin: "auto",
-        marginBottom: "50px",
-        marginTop: "50px",
-      }}
+    <Box
+      padding={"40px 80px"}
+      border={"2px solid rgba(0,0,0,0.1)"}
+      borderRadius={15}
     >
-      <Typography variant="h5" align="center" gutterBottom>
-        Perfil de Usuario
-      </Typography>
       {loading ? (
         <Box
           display="flex"
@@ -62,30 +54,98 @@ const Profile = () => {
           <CircularProgress />
         </Box>
       ) : (
-        <>
-          <Typography variant="body1" gutterBottom>
-            Full Name: {userData?.displayName || "Not available"}
+        <Box display={"flex"} flexDirection={"column"} gap={4} mb={"40px"}>
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: "bold",
+              marginBottom: "40px",
+            }}
+          >
+            {" "}
+            Profile details
           </Typography>
+          <Box
+            display={"flex"}
+            alignItems={"end"}
+            justifyContent={"space-between"}
+          >
+            <Typography variant="body1" gutterBottom>
+              Full Name:{" "}
+            </Typography>
+            <Typography variant="h5" gutterBottom>
+              {userData?.displayName || "Not available"}
+            </Typography>
+          </Box>
 
-          <Typography variant="body1" gutterBottom>
-            Email: {userData?.email || "Not available"}
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            Phone: {userData?.phone || "Not available"}
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            Address: {userData?.address || "Not available"}
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            Country: {userData?.country.label || "Not available"}
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            UID: {user?.uid}
-          </Typography>
-        </>
+          <Box
+            display={"flex"}
+            alignItems={"end"}
+            justifyContent={"space-between"}
+          >
+            <Typography variant="body1" gutterBottom>
+              Email Address:{" "}
+            </Typography>
+            <Typography variant="h5" gutterBottom>
+              {userData?.email || "Not available"}
+            </Typography>
+          </Box>
+
+          <Box
+            display={"flex"}
+            alignItems={"end"}
+            justifyContent={"space-between"}
+          >
+            <Typography variant="body1" gutterBottom>
+              Phone:{" "}
+            </Typography>
+            <Typography variant="h5" gutterBottom>
+              {userData?.phone || "Not available"}
+            </Typography>
+          </Box>
+
+          <Box
+            display={"flex"}
+            alignItems={"end"}
+            justifyContent={"space-between"}
+          >
+            <Typography variant="body1" gutterBottom>
+              Address:{" "}
+            </Typography>
+            <Typography variant="h5" gutterBottom>
+              {userData?.address || "Not available"}
+            </Typography>
+          </Box>
+
+          <Box
+            display={"flex"}
+            alignItems={"end"}
+            justifyContent={"space-between"}
+          >
+            <Typography variant="body1" gutterBottom>
+              Country:{" "}
+            </Typography>
+            <Typography variant="h5" gutterBottom>
+              {userData?.country.label || "Not available"}
+            </Typography>
+          </Box>
+
+          <Box
+            display={"flex"}
+            alignItems={"end"}
+            justifyContent={"space-between"}
+          >
+            <Typography variant="body1" gutterBottom>
+              UID:{" "}
+            </Typography>
+            <Typography variant="h5" gutterBottom>
+              {user?.uid}
+            </Typography>
+          </Box>
+        </Box>
       )}
       <Logout></Logout>
-    </Paper>
+    </Box>
   ) : (
     <p>No hay usuario logeado</p>
   );
