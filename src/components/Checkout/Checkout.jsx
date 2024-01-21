@@ -18,6 +18,9 @@ import {
   ListItem,
   ListItemText,
   Paper,
+  Step,
+  StepButton,
+  Stepper,
   Typography,
 } from "@mui/material";
 import CartContext from "../../context/CartContext";
@@ -26,9 +29,9 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
 import { toast } from "sonner";
-import Profile from "../Profile/Profile";
 import CartPreview from "../Cart/CartPreview";
 import Login from "../Login/Login";
+import ProfileDetails from "../Profile/ProfileDetails";
 
 const Checkout = () => {
   const { isAuthenticated, user } = useAuth();
@@ -61,6 +64,62 @@ const Checkout = () => {
       fetchUserData();
     }
   }, [user?.uid, isAuthenticated]);
+
+  const steps = ["Profile Details", "Shipping Details", "Payment Details"];
+
+  const [activeStep, setActiveStep] = useState(0);
+  const [completed, setCompleted] = useState({});
+
+  const totalSteps = () => {
+    return steps.length;
+  };
+
+  const completedSteps = () => {
+    return Object.keys(completed).filter((step) => completed[step] === true)
+      .length;
+  };
+
+  const isLastStep = () => {
+    return activeStep === totalSteps() - 1;
+  };
+
+  const allStepsCompleted = () => {
+    return completedSteps() === totalSteps();
+  };
+
+  const handleNext = () => {
+    const newActiveStep =
+      isLastStep() && !allStepsCompleted()
+        ? // It's the last step, but not all steps have been completed,
+          // find the first step that has been completed
+          steps.findIndex((step, i) => !(i in completed))
+        : activeStep + 1;
+    setActiveStep(newActiveStep);
+  };
+
+  const handleBack = () => {
+    const newCompleted = completed;
+    newCompleted[activeStep] = false;
+    setCompleted(newCompleted);
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    console.log(completed);
+  };
+
+  const handleStep = (step) => () => {
+    setActiveStep(step);
+  };
+
+  const handleComplete = () => {
+    const newCompleted = completed;
+    newCompleted[activeStep] = true;
+    setCompleted(newCompleted);
+    handleNext();
+  };
+
+  const handleReset = () => {
+    setActiveStep(0);
+    setCompleted({});
+  };
 
   const handlePurchase = async () => {
     if (!isAuthenticated()) {
@@ -129,6 +188,7 @@ const Checkout = () => {
         <StyledLink to="/cart">Cart</StyledLink>
         <Typography color="text.primary">Checkout</Typography>
       </Breadcrumbs>
+
       <Box>
         <Typography variant="body1" color={"primary"} component={"p"} mb={1}>
           - Almost There
@@ -137,54 +197,167 @@ const Checkout = () => {
           Checkout
         </Typography>
       </Box>
-      <>
-        <Box display={"flex"} gap={7} marginY={10}>
-          <Box width="60%">
-            {isAuthenticated() ? (
-              <Profile />
-            ) : (
-              <Box
-                padding={"40px 80px"}
-                border={"2px solid rgba(0,0,0,0.1)"}
-                borderRadius={15}
+      <Box sx={{ width: "100%" }} mt={10} mb={3}>
+        <Stepper nonLinear activeStep={activeStep} alternativeLabel>
+          {steps.map((label, index) => (
+            <Step key={label} completed={completed[index]}>
+              <StepButton
+                color="inherit"
+                onClick={handleStep(index)}
+                disableRipple
               >
-                <Typography
-                  variant="h4"
-                  sx={{
-                    fontWeight: "bold",
-                    marginBottom: "40px",
-                  }}
-                >
-                  {" "}
-                  Login
+                <Typography variant={"body1"} sx={{ mt: 2, mb: 1 }}>
+                  {label}
                 </Typography>
-                <Login variant />
+              </StepButton>
+            </Step>
+          ))}
+        </Stepper>
+        <div>
+          {allStepsCompleted() && (
+            <React.Fragment>
+              <Typography sx={{ mt: 2, mb: 1 }}>
+                All steps completed - you&apos;re finished
+              </Typography>
+              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                <Box sx={{ flex: "1 1 auto" }} />
+                <Button onClick={handleReset}>Reset</Button>
               </Box>
-            )}
-          </Box>
-
-          <Box
-            padding={"40px 80px"}
-            width={"40%"}
-            height={"fit-content"}
-            border={"2px solid rgba(0,0,0,0.1)"}
-            borderRadius={15}
-          >
-            <Typography
-              variant="h4"
-              sx={{
-                fontWeight: "bold",
-                marginBottom: "40px",
-              }}
+            </React.Fragment>
+          )}
+        </div>
+      </Box>
+      <Box display={"flex"} gap={7} marginBottom={10}>
+        <Box width="60%">
+          {isAuthenticated() ? (
+            <Box
+              padding={"40px 80px"}
+              border={"2px solid rgba(0,0,0,0.1)"}
+              borderRadius={15}
             >
-              {" "}
-              My Cart
-            </Typography>
+              <Typography
+                variant="h4"
+                sx={{
+                  fontWeight: "bold",
+                  marginBottom: "40px",
+                }}
+              >
+                {" "}
+                {steps[activeStep]}
+              </Typography>
+              {activeStep === 0 && <ProfileDetails />}
+              <Box display={"flex"} justifyContent={"space-between"}>
+                {activeStep !== 3 && activeStep !== 0 && (
+                  <React.Fragment>
+                    <Button
+                      color="warning"
+                      sx={{
+                        borderRadius: 20,
 
-            <CartPreview checkoutDisable={true} />
-          </Box>
+                        "&:hover, &:focus": {
+                          border: "2px solid #000",
+                        },
+                        border: "2px solid rgba(0,0,0,0.1)",
+                        width: "45%",
+                        padding: "12px 22px",
+                        fontSize: 18,
+                        fontWeight: "bold",
+                        minWidth: "150px",
+                        letterSpacing: 1,
+                      }}
+                      variant="outlined"
+                      disabled={activeStep === 0}
+                      onClick={handleBack}
+                    >
+                      Back
+                    </Button>
+                  </React.Fragment>
+                )}
+
+                {activeStep !== steps.length &&
+                  (completed[activeStep] ? (
+                    <Button
+                      disableElevation
+                      disableRipple
+                      variant="contained"
+                      sx={{
+                        padding: "10px 50px",
+                        fontWeight: "bold",
+                        fontSize: "1.1rem",
+                        borderRadius: 20,
+                        height: "60px",
+                        width: activeStep === 0 ? "100%" : "45%",
+                        minWidth: "150px",
+                      }}
+                      onClick={handleNext}
+                    >
+                      Next
+                    </Button>
+                  ) : (
+                    <Button
+                      disableElevation
+                      disableRipple
+                      variant="contained"
+                      sx={{
+                        width: activeStep === 0 ? "100%" : "45%",
+                        minWidth: "150px",
+                        padding: "10px 50px",
+                        fontWeight: "bold",
+                        fontSize: "1.1rem",
+                        borderRadius: 20,
+                        height: "60px",
+                      }}
+                      onClick={handleComplete}
+                    >
+                      {completedSteps() === totalSteps() - 1
+                        ? "Finish"
+                        : "Next"}
+                    </Button>
+                  ))}
+              </Box>
+            </Box>
+          ) : (
+            <Box
+              padding={"40px 80px"}
+              border={"2px solid rgba(0,0,0,0.1)"}
+              borderRadius={15}
+            >
+              <Typography
+                variant="h4"
+                sx={{
+                  fontWeight: "bold",
+                  marginBottom: "40px",
+                }}
+              >
+                {" "}
+                Login
+              </Typography>
+              <Login variant />
+            </Box>
+          )}
         </Box>
-      </>
+
+        <Box
+          padding={"40px 80px"}
+          width={"40%"}
+          height={"fit-content"}
+          border={"2px solid rgba(0,0,0,0.1)"}
+          borderRadius={15}
+        >
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: "bold",
+              marginBottom: "40px",
+            }}
+          >
+            {" "}
+            My Cart
+          </Typography>
+
+          <CartPreview checkoutDisable={true} />
+        </Box>
+      </Box>
     </div>
   );
 };

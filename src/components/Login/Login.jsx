@@ -167,7 +167,7 @@ const Login = ({ variant }) => {
 
       <Box
         marginTop={10}
-        marginBottom={17}
+        marginBottom={variant ? 0 : 17}
         marginX={"auto"}
         display={"flex"}
         justifyContent={"center"}
