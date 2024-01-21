@@ -5,7 +5,7 @@ import Logout from "../Logout/Logout.jsx";
 import { db } from "../../services/config.js";
 import { getDocs, collection, query, doc, where } from "firebase/firestore";
 
-const ProfileDetails = () => {
+const ProfileDetails = ({ profile, shipping }) => {
   const { user, isAuthenticated } = useAuth();
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -51,83 +51,94 @@ const ProfileDetails = () => {
         </Box>
       ) : (
         <Box display={"flex"} flexDirection={"column"} gap={4} mb={"40px"}>
-          <Box
-            display={"flex"}
-            alignItems={"end"}
-            justifyContent={"space-between"}
-          >
-            <Typography variant="body1" gutterBottom>
-              Full Name:{" "}
-            </Typography>
-            <Typography variant="h5" gutterBottom>
-              {userData?.displayName || "Not available"}
-            </Typography>
-          </Box>
+          {!shipping && (
+            <>
+              {" "}
+              <Box
+                display={"flex"}
+                alignItems={"end"}
+                justifyContent={"space-between"}
+              >
+                <Typography variant="body1" gutterBottom>
+                  Full Name:{" "}
+                </Typography>
+                <Typography variant="h5" gutterBottom>
+                  {userData?.displayName || "Not available"}
+                </Typography>
+              </Box>
+              <Box
+                display={"flex"}
+                alignItems={"end"}
+                justifyContent={"space-between"}
+              >
+                <Typography variant="body1" gutterBottom>
+                  Email Address:{" "}
+                </Typography>
+                <Typography variant="h5" gutterBottom>
+                  {userData?.email || "Not available"}
+                </Typography>
+              </Box>
+              <Box
+                display={"flex"}
+                alignItems={"end"}
+                justifyContent={"space-between"}
+              >
+                <Typography variant="body1" gutterBottom>
+                  Phone:{" "}
+                </Typography>
+                <Typography variant="h5" gutterBottom>
+                  {userData?.phone || "Not available"}
+                </Typography>
+              </Box>
+            </>
+          )}
 
-          <Box
-            display={"flex"}
-            alignItems={"end"}
-            justifyContent={"space-between"}
-          >
-            <Typography variant="body1" gutterBottom>
-              Email Address:{" "}
-            </Typography>
-            <Typography variant="h5" gutterBottom>
-              {userData?.email || "Not available"}
-            </Typography>
-          </Box>
+          {!profile && (
+            <>
+              <Box
+                display={"flex"}
+                alignItems={"end"}
+                justifyContent={"space-between"}
+              >
+                <Typography variant="body1" gutterBottom>
+                  Address:{" "}
+                </Typography>
+                <Typography variant="h5" gutterBottom>
+                  {userData?.address || "Not available"}
+                </Typography>
+              </Box>
 
-          <Box
-            display={"flex"}
-            alignItems={"end"}
-            justifyContent={"space-between"}
-          >
-            <Typography variant="body1" gutterBottom>
-              Phone:{" "}
-            </Typography>
-            <Typography variant="h5" gutterBottom>
-              {userData?.phone || "Not available"}
-            </Typography>
-          </Box>
-
-          <Box
-            display={"flex"}
-            alignItems={"end"}
-            justifyContent={"space-between"}
-          >
-            <Typography variant="body1" gutterBottom>
-              Address:{" "}
-            </Typography>
-            <Typography variant="h5" gutterBottom>
-              {userData?.address || "Not available"}
-            </Typography>
-          </Box>
-
-          <Box
-            display={"flex"}
-            alignItems={"end"}
-            justifyContent={"space-between"}
-          >
-            <Typography variant="body1" gutterBottom>
-              Country:{" "}
-            </Typography>
-            <Typography variant="h5" gutterBottom>
-              {userData?.country.label || "Not available"}
-            </Typography>
-          </Box>
-
-          <Box
-            display={"flex"}
-            alignItems={"end"}
-            justifyContent={"space-between"}
-          >
-            <Typography variant="body1" gutterBottom>
-              UID:{" "}
-            </Typography>
-            <Typography variant="h5" gutterBottom>
-              {user?.uid}
-            </Typography>
-          </Box>
+              <Box
+                display={"flex"}
+                alignItems={"end"}
+                justifyContent={"space-between"}
+              >
+                <Typography variant="body1" gutterBottom>
+                  Country:{" "}
+                </Typography>
+                <Typography variant="h5" gutterBottom>
+                  {userData?.country.label || "Not available"}
+                </Typography>
+              </Box>
+            </>
+          )}
+          {!profile && !shipping && (
+            <>
+              {" "}
+              <Box
+                display={"flex"}
+                alignItems={"end"}
+                justifyContent={"space-between"}
+              >
+                <Typography variant="body1" gutterBottom>
+                  UID:{" "}
+                </Typography>
+                <Typography variant="h5" gutterBottom>
+                  {user?.uid}
+                </Typography>
+              </Box>
+            </>
+          )}
         </Box>
       )}
     </>

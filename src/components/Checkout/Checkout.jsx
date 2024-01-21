@@ -11,9 +11,11 @@ import {
 } from "firebase/firestore";
 import { db } from "../../services/config";
 import {
+  Backdrop,
   Box,
   Breadcrumbs,
   Button,
+  CircularProgress,
   List,
   ListItem,
   ListItemText,
@@ -38,7 +40,7 @@ const Checkout = () => {
   const { cart, total, quantity, cartClear } = useContext(CartContext);
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -122,9 +124,16 @@ const Checkout = () => {
   };
 
   const handlePurchase = async () => {
+    setLoading(true);
     if (!isAuthenticated()) {
       toast.error("You must log in to make a purchase");
+      setLoading(false);
       navigate("/login");
+      return;
+    }
+    if (cart.length === 0) {
+      toast.error("Your cart is empty. Add items before making a purchase.");
+      setLoading(false);
       return;
     }
 
@@ -152,13 +161,14 @@ const Checkout = () => {
         quantity: quantity,
         timestamp: serverTimestamp(),
       });
-
+      handleComplete();
       cartClear();
-      navigate("/");
       window.scrollTo(0, 0);
-      console.log("Compra realizada con éxito. Ticket creado:", docRef.id);
+      toast.success("Purchase successful. Ticket created:", docRef.id);
     } catch (error) {
-      console.error("Error al realizar la compra", error.message);
+      toast.success("Error during purchase", error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -178,7 +188,15 @@ const Checkout = () => {
   `;
 
   return (
-    <div>
+    <Box>
+      {loading && (
+        <Backdrop
+          open={loading}
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        >
+          <CircularProgress color="primary" />
+        </Backdrop>
+      )}
       <Breadcrumbs
         sx={{ margin: "20px 0 40px 0" }}
         separator={<NavigateNextIcon fontSize="small" />}
@@ -213,19 +231,6 @@ const Checkout = () => {
             </Step>
           ))}
         </Stepper>
-        <div>
-          {allStepsCompleted() && (
-            <React.Fragment>
-              <Typography sx={{ mt: 2, mb: 1 }}>
-                All steps completed - you&apos;re finished
-              </Typography>
-              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                <Box sx={{ flex: "1 1 auto" }} />
-                <Button onClick={handleReset}>Reset</Button>
-              </Box>
-            </React.Fragment>
-          )}
-        </div>
       </Box>
       <Box display={"flex"} gap={7} marginBottom={10}>
         <Box width="60%">
@@ -245,7 +250,21 @@ const Checkout = () => {
                 {" "}
                 {steps[activeStep]}
               </Typography>
-              {activeStep === 0 && <ProfileDetails />}
+              {activeStep === 0 && <ProfileDetails profile />}
+              {activeStep === 1 && <ProfileDetails shipping />}
+              <div>
+                {allStepsCompleted() && (
+                  <React.Fragment>
+                    <Typography sx={{ mt: 2, mb: 1 }}>
+                      All steps completed - you&apos;re finished
+                    </Typography>
+                    <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                      <Box sx={{ flex: "1 1 auto" }} />
+                      <Button onClick={handleReset}>Reset</Button>
+                    </Box>
+                  </React.Fragment>
+                )}
+              </div>
               <Box display={"flex"} justifyContent={"space-between"}>
                 {activeStep !== 3 && activeStep !== 0 && (
                   <React.Fragment>
@@ -307,10 +326,14 @@ const Checkout = () => {
                         borderRadius: 20,
                         height: "60px",
                       }}
-                      onClick={handleComplete}
+                      onClick={
+                        completedSteps() === totalSteps() - 1
+                          ? handlePurchase
+                          : handleComplete
+                      }
                     >
                       {completedSteps() === totalSteps() - 1
-                        ? "Finish"
+                        ? "Place order"
                         : "Next"}
                     </Button>
                   ))}
@@ -358,7 +381,7 @@ const Checkout = () => {
           <CartPreview checkoutDisable={true} />
         </Box>
       </Box>
-    </div>
+    </Box>
   );
 };
 
