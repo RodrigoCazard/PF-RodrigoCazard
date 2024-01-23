@@ -30,6 +30,7 @@ import Favorites from "./components/Favorites/Favorites.jsx";
 import ScrollTopRoute from "./components/ComponentsUtils/ScrollTopRoute.jsx";
 
 import UpdateUser from "./components/UpdateUser/UpdateUser.jsx";
+import Orders from "./components/Orders/Orders.jsx";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -130,6 +131,7 @@ function App() {
                           path="/profile/favorites"
                           element={<Favorites />}
                         />
+                        <Route path="/profile/orders" element={<Orders />} />
                         <Route path="*" element={<Navigate to={"/"} />} />
                       </Routes>
 

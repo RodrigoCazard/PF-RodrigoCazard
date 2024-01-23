@@ -1,6 +1,7 @@
 import { db } from "../../services/config.js";
 import {
   getDocs,
+  getDoc,
   collection,
   query,
   doc,
@@ -77,7 +78,6 @@ export const fetchFavoriteProducts = async (userId) => {
     const userData = await fetchUserData(userId);
 
     if (userData && userData.favorites) {
-      // userData.favorites contiene la lista de productos en favoritos
       return userData.favorites;
     } else {
       console.log(
@@ -88,5 +88,28 @@ export const fetchFavoriteProducts = async (userId) => {
   } catch (error) {
     console.error("Error al obtener productos en favoritos:", error);
     return [];
+  }
+};
+
+export const getOrders = async (uid) => {
+  let orders = [];
+  try {
+    const purchasesCollection = collection(db, "purchases");
+
+    const querySnapshot = await getDocs(
+      query(purchasesCollection, where("userData.id", "==", uid))
+    );
+
+    querySnapshot.forEach((doc) => {
+      orders.push({
+        ...doc.data(),
+        id: doc.id,
+      });
+    });
+    console.log(orders);
+    return orders;
+  } catch (error) {
+    console.error("Error al obtener las ordenes:", error);
+    throw error;
   }
 };

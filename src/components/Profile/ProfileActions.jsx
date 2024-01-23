@@ -102,11 +102,10 @@ const ProfileActions = ({ variant }) => {
               Favorites
             </Button>
           </Link>
-          <Link sx={{ width: "100px" }}>
+          <Link to={"/profile/orders"} sx={{ width: "100px" }}>
             <Button
               variant="contained"
               fullWidth
-              disabled
               disableElevation
               sx={{
                 fontWeight: "bold",

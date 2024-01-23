@@ -16,10 +16,6 @@ import {
   Breadcrumbs,
   Button,
   CircularProgress,
-  List,
-  ListItem,
-  ListItemText,
-  Paper,
   Step,
   StepButton,
   Stepper,
@@ -34,6 +30,8 @@ import { toast } from "sonner";
 import CartPreview from "../Cart/CartPreview";
 import Login from "../Login/Login";
 import ProfileDetails from "../Profile/ProfileDetails";
+import PaymentDetails from "../PaymentDetails/PaymentDetails";
+import { updateUser } from "../Utils/users";
 
 const Checkout = () => {
   const { isAuthenticated, user } = useAuth();
@@ -139,7 +137,6 @@ const Checkout = () => {
       return;
     }
 
-    // Aquí puedes agregar la lógica para procesar la compra y enviar el ticket a Firebase
     const db = getFirestore();
     const purchasesCollection = collection(db, "purchases");
 
@@ -256,16 +253,13 @@ const Checkout = () => {
               </Typography>
               {activeStep === 0 && <ProfileDetails profile />}
               {activeStep === 1 && <ProfileDetails shipping />}
+              {activeStep === 2 && <PaymentDetails />}
               <div>
                 {allStepsCompleted() && (
                   <React.Fragment>
                     <Typography sx={{ mt: 2, mb: 1 }}>
                       Order id:{orderID}
                     </Typography>
-                    <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                      <Box sx={{ flex: "1 1 auto" }} />
-                      <Button onClick={handleReset}>Reset</Button>
-                    </Box>
                   </React.Fragment>
                 )}
               </div>

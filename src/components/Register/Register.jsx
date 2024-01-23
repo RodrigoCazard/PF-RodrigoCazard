@@ -131,7 +131,7 @@ const Register = () => {
       };
 
       await addUserToFirestore(userData);
-
+      navigate("/profile");
       toast.success("Successful registration");
     } catch (error) {
       console.log(error.message);
@@ -147,7 +147,6 @@ const Register = () => {
     } finally {
       setLoading(false);
     }
-    navigate("/profile");
   };
   const theme = useTheme();
   const primaryColor = theme.palette.primary.main;
