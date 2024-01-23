@@ -13,10 +13,11 @@ const CartPreview = ({ checkoutDisable }) => {
         <Box
           display={"flex"}
           alignItems={"center"}
+          flexDirection={"column"}
           justifyContent={"space-around"}
           gap={4}
         >
-          <Typography variant="body2">
+          <Typography variant="h5">
             There are no products in the cart.
           </Typography>
           <Link to="/category/all">
@@ -24,7 +25,12 @@ const CartPreview = ({ checkoutDisable }) => {
             <Button
               variant="contained"
               disableElevation
-              sx={{ borderRadius: 15 }}
+              sx={{
+                fontWeight: "bold",
+                padding: "12px 50px",
+                fontSize: "14px",
+                borderRadius: 40,
+              }}
             >
               Explore products
             </Button>

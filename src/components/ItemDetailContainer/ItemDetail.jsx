@@ -1,14 +1,14 @@
 import { Box, Breadcrumbs, Button, Grid, Typography } from "@mui/material";
 import React, { useState } from "react";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+
 import { useTheme } from "@emotion/react";
 import { useContext } from "react";
 import CartContext from "../../context/CartContext";
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import Counter from "../Counter/Counter";
+import AddToFavoritesButton from "../AddToFavoritesButton/AddToFavoritesButton";
 
 const CategoryColors = {
   desktop: "60, 179, 113",
@@ -19,12 +19,6 @@ const CategoryColors = {
 
 const ItemDetail = ({ id, name, price, category, stock, img }) => {
   const { cartAdd } = useContext(CartContext);
-
-  const [favorite, setFavorite] = useState(false);
-
-  const handleFavorite = () => {
-    setFavorite(!favorite);
-  };
 
   const handleCartAdd = () => {
     cartAdd({ id, name, price, category, stock, img }, count);
@@ -172,27 +166,7 @@ const ItemDetail = ({ id, name, price, category, stock, img }) => {
             >
               Add to cart
             </Button>
-            <Box
-              onClick={handleFavorite}
-              sx={{
-                width: 60,
-                height: 60,
-                border: 2,
-                display: "grid",
-                placeItems: "center",
-                padding: 1,
-                borderRadius: "50%",
-                cursor: "pointer",
-              }}
-            >
-              {favorite ? (
-                <FavoriteIcon fontSize="large" sx={{ color: primaryColor }}>
-                  {" "}
-                </FavoriteIcon>
-              ) : (
-                <FavoriteBorderIcon fontSize="large"></FavoriteBorderIcon>
-              )}
-            </Box>
+            <AddToFavoritesButton productId={id}></AddToFavoritesButton>
           </Box>
         </Grid>
       </Grid>

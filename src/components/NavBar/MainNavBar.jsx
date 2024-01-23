@@ -11,8 +11,21 @@ import PropTypes from "prop-types";
 import { useTheme } from "@emotion/react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
+import ProfileActionsOverlay from "../Profile/ProfileActionsOverlay.jsx";
 
 const MainNavBar = ({ isOpen, toggleMenu }) => {
+  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsOverlayVisible(true);
+  };
+
+  const handleMouseLeave = () => {
+    setTimeout(() => {
+      setIsOverlayVisible(false);
+    }, 200);
+  };
+
   const isAuthenticated = useAuth().isAuthenticated();
 
   const [scrolled, setScrolled] = useState(false);
@@ -105,6 +118,8 @@ const MainNavBar = ({ isOpen, toggleMenu }) => {
             style={{ textDecoration: "none", color: "black" }}
           >
             <AccountCircleOutlinedIcon
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
               fontSize="large"
               sx={{
                 ...styledMainNavBar.styledIcon,
@@ -114,6 +129,10 @@ const MainNavBar = ({ isOpen, toggleMenu }) => {
                 },
               }}
             />
+            <ProfileActionsOverlay
+              isVisible={isOverlayVisible}
+              scrolled={scrolled}
+            ></ProfileActionsOverlay>
           </Link>
         </Box>
       </Box>

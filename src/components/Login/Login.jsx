@@ -140,7 +140,6 @@ const Login = ({ variant }) => {
       )}
       {!variant && (
         <>
-          {" "}
           <Breadcrumbs
             sx={{ margin: "20px 0 40px 0" }}
             separator={<NavigateNextIcon fontSize="small" />}

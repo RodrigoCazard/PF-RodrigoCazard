@@ -41,6 +41,8 @@ const Checkout = () => {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+
+  const [orderID, setOrderID] = useState(null);
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -67,7 +69,7 @@ const Checkout = () => {
     }
   }, [user?.uid, isAuthenticated]);
 
-  const steps = ["Profile Details", "Shipping Details", "Payment Details"];
+  const steps = ["User Details", "Shipping Details", "Payment Details"];
 
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
@@ -142,7 +144,6 @@ const Checkout = () => {
     const purchasesCollection = collection(db, "purchases");
 
     try {
-      console.log(user);
       const docRef = await addDoc(purchasesCollection, {
         userData: {
           id: user?.uid,
@@ -161,10 +162,13 @@ const Checkout = () => {
         quantity: quantity,
         timestamp: serverTimestamp(),
       });
+
+      setOrderID(docRef.id);
+
+      toast.success(`Purchase successful. Ticket created: ${docRef.id}`);
       handleComplete();
       cartClear();
       window.scrollTo(0, 0);
-      toast.success("Purchase successful. Ticket created:", docRef.id);
     } catch (error) {
       toast.success("Error during purchase", error.message);
     } finally {
@@ -256,7 +260,7 @@ const Checkout = () => {
                 {allStepsCompleted() && (
                   <React.Fragment>
                     <Typography sx={{ mt: 2, mb: 1 }}>
-                      All steps completed - you&apos;re finished
+                      Order id:{orderID}
                     </Typography>
                     <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                       <Box sx={{ flex: "1 1 auto" }} />

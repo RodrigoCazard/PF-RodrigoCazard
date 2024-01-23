@@ -127,6 +127,7 @@ const Register = () => {
         phone: phone,
         address: address,
         country: country,
+        favorites: [],
       };
 
       await addUserToFirestore(userData);

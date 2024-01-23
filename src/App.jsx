@@ -4,19 +4,19 @@ import MainNavBar from "./components/NavBar/MainNavBar";
 import "./transitionStyles.css";
 import ItemListContainer from "./components/Items/ItemListContainer";
 import Hero from "./components/Hero/Hero";
-import ScrollToTopOnRefresh from "./components/Utils/ScrollToTop";
+import ScrollToTopOnRefresh from "./components/ComponentsUtils/ScrollToTop.jsx";
 import { useEffect, useState } from "react";
-import Loader from "./components/Utils/Loader";
+import Loader from "./components/ComponentsUtils/Loader.jsx";
 import NavMenu from "./components/NavBar/NavMenu";
 import CategoryListContainer from "./components/Categories/CategoryListContainer";
 import { Box } from "@mui/material";
-import CustomThemeProvider from "./components/Utils/CustomThemeProvider";
+import CustomThemeProvider from "./components/Theme/CustomThemeProvider.jsx";
 import WhyUs from "./components/WhyUs/WhyUs";
 
 import Newsletter from "./components/Newsletter/Newsletter";
 import Footer from "./components/Footer/Footer";
 import { Toaster } from "sonner";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ItemDetailContainer from "./components/ItemDetailContainer/ItemDetailContainer";
 import { CartProvider } from "./context/CartContext.jsx";
 import Cart from "./components/Cart/Cart.jsx";
@@ -26,8 +26,10 @@ import { AuthProvider } from "./context/AuthContext.jsx";
 
 import Checkout from "./components/Checkout/Checkout.jsx";
 import Profile from "./components/Profile/Profile.jsx";
+import Favorites from "./components/Favorites/Favorites.jsx";
+import ScrollTopRoute from "./components/ComponentsUtils/ScrollTopRoute.jsx";
 
-import ScrollTopRoute from "./components/Utils/ScrollTopRoute.jsx";
+import UpdateUser from "./components/UpdateUser/UpdateUser.jsx";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -69,9 +71,9 @@ function App() {
                 richColors
                 offset="64px"
                 closeButton
-                duration={2200}
+                duration={3000}
                 toastOptions={{
-                  style: { fontSize: "1.2rem" },
+                  style: { fontSize: "1.4rem" },
                 }}
               />
 
@@ -120,6 +122,15 @@ function App() {
                           element={<Checkout></Checkout>}
                         />
                         <Route path="/profile" element={<Profile></Profile>} />
+                        <Route
+                          path="/profile/update"
+                          element={<UpdateUser></UpdateUser>}
+                        />
+                        <Route
+                          path="/profile/favorites"
+                          element={<Favorites />}
+                        />
+                        <Route path="*" element={<Navigate to={"/"} />} />
                       </Routes>
 
                       <Footer></Footer>

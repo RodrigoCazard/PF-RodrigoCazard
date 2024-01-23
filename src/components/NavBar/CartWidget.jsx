@@ -30,11 +30,12 @@ const StyledLink = styled(Link)`
 `;
 
 const CartWidget = ({ scrolled }) => {
-  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const { quantity } = useContext(CartContext);
 
   const theme = useTheme();
   const primaryColor = theme.palette.primary.main;
+
+  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
 
   const handleMouseEnter = () => {
     setIsOverlayVisible(true);

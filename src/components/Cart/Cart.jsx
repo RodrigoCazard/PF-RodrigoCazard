@@ -78,7 +78,7 @@ const Cart = () => {
           gap={4}
           my={27}
         >
-          <Typography variant="h3">
+          <Typography variant="h4">
             There are no products in the cart.
           </Typography>
           <Link to="/category/all">
@@ -86,7 +86,12 @@ const Cart = () => {
             <Button
               variant="contained"
               disableElevation
-              sx={{ borderRadius: 15, padding: "20px 50px", fontSize: "20px" }}
+              sx={{
+                borderRadius: 40,
+                padding: "20px 50px",
+                fontSize: "20px",
+                fontWeight: "bold",
+              }}
             >
               Explore products
             </Button>

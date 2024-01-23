@@ -1,4 +1,9 @@
 import React, { useState, createContext, useEffect } from "react";
+import { toast } from "sonner";
+import {
+  getLocalStorage,
+  saveCartToLocalStorage,
+} from "../components/Utils/localStorageSave";
 
 export const CartContext = createContext({
   cart: [],
@@ -12,28 +17,17 @@ export const CartProvider = ({ children }) => {
   const [quantity, setQuantity] = useState(0);
 
   useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
-    const storedQuantity = storedCart.reduce(
-      (acc, item) => acc + item.quantity,
-      0
-    );
-    const storedTotal = storedCart.reduce(
-      (acc, item) => acc + item.item.price * item.quantity,
-      0
-    );
+    const cartData = getLocalStorage();
 
-    setCart(storedCart);
-    setQuantity(storedQuantity);
-    setTotal(storedTotal);
+    setCart(cartData.storedCart);
+    setQuantity(cartData.storedQuantity);
+    setTotal(cartData.storedTotal);
   }, []);
 
-  const saveCartToLocalStorage = (cartData) => {
-    localStorage.setItem("cart", JSON.stringify(cartData));
-  };
+  useEffect(() => {
+    saveCartToLocalStorage(cart);
+  }, [cart]);
 
-  console.log(cart);
-  console.log(total);
-  console.log(quantity);
   const cartAdd = (item, quantity) => {
     const itemExist = cart.find((prod) => prod.item.id === item.id);
 
@@ -54,7 +48,8 @@ export const CartProvider = ({ children }) => {
 
       setCart(newCart);
     }
-    saveCartToLocalStorage(cart);
+
+    toast.success("Product added to the cart successfully");
   };
 
   const cartRemove = (id) => {
@@ -66,14 +61,12 @@ export const CartProvider = ({ children }) => {
     setTotal(
       (prev) => prev - deleteProduct.item.price * deleteProduct.quantity
     );
-    saveCartToLocalStorage(cart);
   };
 
   const cartClear = () => {
     setCart([]);
     setQuantity(0);
     setTotal(0);
-    saveCartToLocalStorage(cart);
   };
 
   const cartUpdate = (item, quantity) => {
@@ -87,7 +80,6 @@ export const CartProvider = ({ children }) => {
       }
     });
     setCart(newCart);
-    saveCartToLocalStorage(cart);
   };
   return (
     <CartContext.Provider
