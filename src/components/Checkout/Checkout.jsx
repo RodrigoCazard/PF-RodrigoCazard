@@ -131,11 +131,22 @@ const Checkout = () => {
       setLoading(false);
       return;
     }
+    if (
+      !formData.name ||
+      !formData.cvc ||
+      !formData.expiry ||
+      !formData.number
+    ) {
+      toast.error("Your payment details are incomplete.");
+      setLoading(false);
+      return;
+    }
 
     const db = getFirestore();
     const purchasesCollection = collection(db, "purchases");
 
     try {
+      console.log(formData);
       const docRef = await addDoc(purchasesCollection, {
         userData: {
           id: user?.uid,
@@ -150,6 +161,8 @@ const Checkout = () => {
           name: product.item.name,
           quantity: product.quantity,
         })),
+
+        paymentInfo: formData,
         total: total,
         quantity: quantity,
         timestamp: serverTimestamp(),
@@ -166,6 +179,12 @@ const Checkout = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const [formData, setFormData] = useState(null);
+
+  const handleChildFormData = (paymentFormData) => {
+    setFormData(paymentFormData);
   };
 
   const theme = useTheme();
@@ -249,7 +268,9 @@ const Checkout = () => {
                 </Typography>
                 {activeStep === 0 && <ProfileDetails profile />}
                 {activeStep === 1 && <ProfileDetails shipping />}
-                {activeStep === 2 && <PaymentDetails />}
+                {activeStep === 2 && (
+                  <PaymentDetails onChildFormData={handleChildFormData} />
+                )}
                 <div>
                   {allStepsCompleted() && activeStep === 3 && (
                     <Box>

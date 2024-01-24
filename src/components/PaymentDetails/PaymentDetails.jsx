@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "react-credit-cards-2";
 
 import {
@@ -12,7 +12,7 @@ import "react-credit-cards-2/dist/es/styles-compiled.css";
 import { Box, Typography } from "@mui/material";
 import { toast } from "sonner";
 
-const PaymentDetails = () => {
+const PaymentDetails = ({ onChildFormData }) => {
   const [state, setState] = useState({
     number: "",
     expiry: "",
@@ -80,21 +80,9 @@ const PaymentDetails = () => {
     setState((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!state.name || !state.cvc || !state.number || !state.expiry) {
-      toast.error("Please complete all fields.");
-
-      return;
-    }
-
-    const formData = {
-      ...state,
-    };
-
-    console.log(formData);
-  };
+  useEffect(() => {
+    onChildFormData(state);
+  }, [state, onChildFormData]);
 
   const inputStyle = {
     padding: "17px",
@@ -122,7 +110,7 @@ const PaymentDetails = () => {
             callback={handleCallback}
           />
         </Box>
-        <form onSubmit={handleSubmit}>
+        <form>
           <div>
             <input
               style={{ ...inputStyle, ...inputNumberStyle }}
