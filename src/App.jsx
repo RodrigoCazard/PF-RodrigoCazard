@@ -84,12 +84,7 @@ function App() {
                       <AppRoutes />
 
                       <Footer></Footer>
-                      <ScrollToTop
-                        showUnder={400}
-                        style={{
-                          padding: "30px 60px",
-                        }}
-                      >
+                      <ScrollToTop showUnder={400}>
                         <IconButton
                           color="primary"
                           sx={{

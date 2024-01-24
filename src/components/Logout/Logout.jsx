@@ -9,9 +9,10 @@ const Logout = () => {
 
   const navigate = useNavigate();
   const handleLogout = () => {
-    logout();
-    toast.info("Successful logout! We hope to see you again soon! 😊");
     navigate("/");
+    logout();
+
+    toast.info("Successful logout! We hope to see you again soon! 😊");
   };
 
   return (

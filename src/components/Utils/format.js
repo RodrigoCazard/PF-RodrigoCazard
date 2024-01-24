@@ -62,3 +62,12 @@ export function formatExpirationDate(value) {
 export function formatFormData(data) {
   return Object.keys(data).map((d) => `${d}: ${data[d]}`);
 }
+export function formatName(value) {
+  if (!value) {
+    return value;
+  }
+
+  const cleanedValue = value.replace(/[^a-zA-Z\s]/g, "");
+
+  return cleanedValue;
+}

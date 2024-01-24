@@ -32,9 +32,8 @@ export const AuthProvider = ({ children }) => {
     const auth = getAuth();
     try {
       await signOut(auth);
-      console.log("Usuario desconectado");
     } catch (error) {
-      console.error("Error al desconectar al usuario", error.message);
+      console.error("Error:", error.message);
     }
   };
 

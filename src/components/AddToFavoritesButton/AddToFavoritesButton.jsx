@@ -22,11 +22,13 @@ const AddToFavoritesButton = ({ productId }) => {
   const handleSetIsFavorite = () => {
     setIsLoading(true);
     setIsFavorite(!isFavorite);
-
-    updateUser(user?.uid, { favorites: productId }).then((res) => {
-      console.log(res);
-      setIsLoading(false);
-    });
+    if (isAuthenticated() && user?.uid) {
+      updateUser(user?.uid, { favorites: productId }).then((res) => {});
+    } else {
+      setIsFavorite(false);
+      toast.warning("You are not logged in, you cannot add to favorites");
+    }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -38,7 +40,7 @@ const AddToFavoritesButton = ({ productId }) => {
         setIsFavorite(isProductInFavorites(userData, productId));
       })();
     } else {
-      console.log("no estoy autenticado");
+      console.log("User not authenticated");
     }
     setIsLoading(false);
   }, [isAuthenticated, user?.uid, productId]);
