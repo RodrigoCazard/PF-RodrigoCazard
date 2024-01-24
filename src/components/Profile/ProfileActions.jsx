@@ -53,7 +53,7 @@ const ProfileActions = ({ variant }) => {
           )}
           {!variant && (
             <>
-              <Link to={"/profile/update"} sx={{ width: "100px" }}>
+              <Link sx={{ width: "100px" }}>
                 <Button
                   variant="contained"
                   fullWidth
