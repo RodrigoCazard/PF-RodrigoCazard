@@ -13,7 +13,7 @@ import CustomThemeProvider from "./components/Theme/CustomThemeProvider.jsx";
 
 import Footer from "./components/Footer/Footer";
 import { Toaster } from "sonner";
-import { HashRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
 import { CartProvider } from "./context/CartContext.jsx";
 
@@ -56,7 +56,7 @@ function App() {
       <CartProvider>
         <>
           <CustomThemeProvider>
-            <HashRouter>
+            <BrowserRouter>
               <ScrollToTopOnRefresh />
               <Toaster
                 position="bottom-left"
@@ -114,7 +114,7 @@ function App() {
                   )}
                 </>
               )}
-            </HashRouter>
+            </BrowserRouter>
           </CustomThemeProvider>
         </>
       </CartProvider>
