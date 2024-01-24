@@ -53,8 +53,10 @@ const Item = ({ id, category, name, price, img }) => {
               backgroundColor: primaryColor,
               color: "white",
               padding: "16px 32px",
-              borderRadius: "4px",
+              borderRadius: 15,
               fontSize: "1rem",
+              fontWeight: "bold",
+
               opacity: 0,
               transition: "opacity 0.3s ease-in-out",
               pointerEvents: "none",

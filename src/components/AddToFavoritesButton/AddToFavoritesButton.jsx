@@ -31,7 +31,7 @@ const AddToFavoritesButton = ({ productId }) => {
 
   useEffect(() => {
     setIsLoading(true);
-    if (isAuthenticated()) {
+    if (isAuthenticated() && user?.uid) {
       (async () => {
         const userData = await fetchUserData(user?.uid);
         console.log(userData);
