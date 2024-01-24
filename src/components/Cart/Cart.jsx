@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import CartContext from "../../context/CartContext";
 import { Link } from "react-router-dom";
 import CartItem from "../ CartItem/CartItem";
-import { Box, Breadcrumbs, Button, Typography } from "@mui/material";
+import { Box, Breadcrumbs, Button, Grid, Typography } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
@@ -22,12 +22,7 @@ const Cart = () => {
     }
   `;
 
-  const { cart, cartClear, cartUpdate, total, quantity } =
-    useContext(CartContext);
-
-  const handleCartUpdate = () => {
-    cartUpdate(cart, count);
-  };
+  const { cart, cartClear, total, quantity } = useContext(CartContext);
 
   return (
     <>
@@ -100,96 +95,102 @@ const Cart = () => {
       ) : (
         <Box marginY={10}>
           <Box display="flex" width="100%">
-            <Box
-              position={"sticky"}
-              width="65%"
-              paddingRight="16px"
-              display={"flex"}
-              flexDirection={"column"}
-              gap={6}
-            >
-              {cart.map((prod) => (
+            <Grid container spacing={6}>
+              <Grid item md={12} lg={8}>
                 <Box
-                  key={prod.item.id}
+                  position={"sticky"}
+                  display={"flex"}
+                  flexDirection={"column"}
+                  gap={6}
+                >
+                  {cart.map((prod) => (
+                    <Box
+                      key={prod.item.id}
+                      border={"2px solid rgba(0,0,0,0.1)"}
+                      borderRadius={15}
+                      padding={"20px 50px"}
+                    >
+                      <CartItem
+                        quantityProp={prod.quantity}
+                        {...prod.item}
+                        variant
+                      >
+                        {" "}
+                      </CartItem>
+                    </Box>
+                  ))}
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={12} lg={4}>
+                <Box
+                  ml={"auto"}
+                  height={"fit-content"}
                   border={"2px solid rgba(0,0,0,0.1)"}
-                  padding={"20px 50px"}
+                  padding={"40px 80px"}
                   borderRadius={15}
                 >
-                  <CartItem quantityProp={prod.quantity} {...prod.item} variant>
+                  <Typography
+                    variant="h4"
+                    sx={{ fontWeight: "bold", marginBottom: "45px" }}
+                  >
                     {" "}
-                  </CartItem>
-                </Box>
-              ))}
-            </Box>
+                    Cart Total
+                  </Typography>
+                  <Box display={"flex"} gap={6} flexDirection={"column"}>
+                    <Box display="flex" justifyContent="space-between">
+                      <Typography variant="h5">Subtotal: </Typography>
+                      <Typography variant="h5"> ${total}</Typography>
+                    </Box>
+                    <Box display="flex" justifyContent="space-between">
+                      <Typography variant="h5">Tax: </Typography>
+                      <Typography variant="h5"> In development</Typography>
+                    </Box>
+                    <Box display="flex" justifyContent="space-between">
+                      <Typography variant="h5">Shipping: </Typography>
+                      <Typography variant="h5"> In development</Typography>
+                    </Box>
+                    <Box display="flex" justifyContent="space-between">
+                      <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                        Total:
+                      </Typography>
+                      <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                        ${total}
+                      </Typography>
+                    </Box>
+                    <Box display="flex" justifyContent="space-between">
+                      <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                        Total quantity:
+                      </Typography>
+                      <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                        {quantity} items
+                      </Typography>
+                    </Box>
+                  </Box>
 
-            <Box
-              width="33%"
-              ml={"auto"}
-              height={"fit-content"}
-              border={"2px solid rgba(0,0,0,0.1)"}
-              padding={"40px 80px"}
-              borderRadius={15}
-            >
-              <Typography
-                variant="h4"
-                sx={{ fontWeight: "bold", marginBottom: "45px" }}
-              >
-                {" "}
-                Cart Total
-              </Typography>
-              <Box display={"flex"} gap={6} flexDirection={"column"}>
-                <Box display="flex" justifyContent="space-between">
-                  <Typography variant="h5">Subtotal: </Typography>
-                  <Typography variant="h5"> ${total}</Typography>
+                  <Link
+                    style={{ textDecoration: "none", color: "black" }}
+                    to="/cart/checkout"
+                  >
+                    <Button
+                      disableElevation
+                      disableRipple
+                      fullWidth
+                      variant="contained"
+                      sx={{
+                        marginTop: 9,
+                        padding: "10px 50px",
+                        fontWeight: "bold",
+                        fontSize: "1.1rem",
+                        borderRadius: 20,
+                        height: "60px",
+                      }}
+                    >
+                      Checkout
+                    </Button>
+                  </Link>
                 </Box>
-                <Box display="flex" justifyContent="space-between">
-                  <Typography variant="h5">Tax: </Typography>
-                  <Typography variant="h5"> In development</Typography>
-                </Box>
-                <Box display="flex" justifyContent="space-between">
-                  <Typography variant="h5">Shipping: </Typography>
-                  <Typography variant="h5"> In development</Typography>
-                </Box>
-                <Box display="flex" justifyContent="space-between">
-                  <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                    Total:
-                  </Typography>
-                  <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                    ${total}
-                  </Typography>
-                </Box>
-                <Box display="flex" justifyContent="space-between">
-                  <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                    Total quantity:
-                  </Typography>
-                  <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                    {quantity} items
-                  </Typography>
-                </Box>
-              </Box>
-
-              <Link
-                style={{ textDecoration: "none", color: "black" }}
-                to="/cart/checkout"
-              >
-                <Button
-                  disableElevation
-                  disableRipple
-                  fullWidth
-                  variant="contained"
-                  sx={{
-                    marginTop: 9,
-                    padding: "10px 50px",
-                    fontWeight: "bold",
-                    fontSize: "1.1rem",
-                    borderRadius: 20,
-                    height: "60px",
-                  }}
-                >
-                  Checkout
-                </Button>
-              </Link>
-            </Box>
+              </Grid>
+            </Grid>
           </Box>
         </Box>
       )}

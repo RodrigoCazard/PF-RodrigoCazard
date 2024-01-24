@@ -42,13 +42,15 @@ const CartPreview = ({ checkoutDisable }) => {
 
   return (
     <Box>
-      {cart.map((prod) => (
-        <CartItem
-          quantityProp={prod.quantity}
-          key={prod.item.id}
-          {...prod.item}
-        ></CartItem>
-      ))}
+      <Box width={"100%"}>
+        {cart.map((prod) => (
+          <CartItem
+            quantityProp={prod.quantity}
+            key={prod.item.id}
+            {...prod.item}
+          ></CartItem>
+        ))}
+      </Box>
       <Box display={"flex"} justifyContent={"space-between"} mb={3}>
         <Typography variant="body1">Total: </Typography>
         <Typography variant="body1"> ${total}</Typography>

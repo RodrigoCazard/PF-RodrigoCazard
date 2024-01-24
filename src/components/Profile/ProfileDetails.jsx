@@ -115,15 +115,11 @@ const ProfileDetails = ({ profile, shipping, variant }) => {
                 {" "}
                 <Box
                   display={"flex"}
-                  alignItems={"end"}
+                  alignItems={"center"}
                   justifyContent={"space-between"}
                 >
-                  <Typography variant="body1" gutterBottom>
-                    UID:{" "}
-                  </Typography>
-                  <Typography variant="h5" gutterBottom>
-                    {user?.uid}
-                  </Typography>
+                  <Typography variant="body1">UID: </Typography>
+                  <Typography variant="h5">{user?.uid}</Typography>
                 </Box>
               </>
             )}

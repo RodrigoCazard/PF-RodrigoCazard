@@ -1,20 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Cart from "./components/Cart/Cart.jsx";
-import Login from "./components/Login/Login.jsx";
-import Register from "./components/Register/Register.jsx";
-import UpdateUser from "./components/UpdateUser/UpdateUser.jsx";
 
-import Checkout from "./components/Checkout/Checkout.jsx";
-import Profile from "./components/Profile/Profile.jsx";
-import Favorites from "./components/Favorites/Favorites.jsx";
-import ItemDetailContainer from "./components/ItemDetailContainer/ItemDetailContainer";
-import WhyUs from "./components/WhyUs/WhyUs";
-import Newsletter from "./components/Newsletter/Newsletter";
-import CategoryListContainer from "./components/Categories/CategoryListContainer";
-import ItemListContainer from "./components/Items/ItemListContainer";
-import Hero from "./components/Hero/Hero";
-import Orders from "./components/Orders/Orders.jsx";
+import Login from "../components/Login/Login.jsx";
+import Register from "../components/Register/Register.jsx";
+import UpdateUser from "../components/UpdateUser/UpdateUser.jsx";
+import Cart from "../components/Cart/Cart.jsx";
+import Checkout from "../components/Checkout/Checkout.jsx";
+import Profile from "../components/Profile/Profile.jsx";
+import Favorites from "../components/Favorites/Favorites.jsx";
+import ItemDetailContainer from "../components/ItemDetailContainer/ItemDetailContainer";
+import WhyUs from "../components/WhyUs/WhyUs";
+import Newsletter from "../components/Newsletter/Newsletter";
+import CategoryListContainer from "../components/Categories/CategoryListContainer";
+import ItemListContainer from "../components/Items/ItemListContainer";
+import Hero from "../components/Hero/Hero";
+import Orders from "../components/Orders/OrdersContainer.jsx";
 
 const AppRoutes = () => {
   return (

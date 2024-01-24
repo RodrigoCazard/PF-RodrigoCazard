@@ -16,6 +16,7 @@ import {
   Breadcrumbs,
   Button,
   CircularProgress,
+  Grid,
   Step,
   StepButton,
   Stepper,
@@ -31,7 +32,6 @@ import CartPreview from "../Cart/CartPreview";
 import Login from "../Login/Login";
 import ProfileDetails from "../Profile/ProfileDetails";
 import PaymentDetails from "../PaymentDetails/PaymentDetails";
-import { updateUser } from "../Utils/users";
 
 const Checkout = () => {
   const { isAuthenticated, user } = useAuth();
@@ -118,11 +118,6 @@ const Checkout = () => {
     handleNext();
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-    setCompleted({});
-  };
-
   const handlePurchase = async () => {
     setLoading(true);
     if (!isAuthenticated()) {
@@ -167,7 +162,7 @@ const Checkout = () => {
       cartClear();
       window.scrollTo(0, 0);
     } catch (error) {
-      toast.success("Error during purchase", error.message);
+      toast.error("Error during purchase", error.message);
     } finally {
       setLoading(false);
     }
@@ -234,112 +229,132 @@ const Checkout = () => {
         </Stepper>
       </Box>
       <Box display={"flex"} gap={7} marginBottom={10}>
-        <Box width="60%">
-          {isAuthenticated() ? (
-            <Box
-              padding={"40px 80px"}
-              border={"2px solid rgba(0,0,0,0.1)"}
-              borderRadius={15}
-            >
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: "bold",
-                  marginBottom: "40px",
-                }}
+        <Grid container spacing={8}>
+          <Grid item xs={12} md={12} lg={7}>
+            {isAuthenticated() ? (
+              <Box
+                padding={"40px 80px"}
+                border={"2px solid rgba(0,0,0,0.1)"}
+                borderRadius={15}
               >
-                {" "}
-                {steps[activeStep]}
-              </Typography>
-              {activeStep === 0 && <ProfileDetails profile />}
-              {activeStep === 1 && <ProfileDetails shipping />}
-              {activeStep === 2 && <PaymentDetails />}
-              <div>
-                {allStepsCompleted() && (
-                  <React.Fragment>
-                    <Typography sx={{ mt: 2, mb: 1 }}>
-                      Order id:{orderID}
-                    </Typography>
-                  </React.Fragment>
-                )}
-              </div>
-              <Box display={"flex"} justifyContent={"space-between"}>
-                {activeStep !== 3 && activeStep !== 0 && (
-                  <React.Fragment>
-                    <Button
-                      color="warning"
-                      sx={{
-                        borderRadius: 20,
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontWeight: "bold",
+                    marginBottom: "40px",
+                  }}
+                >
+                  {" "}
+                  {steps[activeStep]}
+                </Typography>
+                {activeStep === 0 && <ProfileDetails profile />}
+                {activeStep === 1 && <ProfileDetails shipping />}
+                {activeStep === 2 && <PaymentDetails />}
+                <div>
+                  {allStepsCompleted() && activeStep === 3 && (
+                    <Box>
+                      <Typography>Order id:{orderID}</Typography>
+                    </Box>
+                  )}
+                </div>
+                <Box display={"flex"} justifyContent={"space-between"}>
+                  {activeStep !== 3 && activeStep !== 0 && (
+                    <React.Fragment>
+                      <Button
+                        color="warning"
+                        sx={{
+                          borderRadius: 20,
 
-                        "&:hover, &:focus": {
-                          border: "2px solid #000",
-                        },
-                        border: "2px solid rgba(0,0,0,0.1)",
-                        width: "45%",
-                        padding: "12px 22px",
-                        fontSize: 18,
-                        fontWeight: "bold",
-                        minWidth: "150px",
-                        letterSpacing: 1,
-                      }}
-                      variant="outlined"
-                      disabled={activeStep === 0}
-                      onClick={handleBack}
-                    >
-                      Back
-                    </Button>
-                  </React.Fragment>
-                )}
+                          "&:hover, &:focus": {
+                            border: "2px solid #000",
+                          },
+                          border: "2px solid rgba(0,0,0,0.1)",
+                          width: "45%",
+                          padding: "12px 22px",
+                          fontSize: 18,
+                          fontWeight: "bold",
+                          minWidth: "150px",
+                          letterSpacing: 1,
+                        }}
+                        variant="outlined"
+                        disabled={activeStep === 0}
+                        onClick={handleBack}
+                      >
+                        Back
+                      </Button>
+                    </React.Fragment>
+                  )}
 
-                {activeStep !== steps.length &&
-                  (completed[activeStep] ? (
-                    <Button
-                      disableElevation
-                      disableRipple
-                      variant="contained"
-                      sx={{
-                        padding: "10px 50px",
-                        fontWeight: "bold",
-                        fontSize: "1.1rem",
-                        borderRadius: 20,
-                        height: "60px",
-                        width: activeStep === 0 ? "100%" : "45%",
-                        minWidth: "150px",
-                      }}
-                      onClick={handleNext}
-                    >
-                      Next
-                    </Button>
-                  ) : (
-                    <Button
-                      disableElevation
-                      disableRipple
-                      variant="contained"
-                      sx={{
-                        width: activeStep === 0 ? "100%" : "45%",
-                        minWidth: "150px",
-                        padding: "10px 50px",
-                        fontWeight: "bold",
-                        fontSize: "1.1rem",
-                        borderRadius: 20,
-                        height: "60px",
-                      }}
-                      onClick={
-                        completedSteps() === totalSteps() - 1
-                          ? handlePurchase
-                          : handleComplete
-                      }
-                    >
-                      {completedSteps() === totalSteps() - 1
-                        ? "Place order"
-                        : "Next"}
-                    </Button>
-                  ))}
+                  {activeStep !== steps.length &&
+                    (completed[activeStep] ? (
+                      <Button
+                        disableElevation
+                        disableRipple
+                        variant="contained"
+                        sx={{
+                          padding: "10px 50px",
+                          fontWeight: "bold",
+                          fontSize: "1.1rem",
+                          borderRadius: 20,
+                          height: "60px",
+                          width: activeStep === 0 ? "100%" : "45%",
+                          minWidth: "150px",
+                        }}
+                        onClick={handleNext}
+                      >
+                        Next
+                      </Button>
+                    ) : (
+                      <Button
+                        disableElevation
+                        disableRipple
+                        variant="contained"
+                        sx={{
+                          width: activeStep === 0 ? "100%" : "45%",
+                          minWidth: "150px",
+                          padding: "10px 50px",
+                          fontWeight: "bold",
+                          fontSize: "1.1rem",
+                          borderRadius: 20,
+                          height: "60px",
+                        }}
+                        onClick={
+                          completedSteps() === totalSteps() - 1
+                            ? handlePurchase
+                            : handleComplete
+                        }
+                      >
+                        {completedSteps() === totalSteps() - 1
+                          ? "Place order"
+                          : "Next"}
+                      </Button>
+                    ))}
+                </Box>
               </Box>
-            </Box>
-          ) : (
+            ) : (
+              <Box
+                padding={"40px 80px"}
+                border={"2px solid rgba(0,0,0,0.1)"}
+                borderRadius={15}
+              >
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontWeight: "bold",
+                    marginBottom: "40px",
+                  }}
+                >
+                  {" "}
+                  Login
+                </Typography>
+                <Login variant />
+              </Box>
+            )}
+          </Grid>
+          <Grid item xs={12} md={12} lg={5}>
             <Box
               padding={"40px 80px"}
+              height={"fit-content"}
               border={"2px solid rgba(0,0,0,0.1)"}
               borderRadius={15}
             >
@@ -351,33 +366,13 @@ const Checkout = () => {
                 }}
               >
                 {" "}
-                Login
+                My Cart
               </Typography>
-              <Login variant />
+
+              <CartPreview checkoutDisable={true} />
             </Box>
-          )}
-        </Box>
-
-        <Box
-          padding={"40px 80px"}
-          width={"40%"}
-          height={"fit-content"}
-          border={"2px solid rgba(0,0,0,0.1)"}
-          borderRadius={15}
-        >
-          <Typography
-            variant="h4"
-            sx={{
-              fontWeight: "bold",
-              marginBottom: "40px",
-            }}
-          >
-            {" "}
-            My Cart
-          </Typography>
-
-          <CartPreview checkoutDisable={true} />
-        </Box>
+          </Grid>
+        </Grid>
       </Box>
     </Box>
   );

@@ -8,18 +8,23 @@ import { Link } from "react-router-dom";
 
 const CartItem = ({ img, id, name, price, quantityProp, stock, variant }) => {
   const { cartRemove } = useContext(CartContext);
-
+  const { cartUpdate } = useContext(CartContext);
   const handleCartRemove = () => {
     cartRemove(id);
   };
 
   const [count, setCount] = useState(quantityProp);
 
+  const handleUpdate = (updatedCount) => {
+    cartUpdate({ img, id, name, price, stock }, updatedCount);
+  };
+
   const increment = () => {
     if (count > stock - 1) {
       setCount(Number(stock));
     } else {
       setCount(count + 1);
+      handleUpdate(count + 1);
     }
   };
   const decrement = () => {
@@ -27,6 +32,7 @@ const CartItem = ({ img, id, name, price, quantityProp, stock, variant }) => {
       setCount(1);
     } else {
       setCount(count - 1);
+      handleUpdate(count - 1);
     }
   };
 
@@ -56,7 +62,7 @@ const CartItem = ({ img, id, name, price, quantityProp, stock, variant }) => {
             <Typography
               fontWeight={"bold"}
               variant={variant ? "body1" : "subtitle1"}
-              width={variant ? "100%" : "250px"}
+              width={"100%"}
             >
               {name}
             </Typography>
@@ -69,6 +75,8 @@ const CartItem = ({ img, id, name, price, quantityProp, stock, variant }) => {
               <Box height={"100%"}>
                 <Counter
                   count={count}
+                  stock={stock}
+                  handleUpdate={handleUpdate}
                   increment={increment}
                   decrement={decrement}
                 />

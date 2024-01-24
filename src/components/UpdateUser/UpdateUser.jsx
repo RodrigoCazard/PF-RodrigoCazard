@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 const UpdateUser = () => {
   const [displayName, setDisplayName] = useState("");
@@ -69,6 +69,7 @@ const UpdateUser = () => {
       flexDirection={"column"}
       width={{ xs: "100%", sm: "80%", md: "60%", lg: "40%", xl: "40%" }}
     >
+      In Development
       <Box width={"100%"} mx="auto">
         <Typography variant="body2" sx={{ letterSpacing: "1px" }} mb={3}>
           Full name

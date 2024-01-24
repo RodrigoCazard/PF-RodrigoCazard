@@ -2,7 +2,23 @@ import { Box } from "@mui/material";
 import React from "react";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-const Counter = ({ count, decrement, increment }) => {
+
+const Counter = ({ count, decrement, increment, stock }) => {
+  const isMinCount = count === 1;
+  const isMaxCount = count === stock;
+
+  const handleDecrement = () => {
+    if (!isMinCount) {
+      decrement();
+    }
+  };
+
+  const handleIncrement = () => {
+    if (!isMaxCount) {
+      increment();
+    }
+  };
+
   return (
     <Box
       mr={2}
@@ -16,8 +32,11 @@ const Counter = ({ count, decrement, increment }) => {
       border={"2px solid rgba(0,0,0,0.1)"}
     >
       <KeyboardArrowLeftIcon
-        onClick={decrement}
-        style={{ cursor: "pointer" }}
+        onClick={handleDecrement}
+        style={{
+          cursor: isMinCount ? "" : "pointer",
+          opacity: isMinCount ? 0.5 : 1,
+        }}
         fontSize="large"
         sx={{ height: "100%" }}
       ></KeyboardArrowLeftIcon>
@@ -25,8 +44,11 @@ const Counter = ({ count, decrement, increment }) => {
       <p>{count}</p>
 
       <KeyboardArrowRightIcon
-        onClick={increment}
-        style={{ cursor: "pointer" }}
+        onClick={handleIncrement}
+        style={{
+          cursor: isMaxCount ? "" : "pointer",
+          opacity: isMaxCount ? 0.5 : 1,
+        }}
         fontSize="large"
         sx={{ height: "100%" }}
       ></KeyboardArrowRightIcon>

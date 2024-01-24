@@ -1,7 +1,8 @@
 import { Grid, Button, Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import Img from "../../assets/71lZK7nE_oL-removebg.png";
+
 import { Link } from "react-router-dom";
+import Carousel from "./Carousel";
 const Hero = () => {
   const styledHero = {
     styledButton: {
@@ -110,11 +111,9 @@ const Hero = () => {
         alignItems={"center"}
         justifyContent={"center"}
       >
-        <img
-          src={Img}
-          alt="Imagen de computadora"
-          style={{ objectFit: "contain", width: "80%" }}
-        ></img>
+        <Box width={"100%"}>
+          <Carousel></Carousel>
+        </Box>
       </Grid>
     </Grid>
   );

@@ -1,36 +1,27 @@
 import "./App.css";
 import MainNavBar from "./components/NavBar/MainNavBar";
-
+import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 import "./transitionStyles.css";
-import ItemListContainer from "./components/Items/ItemListContainer";
-import Hero from "./components/Hero/Hero";
+import ScrollToTop from "react-scroll-up";
 import ScrollToTopOnRefresh from "./components/ComponentsUtils/ScrollToTop.jsx";
 import { useEffect, useState } from "react";
 import Loader from "./components/ComponentsUtils/Loader.jsx";
 import NavMenu from "./components/NavBar/NavMenu";
-import CategoryListContainer from "./components/Categories/CategoryListContainer";
-import { Box } from "@mui/material";
-import CustomThemeProvider from "./components/Theme/CustomThemeProvider.jsx";
-import WhyUs from "./components/WhyUs/WhyUs";
 
-import Newsletter from "./components/Newsletter/Newsletter";
+import { Box, IconButton } from "@mui/material";
+import CustomThemeProvider from "./components/Theme/CustomThemeProvider.jsx";
+
 import Footer from "./components/Footer/Footer";
 import { Toaster } from "sonner";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import ItemDetailContainer from "./components/ItemDetailContainer/ItemDetailContainer";
+import { BrowserRouter } from "react-router-dom";
+
 import { CartProvider } from "./context/CartContext.jsx";
-import Cart from "./components/Cart/Cart.jsx";
-import Login from "./components/Login/Login.jsx";
-import Register from "./components/Register/Register.jsx";
+
 import { AuthProvider } from "./context/AuthContext.jsx";
 
-import Checkout from "./components/Checkout/Checkout.jsx";
-import Profile from "./components/Profile/Profile.jsx";
-import Favorites from "./components/Favorites/Favorites.jsx";
 import ScrollTopRoute from "./components/ComponentsUtils/ScrollTopRoute.jsx";
 
-import UpdateUser from "./components/UpdateUser/UpdateUser.jsx";
-import Orders from "./components/Orders/Orders.jsx";
+import AppRoutes from "./routes/Routes.jsx";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -90,52 +81,35 @@ function App() {
                     <Box style={{ padding: "0 10%" }}>
                       <ScrollTopRoute />
 
-                      <Routes>
-                        <Route
-                          path="/"
-                          element={
-                            <>
-                              <Hero></Hero>
-                              <CategoryListContainer></CategoryListContainer>
-                              <ItemListContainer />
-                              <WhyUs></WhyUs>
-
-                              <Newsletter></Newsletter>
-                            </>
-                          }
-                        />
-                        <Route
-                          path="/category/:category"
-                          element={<ItemListContainer></ItemListContainer>}
-                        />
-                        <Route
-                          path="/item/:idItem"
-                          element={<ItemDetailContainer></ItemDetailContainer>}
-                        />
-                        <Route path="/login" element={<Login></Login>} />
-                        <Route
-                          path="/register"
-                          element={<Register></Register>}
-                        />
-                        <Route path="/cart" element={<Cart></Cart>} />
-                        <Route
-                          path="/cart/checkout"
-                          element={<Checkout></Checkout>}
-                        />
-                        <Route path="/profile" element={<Profile></Profile>} />
-                        <Route
-                          path="/profile/update"
-                          element={<UpdateUser></UpdateUser>}
-                        />
-                        <Route
-                          path="/profile/favorites"
-                          element={<Favorites />}
-                        />
-                        <Route path="/profile/orders" element={<Orders />} />
-                        <Route path="*" element={<Navigate to={"/"} />} />
-                      </Routes>
+                      <AppRoutes></AppRoutes>
 
                       <Footer></Footer>
+                      <ScrollToTop
+                        showUnder={400}
+                        style={{
+                          padding: "30px 60px",
+                        }}
+                      >
+                        <IconButton
+                          color="primary"
+                          sx={{
+                            opacity: "0.9",
+                            transition: "all 0.5s ease",
+                            "&:hover": {
+                              opacity: "1",
+                              transform: "scale(1.1)",
+                              color: "primary",
+                            },
+                          }}
+                        >
+                          <ArrowCircleUpIcon
+                            style={{
+                              opacity: "1",
+                              fontSize: "4rem",
+                            }}
+                          ></ArrowCircleUpIcon>
+                        </IconButton>
+                      </ScrollToTop>
                     </Box>
                   )}
                 </>

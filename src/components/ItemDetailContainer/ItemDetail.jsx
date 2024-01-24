@@ -150,6 +150,7 @@ const ItemDetail = ({ id, name, price, category, stock, img }) => {
             justifyContent={"center"}
           >
             <Counter
+              stock={stock}
               count={count}
               increment={increment}
               decrement={decrement}

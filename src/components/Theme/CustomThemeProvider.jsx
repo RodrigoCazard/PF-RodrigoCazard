@@ -55,15 +55,42 @@ const CustomThemeProvider = ({ children }) => {
       fontSize: "3.5rem",
     },
   };
+  theme.typography.subtitle1 = {
+    letterSpacing: "1px",
+    fontFamily: "Roboto, sans-serif",
+    fontSize: "1.6rem",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.1rem",
+    },
+    [theme.breakpoints.down("md")]: {
+      fontSize: "1.1rem",
+    },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "1rem",
+    },
+  };
+  theme.typography.subtitle2 = {
+    letterSpacing: "1px",
+    fontWeight: "normal",
+    fontFamily: "Roboto, sans-serif",
+    fontSize: "1.4rem",
+
+    [theme.breakpoints.down("md")]: {
+      fontSize: "1.1rem",
+    },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "1rem",
+    },
+  };
 
   theme.typography.h3 = {
     fontFamily: "Roboto, sans-serif",
     fontSize: "2rem",
-    [theme.breakpoints.down("md")]: {
-      fontSize: "1.5rem",
+    [theme.breakpoints.up("md")]: {
+      fontSize: "2.6rem",
     },
     [theme.breakpoints.down("sm")]: {
-      fontSize: "1.2rem",
+      fontSize: "1.7rem",
     },
     [theme.breakpoints.up("lg")]: {
       fontSize: "3.5rem",

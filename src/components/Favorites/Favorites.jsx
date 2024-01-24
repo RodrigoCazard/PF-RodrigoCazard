@@ -4,7 +4,7 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../../services/config";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Box, Breadcrumbs, Grid, Typography } from "@mui/material";
+import { Box, Breadcrumbs, Button, Grid, Typography } from "@mui/material";
 import Item from "../Items/Item.jsx";
 import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
@@ -107,12 +107,31 @@ const Favorites = () => {
         <>
           {" "}
           {products.length === 0 ? (
-            <div>
-              <p>
-                No tienes productos favoritos. ¿Por qué no exploras nuestra{" "}
-                <Link to="/">página de inicio</Link>?
-              </p>
-            </div>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              alignItems={"center"}
+              gap={4}
+              my={27}
+            >
+              <Typography variant="h3">
+                You dont have any favorites in your list
+              </Typography>
+              <Link to="/category/all">
+                {" "}
+                <Button
+                  variant="contained"
+                  disableElevation
+                  sx={{
+                    borderRadius: 15,
+                    padding: "20px 50px",
+                    fontSize: "20px",
+                  }}
+                >
+                  Explore products
+                </Button>
+              </Link>
+            </Box>
           ) : (
             <>
               <Grid container spacing={6} my={3} marginY={"80px"}>

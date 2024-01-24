@@ -48,6 +48,7 @@ const CartOverlay = ({ scrolled, isVisible }) => {
       }}
     >
       <Box
+        width={"500px"}
         maxHeight={"80vh"}
         bgcolor={"white"}
         borderRadius={7}

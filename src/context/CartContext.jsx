@@ -72,15 +72,17 @@ export const CartProvider = ({ children }) => {
   const cartUpdate = (item, quantity) => {
     const newCart = cart.map((prod) => {
       if (prod.item.id === item.id) {
-        setTotal((prev) => prev + item.price * quantity);
-        setQuantity((prev) => prev + quantity);
-        return { ...prod, quantity: prod.quantity + quantity };
+        setTotal(item.price * quantity);
+        setQuantity(quantity);
+
+        return { ...prod, quantity: quantity };
       } else {
         return prod;
       }
     });
     setCart(newCart);
   };
+
   return (
     <CartContext.Provider
       value={{

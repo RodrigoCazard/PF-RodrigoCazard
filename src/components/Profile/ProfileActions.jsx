@@ -58,6 +58,7 @@ const ProfileActions = ({ variant }) => {
                   variant="contained"
                   fullWidth
                   disableElevation
+                  disabled
                   sx={{
                     fontWeight: "bold",
                     padding: "12px",
@@ -65,7 +66,7 @@ const ProfileActions = ({ variant }) => {
                     borderRadius: 40,
                   }}
                 >
-                  Update
+                  Update information
                 </Button>
               </Link>
               <Link sx={{ width: "100px" }}>
@@ -82,6 +83,22 @@ const ProfileActions = ({ variant }) => {
                   }}
                 >
                   Change Password
+                </Button>
+              </Link>
+              <Link sx={{ width: "100px" }}>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  disabled
+                  disableElevation
+                  sx={{
+                    fontWeight: "bold",
+                    padding: "12px",
+                    fontSize: "14px",
+                    borderRadius: 40,
+                  }}
+                >
+                  Change Email
                 </Button>
               </Link>
             </>
