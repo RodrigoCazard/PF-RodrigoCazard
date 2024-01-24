@@ -55,10 +55,10 @@ const Checkout = () => {
         if (data) {
           setUserData(data[0]);
         } else {
-          console.log("Usuario no encontrado en Firestore");
+          console.log("User not found");
         }
       } catch (error) {
-        console.error("Error al obtener datos de usuario:", error);
+        console.error("Error:", error);
       }
     };
 
