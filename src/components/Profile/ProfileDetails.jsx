@@ -44,7 +44,7 @@ const ProfileDetails = ({ profile, shipping, variant }) => {
                 {" "}
                 <Box
                   display={"flex"}
-                  alignItems={"end"}
+                  alignItems={"center"}
                   justifyContent={"space-between"}
                 >
                   <Typography variant="body1" gutterBottom>
@@ -56,7 +56,7 @@ const ProfileDetails = ({ profile, shipping, variant }) => {
                 </Box>
                 <Box
                   display={"flex"}
-                  alignItems={"end"}
+                  alignItems={"center"}
                   justifyContent={"space-between"}
                 >
                   <Typography variant="body1" gutterBottom>
@@ -68,7 +68,7 @@ const ProfileDetails = ({ profile, shipping, variant }) => {
                 </Box>
                 <Box
                   display={"flex"}
-                  alignItems={"end"}
+                  alignItems={"center"}
                   justifyContent={"space-between"}
                 >
                   <Typography variant="body1" gutterBottom>
@@ -85,7 +85,7 @@ const ProfileDetails = ({ profile, shipping, variant }) => {
               <>
                 <Box
                   display={"flex"}
-                  alignItems={"end"}
+                  alignItems={"center"}
                   justifyContent={"space-between"}
                 >
                   <Typography variant="body1" gutterBottom>
@@ -98,7 +98,7 @@ const ProfileDetails = ({ profile, shipping, variant }) => {
 
                 <Box
                   display={"flex"}
-                  alignItems={"end"}
+                  alignItems={"center"}
                   justifyContent={"space-between"}
                 >
                   <Typography variant="body1" gutterBottom>

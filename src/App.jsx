@@ -56,7 +56,7 @@ function App() {
       <CartProvider>
         <>
           <CustomThemeProvider>
-            <BrowserRouter basename="PreEntrega-Dos-Cazard">
+            <BrowserRouter>
               <ScrollToTopOnRefresh />
               <Toaster
                 position="bottom-left"
@@ -81,7 +81,7 @@ function App() {
                     <Box style={{ padding: "0 10%" }}>
                       <ScrollTopRoute />
 
-                      <AppRoutes></AppRoutes>
+                      <AppRoutes />
 
                       <Footer></Footer>
                       <ScrollToTop
