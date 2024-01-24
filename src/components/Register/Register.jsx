@@ -142,6 +142,9 @@ const Register = () => {
       if (error.code === "auth/email-already-in-use") {
         errorMessage = "Email already in use";
       }
+      if (error.code === "auth/weak-password") {
+        errorMessage = "The password should be at least 6 characters ";
+      }
 
       toast.error(errorMessage);
     } finally {

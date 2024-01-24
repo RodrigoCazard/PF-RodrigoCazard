@@ -36,11 +36,11 @@ const AddToFavoritesButton = ({ productId }) => {
         const userData = await fetchUserData(user?.uid);
         console.log(userData);
         setIsFavorite(isProductInFavorites(userData, productId));
-        setIsLoading(false);
       })();
     } else {
       console.log("no estoy autenticado");
     }
+    setIsLoading(false);
   }, [isAuthenticated, user?.uid, productId]);
 
   return (
