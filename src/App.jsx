@@ -56,7 +56,7 @@ function App() {
       <CartProvider>
         <>
           <CustomThemeProvider>
-            <BrowserRouter>
+            <BrowserRouter basename="/">
               <ScrollToTopOnRefresh />
               <Toaster
                 position="bottom-left"
