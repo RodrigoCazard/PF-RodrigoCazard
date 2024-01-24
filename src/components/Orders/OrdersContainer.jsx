@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { fetchUserData, getOrders } from "../Utils/users";
+
 import Order from "./Order";
 import {
   Box,
@@ -14,9 +15,10 @@ import { Link } from "react-router-dom";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { useTheme } from "@emotion/react";
 import NotLogged from "../NotLogged/NotLogged";
+import OrderTable from "./OrderTable";
 const Orders = () => {
   const [orders, setOrders] = useState([]);
-  const [ordersDetails, setOrdersDetails] = useState([]);
+
   const { isAuthenticated, user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
@@ -118,22 +120,9 @@ const Orders = () => {
                 </Box>
               ) : (
                 <Box my={10} display={"flex"} flexWrap={"wrap"} gap={2}>
-                  {orders.map((order) => {
-                    return (
-                      <Box
-                        key={order.id}
-                        border={"2px solid rgba(0,0,0,0.1)"}
-                        borderRadius={2}
-                        width={"fit-content"}
-                        padding={"10px 40px"}
-                      >
-                        <Order {...orders}></Order>
-                        <p>id:{order.id}</p>
-                        <p>Quantity:{order.quantity}</p>
-                        <p>Price:{order.total}$</p>
-                      </Box>
-                    );
-                  })}
+                  <>
+                    <OrderTable ordersDetails={orders}> </OrderTable>
+                  </>
                 </Box>
               )}
             </>
