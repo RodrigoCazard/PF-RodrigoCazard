@@ -10,7 +10,7 @@ Durante el curso, los participantes se sumergieron en el desarrollo de un e-comm
 
 # Live Demo
 
-Para ver una demostración en vivo de este proyecto, puedes visitar [este enlace]([https://pf-rodrigo-cazard.vercel.app/#/]).
+Para ver una demostración en vivo de este proyecto, puedes visitar [este enlace](https://pf-rodrigo-cazard.vercel.app/#/).
 
 ## Índice
 
