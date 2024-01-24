@@ -175,9 +175,6 @@ const PaymentDetails = () => {
             </div>
           </Box>
           <input type="hidden" name="issuer" value={state.issuer} />
-          <div>
-            <button type="submit">PAY</button>
-          </div>
         </form>
       </div>
     </Box>
