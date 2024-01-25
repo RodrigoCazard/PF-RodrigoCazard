@@ -37,14 +37,18 @@ const AddToFavoritesButton = ({ productId }) => {
   };
   useEffect(() => {
     setIsLoading(true);
-    if (isAuthenticated() && user?.uid) {
-      (async () => {
-        const userData = await fetchUserData(user?.uid);
+    const fetchData = async () => {
+      try {
+        if (isAuthenticated() && user?.uid) {
+          const userData = await fetchUserData(user?.uid);
+          setIsFavorite(isProductInFavorites(userData, productId));
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-        setIsFavorite(isProductInFavorites(userData, productId));
-      })();
-    }
-    setIsLoading(false);
+    fetchData();
   }, [isAuthenticated, user?.uid, productId]);
 
   return (
@@ -55,7 +59,12 @@ const AddToFavoritesButton = ({ productId }) => {
           sx={{
             width: 60,
             height: 60,
-            border: 2,
+
+            transition: "all 0.5s ease",
+            border: "2px solid rgba(0,0,0,0.1)",
+            "&:hover": {
+              border: "2px solid rgba(0,0,0,1)",
+            },
             display: "grid",
             placeItems: "center",
             padding: 1,

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Backdrop,
   Box,
   Breadcrumbs,
   Button,
@@ -12,7 +13,7 @@ import "react-international-phone/style.css";
 import countryList from "react-select-country-list";
 import { useAuth } from "../../context/AuthContext";
 import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "@emotion/react";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { toast } from "sonner";
@@ -96,16 +97,28 @@ const UpdateUser = () => {
   `;
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingUpdate, setIsLoadingUpdate] = useState(false);
 
+  const navigate = useNavigate();
   const handleUpdateUser = () => {
-    setIsLoading(true);
+    setIsLoadingUpdate(true);
+    if (!displayName || !phone || !address || !country) {
+      toast.error("Please complete all fields.");
+      setIsLoadingUpdate(false);
+      return;
+    }
     if (isAuthenticated() && user?.uid) {
-      updateUser(user?.uid, { favorites: productId }).finally(() => {
-        setIsLoading(false);
-      });
+      updateUser(user?.uid, { displayName, phone, address, country })
+        .then((res) => {
+          toast.success("Your personal information has been changed");
+          navigate("/profile");
+        })
+        .finally(() => {
+          setIsLoadingUpdate(false);
+        });
     } else {
-      toast.warning("You are not logged in, you cannot update information");
-      setIsLoading(false);
+      toast.error("You are not logged in, you cannot update information");
+      setIsLoadingUpdate(false);
     }
   };
 
@@ -131,6 +144,14 @@ const UpdateUser = () => {
 
   return (
     <>
+      {isLoadingUpdate && (
+        <Backdrop
+          open={isLoadingUpdate}
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        >
+          <CircularProgress color="primary" />
+        </Backdrop>
+      )}
       <Breadcrumbs
         sx={{ margin: "20px 0 40px 0" }}
         separator={<NavigateNextIcon fontSize="small" />}
@@ -318,6 +339,7 @@ const UpdateUser = () => {
                   disableRipple
                   fullWidth
                   variant="contained"
+                  onClick={handleUpdateUser}
                   sx={{
                     padding: "10px 75px",
                     fontWeight: "bold",

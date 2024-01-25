@@ -57,6 +57,23 @@ const Orders = () => {
 
   return (
     <>
+      <Breadcrumbs
+        sx={{ margin: "20px 0 40px 0" }}
+        separator={<NavigateNextIcon fontSize="small" />}
+        aria-label="breadcrumb"
+      >
+        <StyledLink to="/">Home page</StyledLink>
+        <StyledLink to="/profile">Profile</StyledLink>
+        <Typography color="text.primary">Orders</Typography>
+      </Breadcrumbs>
+      <Box>
+        <Typography variant="body1" color={"primary"} component={"p"} mb={1}>
+          - Orders
+        </Typography>
+        <Typography variant="h3" component="h2">
+          Your Orders
+        </Typography>
+      </Box>
       {isLoading ? (
         <Box
           display="flex"
@@ -68,28 +85,6 @@ const Orders = () => {
         </Box>
       ) : (
         <Box>
-          <Breadcrumbs
-            sx={{ margin: "20px 0 40px 0" }}
-            separator={<NavigateNextIcon fontSize="small" />}
-            aria-label="breadcrumb"
-          >
-            <StyledLink to="/">Home page</StyledLink>
-            <StyledLink to="/profile">Profile</StyledLink>
-            <Typography color="text.primary">Orders</Typography>
-          </Breadcrumbs>
-          <Box>
-            <Typography
-              variant="body1"
-              color={"primary"}
-              component={"p"}
-              mb={1}
-            >
-              - Orders
-            </Typography>
-            <Typography variant="h3" component="h2">
-              Your Orders
-            </Typography>
-          </Box>
           {isAuthenticated() ? (
             <>
               {orders.length === 0 ? (

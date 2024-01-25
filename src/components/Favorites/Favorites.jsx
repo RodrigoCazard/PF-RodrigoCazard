@@ -31,7 +31,7 @@ const Favorites = () => {
 
   const [idProducts, setIdProducts] = useState([]);
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,7 +60,7 @@ const Favorites = () => {
       } catch (error) {
         console.error("Error al obtener los productos favoritos:", error);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
 
@@ -68,21 +68,6 @@ const Favorites = () => {
       fetchData();
     }
   }, [user?.uid, isAuthenticated]);
-
-  if (loading) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        <CircularProgress />
-      </div>
-    );
-  }
 
   return (
     <>
@@ -103,49 +88,64 @@ const Favorites = () => {
           Your Favorites products
         </Typography>
       </Box>
-      {isAuthenticated() ? (
-        <>
-          {" "}
-          {products.length === 0 ? (
-            <Box
-              display={"flex"}
-              flexDirection={"column"}
-              alignItems={"center"}
-              gap={4}
-              my={27}
-            >
-              <Typography variant="h3">
-                You dont have any favorites in your list
-              </Typography>
-              <Link to="/category/all">
-                {" "}
-                <Button
-                  variant="contained"
-                  disableElevation
-                  sx={{
-                    borderRadius: 15,
-                    padding: "20px 50px",
-                    fontSize: "20px",
-                  }}
-                >
-                  Explore products
-                </Button>
-              </Link>
-            </Box>
-          ) : (
-            <>
-              <Grid container spacing={6} my={3} marginY={"80px"}>
-                {products.map((product, index) => (
-                  <Grid item xs={12} sm={6} lg={3} xl={3} key={index}>
-                    <Item {...product}></Item>
-                  </Grid>
-                ))}
-              </Grid>
-            </>
-          )}
-        </>
+      {isLoading ? (
+        <Box
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          <CircularProgress />
+        </Box>
       ) : (
-        <NotLogged></NotLogged>
+        <Box>
+          {isAuthenticated() ? (
+            <>
+              {" "}
+              {products.length === 0 ? (
+                <Box
+                  display={"flex"}
+                  flexDirection={"column"}
+                  alignItems={"center"}
+                  gap={4}
+                  my={27}
+                >
+                  <Typography variant="h3">
+                    You dont have any favorites in your list
+                  </Typography>
+                  <Link to="/category/all">
+                    {" "}
+                    <Button
+                      variant="contained"
+                      disableElevation
+                      sx={{
+                        borderRadius: 15,
+                        padding: "20px 50px",
+                        fontSize: "20px",
+                      }}
+                    >
+                      Explore products
+                    </Button>
+                  </Link>
+                </Box>
+              ) : (
+                <>
+                  <Grid container spacing={6} my={3} marginY={"80px"}>
+                    {products.map((product, index) => (
+                      <Grid item xs={12} sm={6} lg={3} xl={3} key={index}>
+                        <Item {...product}></Item>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </>
+              )}
+            </>
+          ) : (
+            <NotLogged></NotLogged>
+          )}
+        </Box>
       )}
     </>
   );

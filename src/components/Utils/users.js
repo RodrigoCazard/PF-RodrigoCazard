@@ -37,22 +37,26 @@ export const updateUser = async (uid, updateData) => {
 
     const userDocRef = doc(db, "users", userData.id);
 
-    const isFavorite = isProductInFavorites(userData, updateData.favorites);
+    const newFavorites =
+      updateData.favorites !== undefined
+        ? updateData.favorites
+        : userData.favorites;
+
+    const isFavorite = isProductInFavorites(userData, newFavorites);
 
     let updatedFavorites;
     if (isFavorite) {
       updatedFavorites = userData.favorites.filter(
-        (fav) => fav !== updateData.favorites
+        (fav) => fav !== newFavorites
       );
     } else {
-      updatedFavorites = [...userData.favorites, updateData.favorites];
+      updatedFavorites = [...userData.favorites, newFavorites];
     }
 
-    const newUser = {
-      ...userData,
-      ...updateData,
-      favorites: updatedFavorites,
-    };
+    const newUser =
+      updateData.favorites !== undefined
+        ? { ...userData, ...updateData, favorites: updatedFavorites }
+        : { ...userData, ...updateData };
 
     await updateDoc(userDocRef, newUser);
 
