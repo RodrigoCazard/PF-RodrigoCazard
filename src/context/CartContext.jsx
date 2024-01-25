@@ -72,14 +72,24 @@ export const CartProvider = ({ children }) => {
   const cartUpdate = (item, quantity) => {
     const newCart = cart.map((prod) => {
       if (prod.item.id === item.id) {
-        setTotal(item.price * quantity);
-        setQuantity(quantity);
-
         return { ...prod, quantity: quantity };
       } else {
         return prod;
       }
     });
+
+    const totalQuantity = newCart.reduce(
+      (accumulator, prod) => accumulator + prod.quantity,
+      0
+    );
+    const totalCost = newCart.reduce((accumulator, prod) => {
+      const productCost = prod.item.price * prod.quantity;
+      return accumulator + productCost;
+    }, 0);
+
+    setQuantity(totalQuantity);
+    setTotal(totalCost);
+
     setCart(newCart);
   };
 
