@@ -120,7 +120,7 @@ npm install
 
 A continuación, se detallan las próximas actualizaciones y características planificadas para el proyecto. Ten en cuenta que el roadmap está sujeto a cambios y actualizaciones a medida que evoluciona el proyecto.
 
-- [x] **Modificación de Datos del Usuario:** Permitir a los usuarios actualizar la información de su perfil, como nombre, dirección y otros datos personales.
+- [x] ~~**Modificación de Datos del Usuario:** Permitir a los usuarios actualizar la información de su perfil, como nombre, dirección y otros datos personales.~~
 - [ ] **Modificación de Contraseña:** Implementar la funcionalidad para permitir a los usuarios cambiar sus contraseñas de forma segura.
 - [ ] **Modificación de Email:** Agregar la capacidad de que los usuarios actualicen su dirección de correo electrónico asociada a la cuenta.
 - [ ] **Autenticación de Email:** Reforzar la seguridad mediante la autenticación por correo electrónico, garantizando la validez de las cuentas.
