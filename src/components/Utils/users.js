@@ -19,13 +19,15 @@ export const fetchUserData = async (userId) => {
       id: doc.id,
     }));
 
-    if (data) {
+    if (data.length > 0) {
       return data[0];
     } else {
-      console.log("Usuario no encontrado en Firestore");
+      console.error("User not found in Firestore");
+      return null;
     }
   } catch (error) {
-    console.error("Error al obtener datos de usuario:", error);
+    console.error("Error fetching user data:", error);
+    return null;
   }
 };
 
@@ -35,11 +37,8 @@ export const updateUser = async (uid, updateData) => {
 
     const userDocRef = doc(db, "users", userData.id);
 
-    // Verificar si el nuevo elemento ya está en favorites
-
     const isFavorite = isProductInFavorites(userData, updateData.favorites);
 
-    // Actualizar "favorites" eliminando o agregando el elemento según sea necesario
     let updatedFavorites;
     if (isFavorite) {
       updatedFavorites = userData.favorites.filter(
@@ -55,22 +54,17 @@ export const updateUser = async (uid, updateData) => {
       favorites: updatedFavorites,
     };
 
-    console.log(newUser);
-    await updateDoc(userDocRef, {
-      ...newUser,
-    });
+    await updateDoc(userDocRef, newUser);
 
     return { isFavorite: !isFavorite, newUser };
   } catch (error) {
-    console.log(error);
+    console.error("Error updating user:", error);
+    return null;
   }
 };
 
 export const isProductInFavorites = (user, productId) => {
-  console.log(user);
-  console.log(productId);
-  console.log(user.favorites.includes(productId));
-  return user.favorites.includes(productId);
+  return user?.favorites.includes(productId);
 };
 
 export const fetchFavoriteProducts = async (userId) => {
@@ -80,20 +74,18 @@ export const fetchFavoriteProducts = async (userId) => {
     if (userData && userData.favorites) {
       return userData.favorites;
     } else {
-      console.log(
-        "Usuario no encontrado en Firestore o no tiene productos en favoritos"
-      );
+      console.error("User not found in Firestore or has no favorite products");
       return [];
     }
   } catch (error) {
-    console.error("Error al obtener productos en favoritos:", error);
+    console.error("Error fetching favorite products:", error);
     return [];
   }
 };
 
 export const getOrders = async (uid) => {
-  let orders = [];
   try {
+    const orders = [];
     const purchasesCollection = collection(db, "purchases");
 
     const querySnapshot = await getDocs(
@@ -106,10 +98,10 @@ export const getOrders = async (uid) => {
         id: doc.id,
       });
     });
-    console.log(orders);
+
     return orders;
   } catch (error) {
-    console.error("Error al obtener las ordenes:", error);
-    throw error;
+    console.error("Error fetching orders:", error);
+    return null;
   }
 };

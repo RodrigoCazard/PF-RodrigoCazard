@@ -146,7 +146,6 @@ const Checkout = () => {
     const purchasesCollection = collection(db, "purchases");
 
     try {
-      console.log(formData);
       const docRef = await addDoc(purchasesCollection, {
         userData: {
           id: user?.uid,
@@ -274,7 +273,45 @@ const Checkout = () => {
                 <div>
                   {allStepsCompleted() && activeStep === 3 && (
                     <Box>
-                      <Typography>Order id:{orderID}</Typography>
+                      <Box
+                        display={"flex"}
+                        alignItems={"center"}
+                        justifyContent={"space-between"}
+                      >
+                        <Typography
+                          variant={"body1"}
+                          style={{ marginBottom: 40 }}
+                        >
+                          Order id:{" "}
+                        </Typography>
+                        <Typography variant={"h5"} style={{ marginBottom: 40 }}>
+                          {orderID}
+                        </Typography>
+                      </Box>
+                      <Link
+                        to={"/profile/orders"}
+                        style={{
+                          textDecoration: "none",
+                          color: "black",
+                        }}
+                      >
+                        <Button
+                          fullWidth
+                          disableElevation
+                          disableRipple
+                          variant="contained"
+                          sx={{
+                            padding: "10px 75px",
+                            fontWeight: "bold",
+                            fontSize: "1.1rem",
+                            borderRadius: 20,
+
+                            height: "60px",
+                          }}
+                        >
+                          See all your orders
+                        </Button>
+                      </Link>
                     </Box>
                   )}
                 </div>

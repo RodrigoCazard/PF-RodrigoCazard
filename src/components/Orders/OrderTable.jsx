@@ -2,22 +2,30 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 
 const columns = [
-  { field: "product", headerName: "Products", width: 500 },
+  {
+    field: "product",
+    headerName: "Products",
+    width: 500,
+    headerAlign: "start",
+  },
   {
     field: "quantity",
     headerName: "Total Quantity",
     width: 200,
     type: "number",
+    headerAlign: "start",
   },
 
   {
     field: "total",
     headerName: "Total",
     type: "number",
-    width: 200,
+    width: 150,
+    headerAlign: "start",
   },
-  { width: 200 },
-  { field: "id", headerName: "ID", width: 300 },
+
+  { width: 150 },
+  { field: "id", headerName: "ID", width: 300, headerAlign: "start" },
 ];
 
 export default function OrderTable({ ordersDetails }) {
@@ -39,16 +47,21 @@ export default function OrderTable({ ordersDetails }) {
   return (
     <div style={{ height: 400, width: "100%" }}>
       <DataGrid
+        sx={{
+          border: "2px solid rgba(0,0,0,0.1)",
+          borderRadius: 5,
+          padding: "15px 30px",
+        }}
         rows={rows}
         columns={columns}
-        disableColumnSelector
         disableColumnMenu
         hideFooterSelectedRowCount
         hideFooter
         //ver celda
         // showColumnVerticalBorder
         // showCellVerticalBorder
-        //
+        disableClickEventBubbling
+        disableDensitySelector
         disableRowSelectionOnClick
         initialState={{
           pagination: {

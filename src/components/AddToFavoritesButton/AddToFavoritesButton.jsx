@@ -13,6 +13,7 @@ import { toast } from "sonner";
 const AddToFavoritesButton = ({ productId }) => {
   const { user, isAuthenticated } = useAuth();
   const [isLoading, setIsLoading] = useState();
+
   const [isFavorite, setIsFavorite] = useState(false);
 
   const theme = useTheme();
@@ -21,33 +22,33 @@ const AddToFavoritesButton = ({ productId }) => {
 
   const handleSetIsFavorite = () => {
     setIsLoading(true);
-    setIsFavorite(!isFavorite);
     if (isAuthenticated() && user?.uid) {
-      updateUser(user?.uid, { favorites: productId }).then((res) => {});
+      updateUser(user?.uid, { favorites: productId })
+        .then((res) => {
+          setIsFavorite(!isFavorite);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     } else {
-      setIsFavorite(false);
       toast.warning("You are not logged in, you cannot add to favorites");
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
-
   useEffect(() => {
     setIsLoading(true);
     if (isAuthenticated() && user?.uid) {
       (async () => {
         const userData = await fetchUserData(user?.uid);
-        console.log(userData);
+
         setIsFavorite(isProductInFavorites(userData, productId));
       })();
-    } else {
-      console.log("User not authenticated");
     }
     setIsLoading(false);
   }, [isAuthenticated, user?.uid, productId]);
 
   return (
     <>
-      {" "}
       {!isLoading ? (
         <Box
           onClick={handleSetIsFavorite}
@@ -73,7 +74,9 @@ const AddToFavoritesButton = ({ productId }) => {
           )}
         </Box>
       ) : (
-        <CircularProgress />
+        <>
+          <CircularProgress />
+        </>
       )}{" "}
     </>
   );

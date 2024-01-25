@@ -8,12 +8,10 @@ export const getLocalStorage = () => {
     (acc, item) => acc + item.item.price * item.quantity,
     0
   );
-  console.log(storedCart, storedQuantity, storedTotal);
+
   return { storedCart, storedQuantity, storedTotal };
 };
 
 export const saveCartToLocalStorage = (cartData) => {
-  console.log(cartData);
-
   localStorage.setItem("cart", JSON.stringify(cartData));
 };

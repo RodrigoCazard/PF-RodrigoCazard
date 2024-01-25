@@ -14,7 +14,7 @@ import Newsletter from "../components/Newsletter/Newsletter";
 import CategoryListContainer from "../components/Categories/CategoryListContainer";
 import ItemListContainer from "../components/Items/ItemListContainer";
 import Hero from "../components/Hero/Hero";
-import Orders from "../components/Orders/OrdersContainer.jsx";
+import OrdersContainer from "../components/Orders/OrdersContainer.jsx";
 
 const AppRoutes = () => {
   return (
@@ -47,7 +47,7 @@ const AppRoutes = () => {
       <Route path="/profile" element={<Profile></Profile>} />
       <Route path="/profile/update" element={<UpdateUser></UpdateUser>} />
       <Route path="/profile/favorites" element={<Favorites />} />
-      <Route path="/profile/orders" element={<Orders />} />
+      <Route path="/profile/orders" element={<OrdersContainer />} />
       <Route path="*" element={<Navigate to={"/"} />} />
     </Routes>
   );
