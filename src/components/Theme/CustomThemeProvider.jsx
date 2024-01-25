@@ -136,6 +136,16 @@ const CustomThemeProvider = ({ children }) => {
       transform: "scale(1.02)",
     },
   };
+  theme.typography.body4 = {
+    fontSize: "1.2rem",
+
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.3rem",
+    },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "1.5rem",
+    },
+  };
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

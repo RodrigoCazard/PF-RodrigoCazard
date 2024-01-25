@@ -5,6 +5,7 @@ import ItemDetail from "./ItemDetail";
 import { db } from "../../services/config";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
+import ItemFeature from "./ItemFeature";
 
 const ItemDetailContainer = () => {
   const [product, setProduct] = useState(null);
@@ -50,10 +51,12 @@ const ItemDetailContainer = () => {
   }
 
   return (
-    <div>
+    <Box>
       {product ? (
         <div>
           <ItemDetail {...product}></ItemDetail>
+
+          <ItemFeature {...product}></ItemFeature>
         </div>
       ) : (
         <Box
@@ -78,7 +81,7 @@ const ItemDetailContainer = () => {
           </Link>
         </Box>
       )}
-    </div>
+    </Box>
   );
 };
 
