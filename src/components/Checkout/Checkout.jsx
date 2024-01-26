@@ -32,6 +32,7 @@ import CartPreview from "../Cart/CartPreview";
 import Login from "../Login/Login";
 import ProfileDetails from "../Profile/ProfileDetails";
 import PaymentDetails from "../PaymentDetails/PaymentDetails";
+import Order from "../Orders/Order";
 
 const Checkout = () => {
   const { isAuthenticated, user } = useAuth();
@@ -55,7 +56,7 @@ const Checkout = () => {
         if (data) {
           setUserData(data[0]);
         } else {
-          console.log("User not found");
+          console.error("User not found");
         }
       } catch (error) {
         console.error("Error:", error);
@@ -102,7 +103,6 @@ const Checkout = () => {
     newCompleted[activeStep] = false;
     setCompleted(newCompleted);
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    console.log(completed);
   };
 
   const handleStep = (step) => () => {
@@ -175,6 +175,8 @@ const Checkout = () => {
           id: product.item.id,
           name: product.item.name,
           quantity: product.quantity,
+          img: product.item.img,
+          price: product.item.price,
         })),
 
         paymentInfo: formData,
@@ -272,8 +274,14 @@ const Checkout = () => {
           >
             {isAuthenticated() ? (
               <Box
-                padding={"40px 80px"}
-                border={"2px solid rgba(0,0,0,0.1)"}
+                padding={
+                  allStepsCompleted() && activeStep === 3 ? 0 : "40px 80px"
+                }
+                border={
+                  allStepsCompleted() && activeStep === 3
+                    ? "0"
+                    : "2px solid rgba(0,0,0,0.1)"
+                }
                 borderRadius={15}
               >
                 <Typography
@@ -294,45 +302,7 @@ const Checkout = () => {
                 <div>
                   {allStepsCompleted() && activeStep === 3 && (
                     <Box>
-                      <Box
-                        display={"flex"}
-                        alignItems={"center"}
-                        justifyContent={"space-between"}
-                      >
-                        <Typography
-                          variant={"body1"}
-                          style={{ marginBottom: 40 }}
-                        >
-                          Order id:{" "}
-                        </Typography>
-                        <Typography variant={"h5"} style={{ marginBottom: 40 }}>
-                          {orderID}
-                        </Typography>
-                      </Box>
-                      <Link
-                        to={"/profile/orders"}
-                        style={{
-                          textDecoration: "none",
-                          color: "black",
-                        }}
-                      >
-                        <Button
-                          fullWidth
-                          disableElevation
-                          disableRipple
-                          variant="contained"
-                          sx={{
-                            padding: "10px 75px",
-                            fontWeight: "bold",
-                            fontSize: "1.1rem",
-                            borderRadius: 20,
-
-                            height: "60px",
-                          }}
-                        >
-                          See all your orders
-                        </Button>
-                      </Link>
+                      <Order orderId={orderID}></Order>
                     </Box>
                   )}
                 </div>

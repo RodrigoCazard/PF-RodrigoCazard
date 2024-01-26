@@ -1,6 +1,6 @@
 # ByteTech
 
-![](https://i.ibb.co/qr4XMsY/Screenshot-2024-01-24-021640.png)
+![Imagen de la pagina](https://i.ibb.co/qr4XMsY/Screenshot-2024-01-24-021640.png)
 
 El proyecto **ByteTech** surge como resultado del curso de React de **Coderhouse**, donde los participantes fueron desafiados a desarrollar una tienda en línea completamente funcional utilizando tecnologías de vanguardia. Esta aplicación de comercio electrónico se erige sobre la potente combinación de React y Vite, ofreciendo así un rendimiento excepcional y una experiencia de usuario fluida.
 

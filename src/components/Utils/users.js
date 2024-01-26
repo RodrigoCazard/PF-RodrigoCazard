@@ -87,7 +87,7 @@ export const fetchFavoriteProducts = async (userId) => {
   }
 };
 
-export const getOrders = async (uid) => {
+export const getOrdersByUser = async (uid) => {
   try {
     const orders = [];
     const purchasesCollection = collection(db, "purchases");

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { fetchUserData, getOrders } from "../Utils/users";
+import { getOrdersByUser } from "../Utils/users";
 
-import Order from "./OrderPreview";
 import {
   Box,
   Breadcrumbs,
@@ -26,7 +25,7 @@ const Orders = () => {
     const fetchData = async () => {
       if (isAuthenticated() && user?.uid) {
         try {
-          const result = await getOrders(user?.uid);
+          const result = await getOrdersByUser(user?.uid);
           setOrders(result);
         } catch (error) {
           console.error("Error al obtener las ordenes:", error);

@@ -28,8 +28,11 @@ const PaymentDetails = ({ onChildFormData }) => {
 
   const handleRememberMeToggle = () => {
     setRememberMe((prev) => !prev);
-  };
 
+    if (!rememberMe) {
+      loadStoredData();
+    }
+  };
   const loadStoredData = () => {
     const storedData = Cookies.get("creditCardData");
     if (storedData) {
@@ -38,7 +41,6 @@ const PaymentDetails = ({ onChildFormData }) => {
       setRememberMe(true);
     }
   };
-
   useEffect(() => {
     loadStoredData();
   }, []);
@@ -73,6 +75,20 @@ const PaymentDetails = ({ onChildFormData }) => {
       Cookies.remove("creditCardData");
     }
   };
+
+  useEffect(() => {
+    // Update issuer in the stored data when rememberMe is true
+    if (rememberMe) {
+      const { number, expiry, name, issuer } = state;
+      Cookies.set(
+        "creditCardData",
+        JSON.stringify({ number, expiry, name, issuer })
+      );
+    } else {
+      Cookies.remove("creditCardData");
+    }
+  }, [state, rememberMe]);
+
   const inputNumberStyle = {
     border: isFocused.number
       ? "2px solid #9c27b0"
@@ -91,9 +107,10 @@ const PaymentDetails = ({ onChildFormData }) => {
   };
   const handleCallback = ({ issuer }, isValid) => {
     if (isValid) {
-      setState((prev) => ({ ...prev, issuer: issuer.issuer || "" }));
+      setState((prev) => ({ ...prev, issuer: issuer || "" }));
     }
   };
+
   const handleInputChange = (evt) => {
     let { name, value } = evt.target;
 
