@@ -92,9 +92,7 @@ const Checkout = () => {
   const handleNext = () => {
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
-        ? // It's the last step, but not all steps have been completed,
-          // find the first step that has been completed
-          steps.findIndex((step, i) => !(i in completed))
+        ? steps.findIndex((step, i) => !(i in completed))
         : activeStep + 1;
     setActiveStep(newActiveStep);
   };
@@ -138,6 +136,23 @@ const Checkout = () => {
       !formData.number
     ) {
       toast.error("Your payment details are incomplete.");
+      setLoading(false);
+      return;
+    }
+
+    const [month, year] = formData.expiry.split("/").map(Number);
+    const currentYear = new Date().getFullYear() % 100;
+    const currentMonth = new Date().getMonth() + 1;
+
+    if (
+      isNaN(month) ||
+      isNaN(year) ||
+      month < 1 ||
+      month > 12 ||
+      year < currentYear ||
+      (year === currentYear && month < currentMonth)
+    ) {
+      toast.error("Invalid expiration date");
       setLoading(false);
       return;
     }

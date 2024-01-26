@@ -108,6 +108,9 @@ npm install
 
 \- **React Select Country List:** Lista de selección de países para React. \[Repositorio de react-select-country-list\]([https://github.com/fabiospampinato/react-select-country-list](https://github.com/fabiospampinato/react-select-country-list))
 
+js-cookie
+\\- **js-cookie:** Manejo de cookies, se utilizo para el Remember me del login. \[Repositorio de react-select-country-list\]([https://github.com/js-cookie/js-cookie](https://github.com/js-cookie/js-cookie))
+
 ### Desarrollo y Retos Personales
 
 - Utilicé estas bibliotecas para facilitar el desarrollo y aprender nuevas tecnologías.
