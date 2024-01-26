@@ -129,11 +129,12 @@ const Checkout = () => {
       setLoading(false);
       return;
     }
+
     if (
       !formData.name ||
       !formData.cvc ||
       !formData.expiry ||
-      !formData.number
+      formData.number.length < 19
     ) {
       toast.error("Your payment details are incomplete.");
       setLoading(false);
@@ -149,8 +150,7 @@ const Checkout = () => {
       isNaN(year) ||
       month < 1 ||
       month > 12 ||
-      year < currentYear ||
-      (year === currentYear && month < currentMonth)
+      year < currentYear
     ) {
       toast.error("Invalid expiration date");
       setLoading(false);
