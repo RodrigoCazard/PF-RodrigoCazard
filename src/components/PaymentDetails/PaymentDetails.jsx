@@ -209,6 +209,9 @@ const PaymentDetails = ({ onChildFormData }) => {
               </Typography>
             }
           />
+          <Typography variant="body2" color="textSecondary">
+            Note: The CVC of the card is not stored.
+          </Typography>
           <input type="hidden" name="issuer" value={state.issuer} />
         </form>
       </div>
