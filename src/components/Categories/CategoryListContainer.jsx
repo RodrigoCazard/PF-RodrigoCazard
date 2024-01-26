@@ -1,15 +1,28 @@
-import { Box, Button, Typography } from "@mui/material";
-import React, { useState, useEffect, useRef } from "react";
-import LaptopIcon from "@mui/icons-material/Laptop";
-import DesktopMacOutlinedIcon from "@mui/icons-material/DesktopMacOutlined";
-import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
-import LocalPrintshopOutlinedIcon from "@mui/icons-material/LocalPrintshopOutlined";
-import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
-import { useTheme } from "@emotion/react";
+import { Box, CircularProgress, Typography } from "@mui/material";
+import { useState, useEffect } from "react";
+
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
+import { getCategoryNames, getIconByCategoryName } from "../Utils/category";
 
 const CategoryListContainer = () => {
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const categoryNames = await getCategoryNames();
+        setCategories(categoryNames || []);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
   const StyledBox = styled("div")({
     position: "relative",
     minWidth: "220px",
@@ -37,75 +50,39 @@ const CategoryListContainer = () => {
       <Typography variant="h3" component="h2" sx={{}}>
         Browse by Category
       </Typography>
-
-      <Box
-        transition={"all 0.3s ease-in-out;"}
-        display={"flex"}
-        gap={4}
-        my={10}
-        flexWrap={"wrap"}
-        justifyContent={"center"}
-      >
-        <Link
-          to={"/category/desktop"}
-          style={{ textDecoration: "none", color: "black" }}
+      {loading ? (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems={"center"}
+          height={"50vh"}
         >
-          <StyledBox>
-            <DesktopMacOutlinedIcon
-              fontSize="large"
-              color="primary"
-            ></DesktopMacOutlinedIcon>
-            Desktop
-          </StyledBox>
-        </Link>
-        <Link
-          to={"/category/laptop"}
-          style={{ textDecoration: "none", color: "black" }}
+          <CircularProgress />
+        </Box>
+      ) : (
+        <Box
+          transition={"all 0.3s ease-in-out;"}
+          display={"flex"}
+          gap={4}
+          my={10}
+          flexWrap={"wrap"}
+          justifyContent={"center"}
         >
-          <StyledBox>
-            <LaptopIcon fontSize="large" color="primary"></LaptopIcon>
-            Laptop
-          </StyledBox>
-        </Link>
-        <Link
-          to={"/category/mobilePhone"}
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <StyledBox>
-            <PhoneIphoneOutlinedIcon
-              fontSize="large"
-              color="primary"
-            ></PhoneIphoneOutlinedIcon>
-            Mobile phone
-          </StyledBox>
-        </Link>
-        <Link
-          to={"/category/printer"}
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <StyledBox>
-            <LocalPrintshopOutlinedIcon
-              fontSize="large"
-              color="primary"
-            ></LocalPrintshopOutlinedIcon>
-            Printer
-          </StyledBox>
-        </Link>
-        <Link
-          to={"/category/others"}
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <StyledBox>
-            <ControlPointOutlinedIcon
-              fontSize="large"
-              color="primary"
-            ></ControlPointOutlinedIcon>
-            Others
-          </StyledBox>
-        </Link>
-      </Box>
+          {categories.map((category) => (
+            <Link
+              key={category.id}
+              to={`/category/${category.id}`}
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <StyledBox>
+                {getIconByCategoryName(category.name)}
+                {category.name}
+              </StyledBox>
+            </Link>
+          ))}
+        </Box>
+      )}
     </Box>
   );
 };
-
 export default CategoryListContainer;

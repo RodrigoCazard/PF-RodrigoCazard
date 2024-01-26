@@ -1,13 +1,17 @@
 import { Box, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import { useTheme } from "@mui/material/styles";
-import { BrowserRouter, Link, NavLink, Route, Routes } from "react-router-dom";
+import { Link, NavLink, Route, Routes } from "react-router-dom";
+import { getCategoryNames } from "../Utils/category";
+
 const NavMenu = ({ isOpen, toggleMenu }) => {
   const [showCategoriesMenu, setShowCategoriesMenu] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const theme = useTheme();
 
   const handleCategoriesClick = () => {
     setShowCategoriesMenu(!showCategoriesMenu);
@@ -16,7 +20,19 @@ const NavMenu = ({ isOpen, toggleMenu }) => {
   const handleToggle = () => {
     toggleMenu();
   };
-  const theme = useTheme();
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const categoryData = await getCategoryNames();
+        setCategories(categoryData);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const primaryColor = theme.palette.primary.main;
 
@@ -84,58 +100,28 @@ const NavMenu = ({ isOpen, toggleMenu }) => {
           {showCategoriesMenu ? (
             <Box
               position={"absolute"}
-              right={"-100%"}
+              right={"-110%"}
               top={"0%"}
               display={"flex"}
               flexDirection={"column"}
               rowGap={2}
             >
-              <Typography variant="body1" sx={styleLink} component={"li"}>
-                <NavLink
-                  onClick={handleToggle}
-                  to="/category/laptop"
-                  style={{ ...styleLink, textDecoration: "none" }}
+              {categories.map((category) => (
+                <Typography
+                  key={category.id}
+                  variant="body1"
+                  sx={styleLink}
+                  component={"li"}
                 >
-                  Laptop
-                </NavLink>
-              </Typography>
-
-              <Typography variant="body1" component={"li"} sx={styleLink}>
-                <NavLink
-                  onClick={handleToggle}
-                  to="/category/desktop"
-                  style={{ ...styleLink, textDecoration: "none" }}
-                >
-                  Desktop
-                </NavLink>
-              </Typography>
-              <Typography variant="body1" sx={styleLink} component={"li"}>
-                <NavLink
-                  onClick={handleToggle}
-                  to="/category/mobilePhone"
-                  style={{ ...styleLink, textDecoration: "none" }}
-                >
-                  Mobile phone
-                </NavLink>
-              </Typography>
-              <Typography variant="body1" sx={styleLink} component={"li"}>
-                <NavLink
-                  onClick={handleToggle}
-                  to="/category/printer"
-                  style={{ ...styleLink, textDecoration: "none" }}
-                >
-                  Printer
-                </NavLink>
-              </Typography>
-              <Typography variant="body1" sx={styleLink} component={"li"}>
-                <NavLink
-                  onClick={handleToggle}
-                  to="/category/others"
-                  style={{ ...styleLink, textDecoration: "none" }}
-                >
-                  Others
-                </NavLink>
-              </Typography>
+                  <NavLink
+                    onClick={handleToggle}
+                    to={`/category/${category.id}`}
+                    style={{ ...styleLink, textDecoration: "none" }}
+                  >
+                    {category.name}
+                  </NavLink>
+                </Typography>
+              ))}
             </Box>
           ) : (
             <></>
