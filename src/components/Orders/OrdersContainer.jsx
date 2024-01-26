@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { fetchUserData, getOrders } from "../Utils/users";
 
-import Order from "./Order";
+import Order from "./OrderPreview";
 import {
   Box,
   Breadcrumbs,

@@ -150,7 +150,8 @@ const Checkout = () => {
       isNaN(year) ||
       month < 1 ||
       month > 12 ||
-      year < currentYear
+      year < currentYear ||
+      (year === currentYear && month < currentMonth)
     ) {
       toast.error("Invalid expiration date");
       setLoading(false);
@@ -247,7 +248,7 @@ const Checkout = () => {
       <Box sx={{ width: "100%" }} mt={10} mb={3}>
         <Stepper nonLinear activeStep={activeStep} alternativeLabel>
           {steps.map((label, index) => (
-            <Step key={label} completed={completed[index]}>
+            <Step key={label} disabled completed={completed[index]}>
               <StepButton
                 color="inherit"
                 onClick={handleStep(index)}
@@ -263,7 +264,12 @@ const Checkout = () => {
       </Box>
       <Box display={"flex"} gap={7} marginBottom={10}>
         <Grid container spacing={8}>
-          <Grid item xs={12} md={12} lg={7}>
+          <Grid
+            item
+            xs={12}
+            md={12}
+            lg={allStepsCompleted() && activeStep === 3 ? 12 : 7}
+          >
             {isAuthenticated() ? (
               <Box
                 padding={"40px 80px"}
@@ -424,27 +430,29 @@ const Checkout = () => {
               </Box>
             )}
           </Grid>
-          <Grid item xs={12} md={12} lg={5}>
-            <Box
-              padding={"40px 80px"}
-              height={"fit-content"}
-              border={"2px solid rgba(0,0,0,0.1)"}
-              borderRadius={15}
-            >
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: "bold",
-                  marginBottom: "40px",
-                }}
+          {!(completedSteps() === totalSteps()) && (
+            <Grid item xs={12} md={12} lg={5}>
+              <Box
+                padding={"40px 80px"}
+                height={"fit-content"}
+                border={"2px solid rgba(0,0,0,0.1)"}
+                borderRadius={15}
               >
-                {" "}
-                My Cart
-              </Typography>
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontWeight: "bold",
+                    marginBottom: "40px",
+                  }}
+                >
+                  {" "}
+                  My Cart
+                </Typography>
 
-              <CartPreview checkoutDisable={true} />
-            </Box>
-          </Grid>
+                <CartPreview checkoutDisable={true} />
+              </Box>
+            </Grid>
+          )}
         </Grid>
       </Box>
     </Box>

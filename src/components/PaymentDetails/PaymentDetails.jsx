@@ -9,9 +9,11 @@ import {
 } from "../Utils/format";
 
 import "react-credit-cards-2/dist/es/styles-compiled.css";
-import { Box, Typography } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import { toast } from "sonner";
-
+import Cookies from "js-cookie";
+import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
+import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 const PaymentDetails = ({ onChildFormData }) => {
   const [state, setState] = useState({
     number: "",
@@ -21,6 +23,25 @@ const PaymentDetails = ({ onChildFormData }) => {
 
     issuer: "",
   });
+
+  const [rememberMe, setRememberMe] = useState(false);
+
+  const handleRememberMeToggle = () => {
+    setRememberMe((prev) => !prev);
+  };
+
+  const loadStoredData = () => {
+    const storedData = Cookies.get("creditCardData");
+    if (storedData) {
+      const { number, expiry, name, issuer } = JSON.parse(storedData);
+      setState({ number, expiry, name, issuer, cvc: "" });
+      setRememberMe(true);
+    }
+  };
+
+  useEffect(() => {
+    loadStoredData();
+  }, []);
 
   const [isFocused, setIsFocused] = useState({
     number: false,
@@ -42,6 +63,15 @@ const PaymentDetails = ({ onChildFormData }) => {
 
   const handleBlur = (field) => {
     setIsFocused((prev) => ({ ...prev, [field]: false }));
+    if (rememberMe) {
+      const { number, expiry, name, issuer } = state;
+      Cookies.set(
+        "creditCardData",
+        JSON.stringify({ number, expiry, name, issuer })
+      );
+    } else {
+      Cookies.remove("creditCardData");
+    }
   };
   const inputNumberStyle = {
     border: isFocused.number
@@ -162,6 +192,23 @@ const PaymentDetails = ({ onChildFormData }) => {
               />
             </div>
           </Box>
+          <FormControlLabel
+            sx={{ marginTop: "-30px", marginRight: "auto" }}
+            control={
+              <Checkbox
+                color="primary"
+                icon={<RadioButtonUncheckedIcon fontSize="large" />}
+                checkedIcon={<RadioButtonCheckedIcon fontSize="large" />}
+                checked={rememberMe}
+                onChange={handleRememberMeToggle}
+              />
+            }
+            label={
+              <Typography sx={{ letterSpacing: "1px" }} variant="h5">
+                Remember my card information
+              </Typography>
+            }
+          />
           <input type="hidden" name="issuer" value={state.issuer} />
         </form>
       </div>
