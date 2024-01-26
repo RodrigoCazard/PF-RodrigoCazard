@@ -21,6 +21,7 @@
     "emailjs-com": "^3.2.0",
     "firebase": "^10.7.1",
     "font-awesome": "^4.7.0",
+    "js-cookie": "^3.0.5",
     "mui-tel-input": "^5.0.0",
     "react": "^18.2.0",
     "react-credit-cards-2": "^1.0.2",

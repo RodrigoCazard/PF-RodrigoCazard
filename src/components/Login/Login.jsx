@@ -1,5 +1,5 @@
 // src/components/Login.jsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TextField,
   Button,
@@ -25,11 +25,27 @@ import { toast } from "sonner";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
+import Cookies from "js-cookie";
 const Login = ({ variant }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+
+  useEffect(() => {
+    const rememberedEmail = Cookies.get("rememberedEmail");
+
+    if (rememberedEmail) {
+      setEmail(rememberedEmail);
+      setRememberMe(true);
+    }
+  }, []);
+
+  const handleRememberMeChange = () => {
+    setRememberMe(!rememberMe);
+  };
+
   const handleLogin = async () => {
     setLoading(true);
     if (!email) {
@@ -41,6 +57,12 @@ const Login = ({ variant }) => {
     const auth = getAuth();
     try {
       await signInWithEmailAndPassword(auth, email, password);
+
+      if (rememberMe) {
+        Cookies.set("rememberedEmail", email, { expires: 365 });
+      } else {
+        Cookies.remove("rememberedEmail");
+      }
 
       toast.success("Successful login");
       if (!variant) {
@@ -229,6 +251,8 @@ const Login = ({ variant }) => {
               color="primary"
               icon={<RadioButtonUncheckedIcon fontSize="large" />}
               checkedIcon={<RadioButtonCheckedIcon fontSize="large" />}
+              checked={rememberMe}
+              onChange={handleRememberMeChange}
             />
           }
           label={
