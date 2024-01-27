@@ -26,9 +26,10 @@ export default function OrderTable({ ordersDetails }) {
     {
       field: "quantity",
       headerName: "Quantity",
-      width: 130,
+      width: 140,
       type: "number",
       headerAlign: "start",
+      renderCell: (params) => `${params.row.quantity} Items`,
     },
 
     {
@@ -37,6 +38,7 @@ export default function OrderTable({ ordersDetails }) {
       type: "number",
       width: 150,
       headerAlign: "start",
+      renderCell: (params) => `$ ${params.row.total}`,
     },
 
     { field: "id", headerName: "ID", width: 300, headerAlign: "start" },
@@ -53,8 +55,8 @@ export default function OrderTable({ ordersDetails }) {
       const updatedRows = ordersDetails.map((order) => ({
         id: String(order.id),
         product: order.products[0].name,
-        quantity: `${order.quantity} items`,
-        total: `${order.total} $`,
+        quantity: order.quantity,
+        total: order.total,
       }));
 
       setRows(updatedRows);
