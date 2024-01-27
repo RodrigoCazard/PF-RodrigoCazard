@@ -26,7 +26,7 @@ export default function OrderTable({ ordersDetails }) {
     {
       field: "quantity",
       headerName: "Quantity",
-      width: 140,
+      width: 150,
       type: "number",
       headerAlign: "start",
       renderCell: (params) => `${params.row.quantity} Items`,
