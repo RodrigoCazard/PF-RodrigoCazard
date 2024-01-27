@@ -28,10 +28,10 @@ const Orders = () => {
           const result = await getOrdersByUser(user?.uid);
           setOrders(result);
         } catch (error) {
-          console.error("Error al obtener las ordenes:", error);
+          console.error("Error :", error);
         }
       } else {
-        console.log("no estoy autenticado");
+        console.error("Not authenticated");
       }
       setIsLoading(false);
     };

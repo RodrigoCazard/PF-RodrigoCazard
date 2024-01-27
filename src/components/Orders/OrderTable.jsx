@@ -18,6 +18,12 @@ export default function OrderTable({ ordersDetails }) {
 
   const columns = [
     {
+      field: "timestamp",
+      headerName: "Purchase Date",
+      width: 250,
+      headerAlign: "start",
+    },
+    {
       field: "product",
       headerName: "Products",
       width: 400,
@@ -52,19 +58,29 @@ export default function OrderTable({ ordersDetails }) {
 
   useEffect(() => {
     if (ordersDetails) {
-      const updatedRows = ordersDetails.map((order) => ({
-        id: String(order.id),
-        product: order.products[0].name,
-        quantity: order.quantity,
-        total: order.total,
-      }));
+      const updatedRows = ordersDetails.map((order) => {
+        const timestampInMilliseconds =
+          order.timestamp.seconds * 1000 +
+          Math.floor(order.timestamp.nanoseconds / 1e6);
+        const date = new Date(timestampInMilliseconds);
+        const productNames = order.products
+          .map((product) => product.name)
+          .join(", ");
+        return {
+          id: String(order.id),
+          product: productNames,
+          quantity: order.quantity,
+          total: order.total,
+          timestamp: date.toLocaleString(),
+        };
+      });
 
       setRows(updatedRows);
     }
   }, [ordersDetails]);
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{ width: "100%" }}>
       <StyledDataGrid
         sx={{
           border: "2px solid rgba(0,0,0,0.1)",
@@ -74,22 +90,15 @@ export default function OrderTable({ ordersDetails }) {
         rows={rows}
         columns={columns}
         disableColumnMenu
-        hideFooterSelectedRowCount
-        hideFooter
-        //ver celda
-        // showColumnVerticalBorder
-        // showCellVerticalBorder
-
         disableClickEventBubbling
         disableDensitySelector
         disableRowSelectionOnClick
         onRowClick={handleRowClick}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
+            paginationModel: { page: 0, pageSize: 10 },
           },
         }}
-        pageSizeOptions={[5, 10]}
       />
     </div>
   );
