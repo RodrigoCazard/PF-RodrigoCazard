@@ -15,6 +15,7 @@ import CategoryListContainer from "../components/Categories/CategoryListContaine
 import ItemListContainer from "../components/Items/ItemListContainer";
 import Hero from "../components/Hero/Hero";
 import OrdersContainer from "../components/Orders/OrdersContainer.jsx";
+import Order from "../components/Orders/Order.jsx";
 
 const AppRoutes = () => {
   return (
@@ -40,6 +41,10 @@ const AppRoutes = () => {
         path="/item/:idItem"
         element={<ItemDetailContainer></ItemDetailContainer>}
       />
+      <Route
+        path="/profile/orders/:idOrder"
+        element={<Order variant></Order>}
+      />
       <Route path="/login" element={<Login></Login>} />
       <Route path="/register" element={<Register></Register>} />
       <Route path="/cart" element={<Cart></Cart>} />
@@ -48,7 +53,7 @@ const AppRoutes = () => {
       <Route path="/profile/update" element={<UpdateUser></UpdateUser>} />
       <Route path="/profile/favorites" element={<Favorites />} />
       <Route path="/profile/orders" element={<OrdersContainer />} />
-      <Route path="*" element={<Navigate to={"/"} />} />
+      {/* <Route path="*" element={<Navigate to={"/"} />} /> */}
     </Routes>
   );
 };

@@ -187,7 +187,7 @@ const Checkout = () => {
 
       setOrderID(docRef.id);
 
-      toast.success(`Purchase successful. Ticket created: ${docRef.id}`);
+      toast.success(`Purchase successful. Order created`);
       handleComplete();
       cartClear();
       window.scrollTo(0, 0);

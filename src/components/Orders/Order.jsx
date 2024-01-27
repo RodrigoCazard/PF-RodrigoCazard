@@ -1,23 +1,36 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Breadcrumbs,
+  Button,
+  CircularProgress,
+  Stack,
+  Typography,
+} from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import React, { useEffect, useState } from "react";
 import { getOrder } from "../Utils/order";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import styled from "@emotion/styled";
+import { useTheme } from "@emotion/react";
+const Order = ({ orderId: propOrderId, variant }) => {
+  const { idOrder: paramId } = useParams();
 
-const Order = ({ orderId }) => {
+  const orderId = propOrderId || paramId;
+
   const formatTimestamp = (timestamp) => {
     if (!timestamp || typeof timestamp !== "object") {
-      return ""; // O cualquier valor predeterminado que desees mostrar
+      return "";
     }
 
     const { seconds, nanoseconds } = timestamp;
     const date = new Date(seconds * 1000 + nanoseconds / 1000000);
 
-    return date.toLocaleString(); // Puedes ajustar el formato según tus necesidades
+    return date.toLocaleString();
   };
 
   const [order, setOrder] = useState(null);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchOrder = async () => {
       try {
@@ -25,18 +38,105 @@ const Order = ({ orderId }) => {
         setOrder(fetchedOrder);
       } catch (error) {
         console.error("Error fetching order:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchOrder();
   }, [orderId]);
 
+  const theme = useTheme();
+  const primaryColor = theme.palette.primary.main;
+
+  const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: black;
+    opacity: 0.6;
+
+    &:hover {
+      text-decoration: underline;
+      opacity: 1;
+      color: ${primaryColor};
+    }
+  `;
+
+  if (loading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <>
-      <Grid container columnSpacing={5}>
+      <>
+        {variant && (
+          <Breadcrumbs
+            sx={{ margin: "20px 0 40px 0" }}
+            separator={<NavigateNextIcon fontSize="small" />}
+            aria-label="breadcrumb"
+          >
+            <StyledLink to="/">Home page</StyledLink>
+            <StyledLink to="/profile">Profile</StyledLink>
+            <StyledLink to="/orders">Orders</StyledLink>
+            <Typography color="text.primary">Order ticket</Typography>
+          </Breadcrumbs>
+        )}
+        <Box>
+          <Typography variant="body1" color={"primary"} component={"p"} mb={1}>
+            - Order ticket
+          </Typography>
+          <Box
+            display={"flex"}
+            justifyContent={"space-between"}
+            flexWrap={"wrap"}
+            alignItems={"center"}
+          >
+            <Typography variant="h3" component="h2">
+              #{orderId}
+            </Typography>
+            <Link
+              to={"/profile/orders"}
+              style={{
+                textDecoration: "none",
+                color: "black",
+              }}
+            >
+              <Button
+                disableElevation
+                disableRipple
+                color="warning"
+                variant="outlined"
+                sx={{
+                  borderRadius: 20,
+                  "&:hover, &:focus": {
+                    border: "2px solid #000",
+                  },
+                  border: "2px solid rgba(0,0,0,0.1)",
+                  padding: "12px 22px",
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  letterSpacing: 1,
+                  marginTop: { xs: 4, sm: 4, md: 0 },
+                }}
+              >
+                See all your orders
+              </Button>
+            </Link>
+          </Box>
+        </Box>
+      </>
+      <Grid container columnSpacing={5} my={10}>
         <Grid md={12} lg={4} sm={12}>
           <Box
-            border={"2px solid rgba(0,0,0,0.4)"}
+            border={"2px solid rgba(0,0,0,0.1)"}
             padding={"20px"}
             mb={4}
             borderRadius={2}
@@ -66,7 +166,7 @@ const Order = ({ orderId }) => {
             </Link>
           </Box>
           <Box
-            border={"2px solid rgba(0,0,0,0.4)"}
+            border={"2px solid rgba(0,0,0,0.1)"}
             padding={"10px 20px"}
             mb={4}
             borderRadius={2}
@@ -96,7 +196,7 @@ const Order = ({ orderId }) => {
             </Box>
           </Box>
           <Box
-            border={"2px solid rgba(0,0,0,0.4)"}
+            border={"2px solid rgba(0,0,0,0.1)"}
             padding={"10px 20px"}
             mb={4}
             borderRadius={2}
@@ -133,7 +233,7 @@ const Order = ({ orderId }) => {
             </Box>
           </Box>
           <Box
-            border={"2px solid rgba(0,0,0,0.4)"}
+            border={"2px solid rgba(0,0,0,0.1)"}
             padding={"10px 20px"}
             mb={4}
             borderRadius={2}
@@ -155,34 +255,6 @@ const Order = ({ orderId }) => {
               </Typography>
             </Box>
           </Box>
-          <Link
-            to={"/profile/orders"}
-            style={{
-              textDecoration: "none",
-              color: "black",
-            }}
-          >
-            <Button
-              fullWidth
-              disableElevation
-              disableRipple
-              color="warning"
-              variant="outlined"
-              sx={{
-                borderRadius: 20,
-                "&:hover, &:focus": {
-                  border: "2px solid #000",
-                },
-                border: "2px solid rgba(0,0,0,0.1)",
-                padding: "12px 22px",
-                fontSize: 18,
-                fontWeight: "bold",
-                letterSpacing: 1,
-              }}
-            >
-              See all your orders
-            </Button>
-          </Link>
         </Grid>
         <Grid md={12} lg={8} sm={12}>
           <Box
@@ -193,7 +265,7 @@ const Order = ({ orderId }) => {
             gap={2}
           >
             <Box
-              border={"2px solid rgba(0,0,0,0.4)"}
+              border={"2px solid rgba(0,0,0,0.1)"}
               borderRadius={2}
               padding={"20px"}
               width={190}
@@ -204,7 +276,7 @@ const Order = ({ orderId }) => {
               <Typography variant={"body4"}>${order?.total}</Typography>
             </Box>
             <Box
-              border={"2px solid rgba(0,0,0,0.4)"}
+              border={"2px solid rgba(0,0,0,0.1)"}
               borderRadius={2}
               padding={"20px"}
               width={190}
@@ -212,7 +284,7 @@ const Order = ({ orderId }) => {
               <Typography variant={"body2"}>Tax</Typography>
             </Box>
             <Box
-              border={"2px solid rgba(0,0,0,0.4)"}
+              border={"2px solid rgba(0,0,0,0.1)"}
               borderRadius={2}
               padding={"20px"}
               width={190}
@@ -220,7 +292,7 @@ const Order = ({ orderId }) => {
               <Typography variant={"body2"}>Shipping</Typography>
             </Box>
             <Box
-              border={"2px solid rgba(0,0,0,0.4)"}
+              border={"2px solid rgba(0,0,0,0.1)"}
               borderRadius={2}
               padding={"20px"}
               width={190}
@@ -232,7 +304,7 @@ const Order = ({ orderId }) => {
             </Box>
           </Box>
           <Box
-            border={"2px solid rgba(0,0,0,0.4)"}
+            border={"2px solid rgba(0,0,0,0.1)"}
             padding={"20px"}
             borderRadius={2}
             mt={5}
