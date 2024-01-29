@@ -7,6 +7,7 @@ import {
   updateEmail,
   deleteUser,
 } from "firebase/auth";
+import { toast } from "sonner";
 
 const AuthContext = createContext({
   user: null,
@@ -72,14 +73,14 @@ export const AuthProvider = ({ children }) => {
       try {
         await deleteUser(currentUser);
 
-        alert("Deleted");
+        toast.success("User deleted successfully.");
       } catch (error) {
-        console.error("Error deleting user account:", error.message);
-        alert("There was an error deleting the user account.");
+        console.log("Error deleting user account:", error.message);
+        toast.error("There was an error deleting the user account.");
       }
     } else {
       console.error("User not authenticated.");
-      alert("You must be logged in before deleting the user account.");
+      toast.error("You must be logged in before deleting the user account.");
     }
   };
   return (
