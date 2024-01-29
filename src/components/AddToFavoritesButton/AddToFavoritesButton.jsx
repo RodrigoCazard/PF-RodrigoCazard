@@ -59,8 +59,7 @@ const AddToFavoritesButton = ({ productId }) => {
           sx={{
             width: 60,
             height: 60,
-
-            transition: "all 0.5s ease",
+            transition: "border 0.5s ease",
             border: "2px solid rgba(0,0,0,0.1)",
             "&:hover": {
               border: "2px solid rgba(0,0,0,1)",
@@ -83,9 +82,9 @@ const AddToFavoritesButton = ({ productId }) => {
           )}
         </Box>
       ) : (
-        <>
+        <Box display={"flex"} alignItems={"center"}>
           <CircularProgress />
-        </>
+        </Box>
       )}{" "}
     </>
   );

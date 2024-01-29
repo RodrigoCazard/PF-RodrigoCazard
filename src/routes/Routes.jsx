@@ -16,6 +16,7 @@ import ItemListContainer from "../components/Items/ItemListContainer";
 import Hero from "../components/Hero/Hero";
 import OrdersContainer from "../components/Orders/OrdersContainer.jsx";
 import Order from "../components/Orders/Order.jsx";
+import UpdateEmail from "../components/UpdateUser/UpdateEmail.jsx";
 
 const AppRoutes = () => {
   return (
@@ -53,7 +54,8 @@ const AppRoutes = () => {
       <Route path="/profile/update" element={<UpdateUser></UpdateUser>} />
       <Route path="/profile/favorites" element={<Favorites />} />
       <Route path="/profile/orders" element={<OrdersContainer />} />
-      {/* <Route path="*" element={<Navigate to={"/"} />} /> */}
+      <Route path="/profile/email" element={<UpdateEmail />} />
+      {<Route path="*" element={<Navigate to={"/"} />} />}
     </Routes>
   );
 };

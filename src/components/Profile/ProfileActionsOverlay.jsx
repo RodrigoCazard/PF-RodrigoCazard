@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Hidden } from "@mui/material";
 import ProfileActions from "./ProfileActions";
 
-const ProfileActionsOverlay = ({ scrolled, isVisible }) => {
+const ProfileActionsOverlay = ({ scrolled, isVisible, authState }) => {
   const [overlayStyle, setOverlayStyle] = useState({
     opacity: 0,
     visibility: "hidden",
@@ -30,6 +30,18 @@ const ProfileActionsOverlay = ({ scrolled, isVisible }) => {
     }
   };
 
+  let topValue;
+
+  if (!authState) {
+    topValue = scrolled ? 50 : 70;
+  } else {
+    topValue = scrolled ? 100 : 105;
+  }
+
+  const topStyle = {
+    top: topValue,
+  };
+
   return (
     <Box
       onMouseEnter={handleMouseEnter}
@@ -41,7 +53,7 @@ const ProfileActionsOverlay = ({ scrolled, isVisible }) => {
         position: "fixed",
         right: 0,
 
-        top: scrolled ? 50 : 70,
+        ...topStyle,
         ...overlayStyle,
         alignItems: "center",
         justifyContent: "center",

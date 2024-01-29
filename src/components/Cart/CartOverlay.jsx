@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import CartPreview from "./CartPreview";
 import { Box, Hidden } from "@mui/material";
 
-const CartOverlay = ({ scrolled, isVisible }) => {
+const CartOverlay = ({ scrolled, isVisible, authState }) => {
   const [overlayStyle, setOverlayStyle] = useState({
     opacity: 0,
     visibility: "hidden",
@@ -29,6 +29,18 @@ const CartOverlay = ({ scrolled, isVisible }) => {
     }
   };
 
+  let topValue;
+
+  if (!authState) {
+    topValue = scrolled ? 50 : 70;
+  } else {
+    topValue = scrolled ? 100 : 105;
+  }
+
+  const topStyle = {
+    top: topValue,
+  };
+
   return (
     <Box
       onMouseEnter={handleMouseEnter}
@@ -39,9 +51,9 @@ const CartOverlay = ({ scrolled, isVisible }) => {
         paddingTop: scrolled ? 2 : 4,
         position: "fixed",
         right: 0,
-
-        top: scrolled ? 50 : 70,
-        ...overlayStyle, // Aplicar el estilo dinámico
+        ...topStyle,
+        top: topStyle,
+        ...overlayStyle,
         alignItems: "center",
         justifyContent: "center",
         zIndex: "1000",
@@ -52,7 +64,7 @@ const CartOverlay = ({ scrolled, isVisible }) => {
         maxHeight={"80vh"}
         bgcolor={"white"}
         borderRadius={7}
-        border="1px solid rgba(0,0,0,0.1)"
+        border="2px solid rgba(0,0,0,0.1)"
         paddingX={5}
         paddingY={3}
         className="cart-overlay"

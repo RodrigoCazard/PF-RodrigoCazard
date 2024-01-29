@@ -29,7 +29,7 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const CartWidget = ({ scrolled }) => {
+const CartWidget = ({ scrolled, authState }) => {
   const { quantity } = useContext(CartContext);
 
   const theme = useTheme();
@@ -67,7 +67,11 @@ const CartWidget = ({ scrolled }) => {
         </Badge>
       </StyledLink>
 
-      <CartOverlay scrolled={scrolled} isVisible={isOverlayVisible} />
+      <CartOverlay
+        scrolled={scrolled}
+        isVisible={isOverlayVisible}
+        authState={authState}
+      />
     </Box>
   );
 };

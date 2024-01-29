@@ -12,8 +12,20 @@ import { useTheme } from "@emotion/react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
 import ProfileActionsOverlay from "../Profile/ProfileActionsOverlay.jsx";
+import VerificationMessage from "../VerificationMessage/VerificationMessage.jsx";
+import { Grid } from "@mui/material";
 
 const MainNavBar = ({ isOpen, toggleMenu }) => {
+  const { user } = useAuth();
+  const verify = user?.reloadUserInfo.emailVerified;
+  let authState;
+
+  if (user && !verify) {
+    authState = true;
+  } else {
+    authState = false;
+  }
+
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
 
   const handleMouseEnter = () => {
@@ -60,9 +72,7 @@ const MainNavBar = ({ isOpen, toggleMenu }) => {
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
-      position: "fixed",
-      width: "100%",
-      zIndex: 1000,
+
       transition: "background-color 0.3s, padding 0.3s, box-shadow 0.3s",
       backgroundColor: "white",
       padding: scrolled ? "10px 10%" : "30px 10%",
@@ -82,61 +92,78 @@ const MainNavBar = ({ isOpen, toggleMenu }) => {
   };
 
   return (
-    <Box height="120px">
-      <Box style={styledMainNavBar.styledHeader} component={"header"}>
-        <NavWidget isOpen={isOpen} toggleMenu={handleToggle} sx={{}} />
-        <Link to="/" style={{ textDecoration: "none", color: "black" }}>
-          <Box
-            display={"flex"}
-            alignItems={"center"}
-            sx={{ cursor: "pointer" }}
-          >
-            <img
-              src={LogoImg}
-              alt="Store logo"
-              style={{ display: "block", width: 45, marginRight: "10px" }}
-            />
-            <Typography
-              variant="body1"
-              component="h1"
-              sx={{
-                display: {
-                  xs: "none",
-                  sm: "block",
-                },
-              }}
-            >
-              ByteTech
-            </Typography>
+    <>
+      <Box height={authState ? "170px" : "120px"}>
+        <Box
+          component={"header"}
+          position={"fixed"}
+          width={"100%"}
+          zIndex={99999}
+        >
+          <Box>
+            {" "}
+            <VerificationMessage
+              user={user}
+              verify={verify}
+            ></VerificationMessage>
           </Box>
-        </Link>
-        <Box sx={{ display: "flex", gap: "4vw", alignItems: "center" }}>
-          <SearchWidget />
-          <CartWidget scrolled={scrolled} />
-          <Link
-            to={isAuthenticated ? "/profile" : "/login"}
-            style={{ textDecoration: "none", color: "black" }}
-          >
-            <AccountCircleOutlinedIcon
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-              fontSize="large"
-              sx={{
-                ...styledMainNavBar.styledIcon,
-                display: {
-                  xs: "none",
-                  sm: "flex",
-                },
-              }}
-            />
-            <ProfileActionsOverlay
-              isVisible={isOverlayVisible}
-              scrolled={scrolled}
-            ></ProfileActionsOverlay>
-          </Link>
+          <Box style={styledMainNavBar.styledHeader}>
+            <NavWidget isOpen={isOpen} toggleMenu={handleToggle} sx={{}} />{" "}
+            <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+              <Box
+                display={"flex"}
+                alignItems={"center"}
+                sx={{ cursor: "pointer" }}
+              >
+                <img
+                  src={LogoImg}
+                  alt="Store logo"
+                  style={{ display: "block", width: 45, marginRight: "10px" }}
+                />
+                <Typography
+                  variant="body1"
+                  component="h1"
+                  sx={{
+                    display: {
+                      xs: "none",
+                      sm: "block",
+                    },
+                  }}
+                >
+                  ByteTech
+                </Typography>
+              </Box>
+            </Link>
+            <Box sx={{ display: "flex", gap: "4vw", alignItems: "center" }}>
+              <SearchWidget />
+              <CartWidget scrolled={scrolled} authState={authState} />
+              <Link
+                to={isAuthenticated ? "/profile" : "/login"}
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <AccountCircleOutlinedIcon
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                  fontSize="large"
+                  sx={{
+                    ...styledMainNavBar.styledIcon,
+                    display: {
+                      xs: "none",
+                      sm: "flex",
+                    },
+                  }}
+                />
+                <ProfileActionsOverlay
+                  authState={authState}
+                  isVisible={isOverlayVisible}
+                  scrolled={scrolled}
+                ></ProfileActionsOverlay>
+              </Link>
+            </Box>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 

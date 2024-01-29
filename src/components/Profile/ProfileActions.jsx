@@ -4,6 +4,7 @@ import Logout from "../Logout/Logout";
 import UpdateUser from "../UpdateUser/UpdateUser";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import DeleteUserButtomModal from "./DeleteModal";
 
 const ProfileActions = ({ variant }) => {
   const isAuthenticated = useAuth().isAuthenticated();
@@ -84,11 +85,10 @@ const ProfileActions = ({ variant }) => {
                   Change Password
                 </Button>
               </Link>
-              <Link sx={{ width: "100px" }}>
+              <Link to={"/profile/email"} sx={{ width: "100px" }}>
                 <Button
                   variant="contained"
                   fullWidth
-                  disabled
                   disableElevation
                   sx={{
                     fontWeight: "bold",
@@ -133,7 +133,7 @@ const ProfileActions = ({ variant }) => {
               Orders
             </Button>
           </Link>
-
+          {!variant && <DeleteUserButtomModal></DeleteUserButtomModal>}
           <Logout></Logout>
         </Box>
       </Box>

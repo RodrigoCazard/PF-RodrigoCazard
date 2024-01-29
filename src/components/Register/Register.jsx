@@ -13,6 +13,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
+  sendEmailVerification,
 } from "firebase/auth";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
@@ -131,8 +132,11 @@ const Register = () => {
       };
 
       await addUserToFirestore(userData);
+      await sendEmailVerification(auth.currentUser);
       navigate("/profile");
-      toast.success("Successful registration");
+      toast.success(
+        "Confirmation message has been sent. Please check your email."
+      );
     } catch (error) {
       console.log(error.message);
       let errorMessage = "Login error";

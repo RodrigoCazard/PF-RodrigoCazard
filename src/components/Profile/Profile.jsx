@@ -46,7 +46,7 @@ const Profile = () => {
       </Box>
       {isAuthenticated() ? (
         <>
-          <Box display={"flex"} mt={10}>
+          <Box display={"flex"} my={10}>
             <Box
               width={"100%"}
               mr={7}
