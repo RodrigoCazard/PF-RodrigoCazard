@@ -94,12 +94,7 @@ const MainNavBar = ({ isOpen, toggleMenu }) => {
   return (
     <>
       <Box height={authState ? "170px" : "120px"}>
-        <Box
-          component={"header"}
-          position={"fixed"}
-          width={"100%"}
-          zIndex={99999}
-        >
+        <Box component={"header"} position={"fixed"} width={"100%"} zIndex={1}>
           <Box>
             {" "}
             <VerificationMessage
