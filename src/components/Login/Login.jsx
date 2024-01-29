@@ -53,6 +53,11 @@ const Login = ({ variant }) => {
       setLoading(false);
       return;
     }
+    if (!password) {
+      toast.error("Please enter a password.");
+      setLoading(false);
+      return;
+    }
 
     const auth = getAuth();
     try {
