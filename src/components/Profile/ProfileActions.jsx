@@ -85,11 +85,12 @@ const ProfileActions = ({ variant }) => {
                   Change Password
                 </Button>
               </Link>
-              <Link to={"/profile/email"} sx={{ width: "100px" }}>
+              <Link sx={{ width: "100px" }}>
                 <Button
                   variant="contained"
                   fullWidth
                   disableElevation
+                  disabled
                   sx={{
                     fontWeight: "bold",
                     padding: "12px",
