@@ -27,8 +27,7 @@ const Item = ({ id, category, name, price, img }) => {
     <Box maxHeight={800}>
       <Link to={`/item/${id}`}>
         <Box
-          bgcolor={"rgba(0,0,0,0.03)"}
-          minHeight={"350px"}
+          minHeight={"300px"}
           borderRadius={10}
           position={"relative"}
           mb={5}
@@ -36,7 +35,7 @@ const Item = ({ id, category, name, price, img }) => {
             backgroundImage: `url(${img})`,
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
+            backgroundSize: "contain",
             position: "relative",
             cursor: "pointer",
             display: "flex",
@@ -52,6 +51,8 @@ const Item = ({ id, category, name, price, img }) => {
               transform: "translate(-50%, -50%)",
               backgroundColor: primaryColor,
               color: "white",
+              whiteSpace: "nowrap",
+              width: "fit-content",
               padding: "16px 32px",
               borderRadius: 15,
               fontSize: "1rem",

@@ -29,6 +29,7 @@ const AppRoutes = () => {
             <Hero></Hero>
             <CategoryListContainer></CategoryListContainer>
             <ItemListContainer />
+            <ReviewContainer></ReviewContainer>
             <WhyUs></WhyUs>
 
             <Newsletter></Newsletter>

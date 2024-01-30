@@ -59,7 +59,7 @@ const ItemDetailContainer = () => {
 
           <ItemFeature {...product}></ItemFeature>
 
-          <ReviewContainer></ReviewContainer>
+          <ReviewContainer variant></ReviewContainer>
         </div>
       ) : (
         <Box
