@@ -38,7 +38,13 @@ const AppRoutes = () => {
       />
       <Route
         path="/category/:category"
-        element={<ItemListContainer></ItemListContainer>}
+        element={
+          <>
+            {" "}
+            <ItemListContainer></ItemListContainer>
+            <Newsletter></Newsletter>
+          </>
+        }
       />
       <Route
         path="/item/:idItem"

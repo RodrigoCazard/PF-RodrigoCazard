@@ -35,7 +35,7 @@ const ProfileActionsOverlay = ({ scrolled, isVisible, authState }) => {
   if (!authState) {
     topValue = scrolled ? 50 : 70;
   } else {
-    topValue = scrolled ? 100 : 105;
+    topValue = scrolled ? 100 : 115;
   }
 
   const topStyle = {
