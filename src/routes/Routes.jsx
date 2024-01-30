@@ -17,6 +17,7 @@ import Hero from "../components/Hero/Hero";
 import OrdersContainer from "../components/Orders/OrdersContainer.jsx";
 import Order from "../components/Orders/Order.jsx";
 import UpdateEmail from "../components/UpdateUser/UpdateEmail.jsx";
+import ReviewContainer from "../components/ReviewSection/ReviewContainer.jsx";
 
 const AppRoutes = () => {
   return (
@@ -40,7 +41,11 @@ const AppRoutes = () => {
       />
       <Route
         path="/item/:idItem"
-        element={<ItemDetailContainer></ItemDetailContainer>}
+        element={
+          <>
+            <ItemDetailContainer></ItemDetailContainer>
+          </>
+        }
       />
       <Route
         path="/profile/orders/:idOrder"

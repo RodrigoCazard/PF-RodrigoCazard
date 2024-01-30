@@ -6,6 +6,7 @@ import { db } from "../../services/config";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import ItemFeature from "./ItemFeature";
+import ReviewContainer from "../ReviewSection/ReviewContainer";
 
 const ItemDetailContainer = () => {
   const [product, setProduct] = useState(null);
@@ -57,6 +58,8 @@ const ItemDetailContainer = () => {
           <ItemDetail {...product}></ItemDetail>
 
           <ItemFeature {...product}></ItemFeature>
+
+          <ReviewContainer></ReviewContainer>
         </div>
       ) : (
         <Box

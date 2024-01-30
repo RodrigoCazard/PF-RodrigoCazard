@@ -82,7 +82,7 @@ const ItemDetail = ({ id, name, price, category, stock, img }) => {
             <img
               src={img}
               alt=""
-              width={"60%"}
+              width={"80%"}
               height={"auto"}
               style={{
                 objectFit: "contain",
@@ -143,32 +143,36 @@ const ItemDetail = ({ id, name, price, category, stock, img }) => {
           <Typography variant="body2" mt={1} mb={5}>
             Stock: {stock}
           </Typography>
-          <Box
-            display={"flex"}
-            flexWrap={"wrap"}
-            gap={2}
-            justifyContent={"center"}
-          >
-            <Counter
-              stock={stock}
-              count={count}
-              increment={increment}
-              decrement={decrement}
-            ></Counter>
-            <Button
-              onClick={handleCartAdd}
-              variant="contained"
-              sx={{
-                padding: "15px 50px",
-                borderRadius: 15,
-                fontSize: "1.2rem",
-                marginRight: 2,
-              }}
-            >
-              Add to cart
-            </Button>
-            <AddToFavoritesButton productId={id}></AddToFavoritesButton>
-          </Box>
+          <Grid container gap={2} justifyContent={"center"}>
+            <Grid item>
+              {" "}
+              <Counter
+                stock={stock}
+                count={count}
+                increment={increment}
+                decrement={decrement}
+              ></Counter>{" "}
+            </Grid>
+            <Grid item>
+              {" "}
+              <Button
+                onClick={handleCartAdd}
+                variant="contained"
+                sx={{
+                  padding: "15px 50px",
+                  borderRadius: 15,
+                  fontSize: "1.2rem",
+                  marginRight: 2,
+                }}
+              >
+                Add to cart
+              </Button>
+            </Grid>
+            <Grid item>
+              {" "}
+              <AddToFavoritesButton productId={id}></AddToFavoritesButton>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </>

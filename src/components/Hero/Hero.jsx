@@ -61,14 +61,18 @@ const Hero = () => {
         item
         xs={12}
         md={5}
-        paddingLeft={"80px"}
+        paddingLeft={{
+          md: "80px",
+          lg: "80px",
+        }}
+        padding={{ sm: 8, xs: 4 }}
         width={100}
         display={"flex"}
         justifyContent={"center"}
         alignContent={"center"}
         flexDirection={"column"}
       >
-        <Box mb={6} ml={{ lg: 6, md: 0 }}>
+        <Box mb={6}>
           <Typography variant="body1" color={"primary"} component={"p"} mb={1}>
             - Tech Products
           </Typography>

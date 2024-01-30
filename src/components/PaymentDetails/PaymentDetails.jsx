@@ -77,7 +77,6 @@ const PaymentDetails = ({ onChildFormData }) => {
   };
 
   useEffect(() => {
-    // Update issuer in the stored data when rememberMe is true
     if (rememberMe) {
       const { number, expiry, name, issuer } = state;
       Cookies.set(

@@ -8,7 +8,6 @@ const VerificationMessage = ({ user, verify }) => {
   useEffect(() => {
     if (user && !verify) {
       setShowMessage(true);
-      console.log("entre true");
     } else {
       setShowMessage(false);
     }

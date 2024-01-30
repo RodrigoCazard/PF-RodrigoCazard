@@ -30,7 +30,6 @@ const CustomThemeProvider = ({ children }) => {
     },
   });
 
-  // Modificar las fuentes después de definir los breakpoints
   theme.typography.h1 = {
     fontFamily: "Roboto, sans-serif",
     fontSize: "2.5rem",
