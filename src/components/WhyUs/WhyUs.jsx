@@ -5,7 +5,7 @@ import StarPurple500OutlinedIcon from "@mui/icons-material/StarPurple500Outlined
 import AssignmentReturnOutlinedIcon from "@mui/icons-material/AssignmentReturnOutlined";
 const WhyUs = () => {
   return (
-    <Box component={"section"} mb={"120px"}>
+    <Box component={"section"} my={"120px"}>
       <Box textAlign={"center"}>
         <Typography variant="body1" color={"primary"} component={"p"} mb={1}>
           - Why Us

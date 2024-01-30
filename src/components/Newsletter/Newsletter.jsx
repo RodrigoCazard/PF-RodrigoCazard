@@ -45,9 +45,9 @@ const Newsletter = () => {
     fontSize: "20px",
     borderRadius: 40,
     outline: "none",
-    width: "100%", // Ancho del input al 100% del contenedor
-    maxWidth: "450px", // Ancho máximo permitido
-    minWidth: "150px", // Ancho mínimo permitido
+    width: "100%",
+    maxWidth: "450px",
+    minWidth: "150px",
     border: isFocused ? "2px solid #9c27b0" : "2px solid transparent",
     transition: "all 0.5s ease",
   };
@@ -55,7 +55,7 @@ const Newsletter = () => {
   return (
     <Box
       component={"section"}
-      my={"120px"}
+      my={"160px"}
       bgcolor={"rgba(0,0,0,0.03)"}
       paddingY={"120px"}
       paddingX={"20px"}
