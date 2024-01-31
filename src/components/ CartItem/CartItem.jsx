@@ -47,7 +47,7 @@ const CartItem = ({ img, id, name, price, quantityProp, stock, variant }) => {
           src={img}
           alt=""
           width={variant ? "200px" : "100px"}
-          style={{ objectFit: "contain" }}
+          style={{ objectFit: "cover", borderRadius: 15 }}
         />
 
         <Box
