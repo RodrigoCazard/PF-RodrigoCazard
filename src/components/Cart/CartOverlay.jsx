@@ -53,7 +53,7 @@ const CartOverlay = ({ scrolled, isVisible, authState }) => {
       }}
     >
       <Box
-        width={"500px"}
+        width={"550px"}
         maxHeight={"80vh"}
         borderRadius={7}
         border={`2px solid ${theme.palette.border.main}`}
