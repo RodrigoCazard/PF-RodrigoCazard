@@ -66,7 +66,7 @@ const ItemListContainer = () => {
       {category && (
         <BreadCrumbsCustom
           breadCrumbs={[
-            { name: "Category", link: "/category/all" },
+            { name: "Categories", link: "/categories" },
             formatCategory,
           ]}
         ></BreadCrumbsCustom>

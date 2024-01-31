@@ -48,6 +48,16 @@ const AppRoutes = () => {
         }
       />
       <Route
+        path="/categories"
+        element={
+          <>
+            {" "}
+            <CategoryListContainer variant></CategoryListContainer>
+            <Newsletter></Newsletter>
+          </>
+        }
+      />
+      <Route
         path="/item/:idItem"
         element={
           <>

@@ -5,8 +5,9 @@ import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import { getCategoryNames, getIconByCategoryName } from "../Utils/category";
 import { useTheme } from "@emotion/react";
+import BreadCrumbsCustom from "../BreadCrumbsCustom/BreadCrumbsCustom";
 
-const CategoryListContainer = () => {
+const CategoryListContainer = ({ variant }) => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -45,49 +46,58 @@ const CategoryListContainer = () => {
   });
 
   return (
-    <Box component={"section"} marginY={"120px"}>
-      <Typography variant="body1" color={"primary"} component={"p"} mb={1}>
-        - The Categories
-      </Typography>
-      <Typography variant="h3" component="h2" sx={{}}>
-        Browse by Category
-      </Typography>
-      {loading ? (
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems={"center"}
-          height={"50vh"}
-        >
-          <CircularProgress />
-        </Box>
-      ) : (
-        <Box
-          transition={"all 0.3s ease-in-out;"}
-          display={"flex"}
-          gap={4}
-          my={10}
-          flexWrap={"wrap"}
-          justifyContent={"center"}
-        >
-          {categories.map((category) => (
-            <Link
-              key={category.id}
-              to={`/category/${category.id}`}
-              style={{
-                textDecoration: "none",
-                color: theme.palette.basicText.main,
-              }}
-            >
-              <StyledBox>
-                {getIconByCategoryName(category.name)}
-                {category.name}
-              </StyledBox>
-            </Link>
-          ))}
-        </Box>
+    <>
+      {variant && (
+        <BreadCrumbsCustom breadCrumbs={["Categories"]}></BreadCrumbsCustom>
       )}
-    </Box>
+      <Box
+        component={"section"}
+        marginY={"120px"}
+        marginTop={variant ? 0 : "120px"}
+      >
+        <Typography variant="body1" color={"primary"} component={"p"} mb={1}>
+          - The Categories
+        </Typography>
+        <Typography variant="h3" component="h2" sx={{}}>
+          Browse by Category
+        </Typography>
+        {loading ? (
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems={"center"}
+            height={"50vh"}
+          >
+            <CircularProgress />
+          </Box>
+        ) : (
+          <Box
+            transition={"all 0.3s ease-in-out;"}
+            display={"flex"}
+            gap={4}
+            my={10}
+            flexWrap={"wrap"}
+            justifyContent={"center"}
+          >
+            {categories.map((category) => (
+              <Link
+                key={category.id}
+                to={`/category/${category.id}`}
+                style={{
+                  textDecoration: "none",
+                  color: theme.palette.basicText.main,
+                }}
+              >
+                <StyledBox>
+                  {getIconByCategoryName(category.name)}
+                  {category.name}
+                </StyledBox>
+              </Link>
+            ))}
+          </Box>
+        )}
+      </Box>
+    </>
   );
 };
 export default CategoryListContainer;
