@@ -15,10 +15,8 @@ const ProfileActions = ({ variant }) => {
   return isAuthenticated ? (
     <>
       <Box
-        width={variant ? "200px" : "600px"}
-        ml={"auto"}
-        bgcolor={theme.palette.background.paper}
         height={"fit-content"}
+        bgcolor={theme.palette.background.paper}
         padding={variant ? "20px 40px" : "40px 80px"}
         border={`2px solid ${theme.palette.border.main}`}
         borderRadius={variant ? 5 : 15}
@@ -72,11 +70,10 @@ const ProfileActions = ({ variant }) => {
                   Update information
                 </Button>
               </Link>
-              <Link sx={{ width: "100px" }}>
+              <Link to={"/profile/password"} sx={{ width: "100px" }}>
                 <Button
                   variant="contained"
                   fullWidth
-                  disabled
                   disableElevation
                   sx={{
                     fontWeight: "bold",
@@ -88,12 +85,11 @@ const ProfileActions = ({ variant }) => {
                   Change Password
                 </Button>
               </Link>
-              <Link sx={{ width: "100px" }}>
+              <Link to={"/profile/email"} sx={{ width: "100px" }}>
                 <Button
                   variant="contained"
                   fullWidth
                   disableElevation
-                  disabled
                   sx={{
                     fontWeight: "bold",
                     padding: "12px",
@@ -145,8 +141,6 @@ const ProfileActions = ({ variant }) => {
   ) : (
     <>
       <Box
-        width={variant ? "260px" : "600px"}
-        ml={"auto"}
         bgcolor={theme.palette.background.paper}
         height={"fit-content"}
         padding={variant ? "20px 40px" : "40px 80px"}

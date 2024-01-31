@@ -109,19 +109,6 @@ const ProfileDetails = ({ profile, shipping, variant }) => {
               </Box>
             </>
           )}
-          {!profile && !shipping && (
-            <>
-              {" "}
-              <Box
-                display={"flex"}
-                alignItems={"center"}
-                justifyContent={"space-between"}
-              >
-                <Typography variant="body1">UID: </Typography>
-                <Typography variant="h5">{user?.uid}</Typography>
-              </Box>
-            </>
-          )}
         </Box>
       )}
     </>

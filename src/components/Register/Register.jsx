@@ -20,7 +20,6 @@ import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import {
   Typography,
   Button,
-  Breadcrumbs,
   Checkbox,
   FormControlLabel,
   Box,
@@ -29,9 +28,9 @@ import {
 } from "@mui/material";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../services/config";
-import styled from "@emotion/styled";
+
 import { useTheme } from "@emotion/react";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+
 import { Link, useNavigate } from "react-router-dom";
 import BreadCrumbsCustom from "../BreadCrumbsCustom/BreadCrumbsCustom";
 
@@ -68,6 +67,17 @@ const Register = () => {
     transform: "translateY(-25%)",
     cursor: "pointer",
   };
+
+  const inputStyle = {
+    padding: "17px 20px",
+    fontSize: "20px",
+    borderRadius: 40,
+    outline: "none",
+    width: "100%",
+    marginBottom: "50px",
+    transition: "all 0.5s ease",
+  };
+
   const handleSetShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -157,29 +167,6 @@ const Register = () => {
     }
   };
   const theme = useTheme();
-  const primaryColor = theme.palette.primary.main;
-
-  const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: black;
-    opacity: 0.6;
-
-    &:hover {
-      text-decoration: underline;
-      opacity: 1;
-      color: ${primaryColor};
-    }
-  `;
-
-  const inputStyle = {
-    padding: "17px 20px",
-    fontSize: "20px",
-    borderRadius: 40,
-    outline: "none",
-    width: "100%",
-    marginBottom: "50px",
-    transition: "all 0.5s ease",
-  };
 
   const [isFocused, setIsFocused] = useState({
     email: false,
@@ -200,6 +187,11 @@ const Register = () => {
       ? "2px solid #9c27b0"
       : `2px solid ${theme.palette.border.main}`,
   };
+  const inputConfirmPasswordStyle = {
+    border: isFocused.confirmPassword
+      ? "2px solid #9c27b0"
+      : `2px solid ${theme.palette.border.main}`,
+  };
   const inputCountryStyle = {
     border: isFocused.country
       ? "2px solid #9c27b0"
@@ -210,11 +202,7 @@ const Register = () => {
         : `2px solid ${theme.palette.border.main}`,
     },
   };
-  const inputConfirmPasswordStyle = {
-    border: isFocused.confirmPassword
-      ? "2px solid #9c27b0"
-      : `2px solid ${theme.palette.border.main}`,
-  };
+
   const inputDisplayNameStyle = {
     border: isFocused.displayName
       ? "2px solid #9c27b0"

@@ -45,26 +45,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const changeEmail = async (newEmail) => {
-    const auth = getAuth();
-    const currentUser = auth.currentUser;
-
-    if (currentUser) {
-      try {
-        await sendEmailVerification(currentUser);
-        await updateEmail(currentUser, newEmail);
-
-        alert("Se ha enviado un correo de verificación a la nueva dirección.");
-      } catch (error) {
-        console.error("Error al cambiar el correo electrónico:", error.message);
-        alert("Hubo un error al cambiar la dirección de correo electrónico.");
-      }
-    } else {
-      console.error("Usuario no autenticado.");
-      alert("Debe iniciar sesión antes de cambiar el correo electrónico.");
-    }
-  };
-
   const deleteUserAccount = async () => {
     const auth = getAuth();
     const currentUser = auth.currentUser;
@@ -90,7 +70,6 @@ export const AuthProvider = ({ children }) => {
         isAuthenticated,
         loading,
         logout,
-        changeEmail,
         deleteUserAccount,
       }}
     >

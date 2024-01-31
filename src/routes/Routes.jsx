@@ -18,6 +18,7 @@ import OrdersContainer from "../components/Orders/OrdersContainer.jsx";
 import Order from "../components/Orders/Order.jsx";
 import UpdateEmail from "../components/UpdateUser/UpdateEmail.jsx";
 import ReviewContainer from "../components/ReviewSection/ReviewContainer.jsx";
+import UpdatePassword from "../components/UpdateUser/UpdatePassword.jsx";
 
 const AppRoutes = () => {
   return (
@@ -67,6 +68,7 @@ const AppRoutes = () => {
       <Route path="/profile/favorites" element={<Favorites />} />
       <Route path="/profile/orders" element={<OrdersContainer />} />
       <Route path="/profile/email" element={<UpdateEmail />} />
+      <Route path="/profile/password" element={<UpdatePassword />} />
       {<Route path="*" element={<Navigate to={"/"} />} />}
     </Routes>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import ProfileDetails from "./ProfileDetails";
 import ProfileActions from "./ProfileActions";
-import { Box, Breadcrumbs, Typography } from "@mui/material";
+import { Box, Breadcrumbs, Grid, Typography } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
@@ -40,22 +40,36 @@ const Profile = () => {
       </Box>
       {isAuthenticated() ? (
         <>
-          <Box display={"flex"} my={10}>
-            <Box
-              width={"100%"}
-              mr={7}
+          <Grid container my={10} columnSpacing={{ lg: 7, md: 0 }}>
+            <Grid
+              md={12}
+              sm={12}
+              xs={12}
+              lg={8}
+              item
+              width={"fit-content"}
+              height={"fit-content"}
               padding={"40px 80px"}
               border={`2px solid ${theme.palette.border.main}`}
               borderRadius={15}
-              mb={"40px"}
             >
               <Typography variant="h4" mb={5}>
                 Profile Info{" "}
               </Typography>
               <ProfileDetails></ProfileDetails>
-            </Box>
-            <ProfileActions></ProfileActions>
-          </Box>
+            </Grid>
+            <Grid
+              item
+              md={12}
+              sm={12}
+              xs={12}
+              lg={4}
+              mt={{ sx: 7, md: 7, xs: 7, lg: 0 }}
+            >
+              {" "}
+              <ProfileActions></ProfileActions>
+            </Grid>
+          </Grid>
         </>
       ) : (
         <NotLogged></NotLogged>

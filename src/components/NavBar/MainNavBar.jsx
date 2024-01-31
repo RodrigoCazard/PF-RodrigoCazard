@@ -17,7 +17,7 @@ import { Grid } from "@mui/material";
 
 const MainNavBar = ({ isOpen, toggleMenu, darkMode }) => {
   const { user } = useAuth();
-  const verify = user?.reloadUserInfo.emailVerified;
+  const verify = user?.reloadUserInfo?.emailVerified;
   let authState;
 
   if (user && !verify) {

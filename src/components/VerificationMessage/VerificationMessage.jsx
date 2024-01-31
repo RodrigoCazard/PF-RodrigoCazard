@@ -4,14 +4,18 @@ import Alert from "@mui/material/Alert";
 import { sendEmailVerification } from "firebase/auth";
 import { toast } from "sonner";
 import { useTheme } from "@emotion/react";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 const VerificationMessage = ({ user, verify }) => {
   const theme = useTheme();
 
+  const [isLoading, setIsLoading] = useState(false);
   const handleVerification = () => {
+    setIsLoading(true);
     sendEmailVerification(user)
       .then(() => {
         toast.success("We have successfully forwarded your message.");
+        setIsLoading(false);
       })
       .catch((error) => {
         let errorMessage = "Send error";
@@ -21,6 +25,7 @@ const VerificationMessage = ({ user, verify }) => {
         }
 
         toast.error(errorMessage);
+        setIsLoading(false);
       });
   };
 
@@ -36,6 +41,14 @@ const VerificationMessage = ({ user, verify }) => {
 
   return (
     <>
+      {isLoading && (
+        <Backdrop
+          open={isLoading}
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        >
+          <CircularProgress color="primary" />
+        </Backdrop>
+      )}
       {showMessage && (
         <Alert
           severity="error"
