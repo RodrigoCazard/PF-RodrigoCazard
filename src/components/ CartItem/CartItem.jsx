@@ -44,7 +44,6 @@ const CartItem = ({ img, id, name, price, quantityProp, stock, variant }) => {
     <>
       <Box display={"flex"} mb={2}>
         <img
-          crossOrigin="anonymous"
           src={img}
           alt=""
           width={variant ? "200px" : "100px"}

@@ -31,7 +31,6 @@ const Item = ({ id, category, name, price, img }) => {
           borderRadius={10}
           position={"relative"}
           mb={5}
-          crossOrigin="anonymous"
           sx={{
             backgroundImage: `url(${img})`,
             backgroundPosition: "center",
