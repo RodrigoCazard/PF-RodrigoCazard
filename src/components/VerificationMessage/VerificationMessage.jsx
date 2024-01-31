@@ -8,9 +8,21 @@ import { useTheme } from "@emotion/react";
 const VerificationMessage = ({ user, verify }) => {
   const theme = useTheme();
 
-  sendEmailVerification(user).then(() => {
-    toast.success("We have successfully forwarded your message.");
-  });
+  const handleVerification = () => {
+    sendEmailVerification(user)
+      .then(() => {
+        toast.success("We have successfully forwarded your message.");
+      })
+      .catch((error) => {
+        let errorMessage = "Send error";
+        if (error.code === "auth/too-many-requests") {
+          errorMessage =
+            "Due to high demand, we have temporarily disabled message forwarding. ";
+        }
+
+        toast.error(errorMessage);
+      });
+  };
 
   const [showMessage, setShowMessage] = useState(false);
 
@@ -38,7 +50,7 @@ const VerificationMessage = ({ user, verify }) => {
           Your email is not verified. Please verify your email.{" "}
           <span
             style={{ color: theme.palette.primary.main, cursor: "pointer" }}
-            onClick={sendEmailVerification()}
+            onClick={handleVerification}
           >
             {" "}
             Resend email
