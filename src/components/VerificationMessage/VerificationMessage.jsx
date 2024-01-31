@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../context/AuthContext";
+
 import Alert from "@mui/material/Alert";
+import { sendEmailVerification } from "firebase/auth";
+import { toast } from "sonner";
+import { useTheme } from "@emotion/react";
 
 const VerificationMessage = ({ user, verify }) => {
+  const theme = useTheme();
+
+  sendEmailVerification(user).then(() => {
+    toast.success("We have successfully forwarded your message.");
+  });
+
   const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
@@ -26,7 +35,14 @@ const VerificationMessage = ({ user, verify }) => {
             color: "black",
           }}
         >
-          Your email is not verified. Please verify your email.
+          Your email is not verified. Please verify your email.{" "}
+          <span
+            style={{ color: theme.palette.primary.main, cursor: "pointer" }}
+            onClick={sendEmailVerification()}
+          >
+            {" "}
+            Resend email
+          </span>
         </Alert>
       )}
     </>

@@ -35,7 +35,7 @@ const Item = ({ id, category, name, price, img }) => {
             backgroundImage: `url(${img})`,
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
+            backgroundSize: "contain",
             borderRadius: 5,
             position: "relative",
             cursor: "pointer",
