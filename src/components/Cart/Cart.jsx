@@ -2,38 +2,18 @@ import { useContext, useState } from "react";
 import CartContext from "../../context/CartContext";
 import { Link } from "react-router-dom";
 import CartItem from "../ CartItem/CartItem";
-import { Box, Breadcrumbs, Button, Grid, Typography } from "@mui/material";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import styled from "@emotion/styled";
+import { Box, Button, Grid, Typography } from "@mui/material";
+
 import { useTheme } from "@emotion/react";
+import BreadCrumbsCustom from "../BreadCrumbsCustom/BreadCrumbsCustom";
 const Cart = () => {
   const theme = useTheme();
-  const primaryColor = theme.palette.primary.main;
-
-  const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: black;
-    opacity: 0.6;
-
-    &:hover {
-      text-decoration: underline;
-      opacity: 1;
-      color: ${primaryColor};
-    }
-  `;
 
   const { cart, cartClear, total, quantity } = useContext(CartContext);
 
   return (
     <>
-      <Breadcrumbs
-        sx={{ margin: "20px 0 40px 0" }}
-        separator={<NavigateNextIcon fontSize="small" />}
-        aria-label="breadcrumb"
-      >
-        <StyledLink to="/">Home page</StyledLink>
-        <Typography color="text.primary">Cart</Typography>
-      </Breadcrumbs>
+      <BreadCrumbsCustom breadCrumbs={["Cart"]}></BreadCrumbsCustom>
       <Box>
         <Typography variant="body1" color={"primary"} component={"p"} mb={1}>
           - Your Cart
@@ -51,9 +31,9 @@ const Cart = () => {
               borderRadius: 20,
 
               "&:hover, &:focus": {
-                border: "2px solid #000",
+                border: `2px solid ${theme.palette.basicText.main}`,
               },
-              border: "2px solid rgba(0,0,0,0.1)",
+              border: `2px solid ${theme.palette.border.main}`,
               minWidth: "200px",
               fontSize: 18,
               fontWeight: "bold",
@@ -106,7 +86,7 @@ const Cart = () => {
                   {cart.map((prod) => (
                     <Box
                       key={prod.item.id}
-                      border={"2px solid rgba(0,0,0,0.1)"}
+                      sx={{ border: `2px solid ${theme.palette.border.main}` }}
                       borderRadius={15}
                       padding={"20px 50px"}
                     >
@@ -125,7 +105,7 @@ const Cart = () => {
                 <Box
                   ml={"auto"}
                   height={"fit-content"}
-                  border={"2px solid rgba(0,0,0,0.1)"}
+                  sx={{ border: `2px solid ${theme.palette.border.main}` }}
                   padding={"40px 80px"}
                   borderRadius={15}
                 >

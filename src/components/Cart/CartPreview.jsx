@@ -3,8 +3,11 @@ import CartContext from "../../context/CartContext";
 import { Link } from "react-router-dom";
 import CartItem from "../ CartItem/CartItem";
 import { Box, Button, Typography } from "@mui/material";
+import { useTheme } from "@emotion/react";
 
 const CartPreview = ({ checkoutDisable }) => {
+  const theme = useTheme();
+
   const { cart, cartClear, total, quantity } = useContext(CartContext);
 
   if (quantity === 0) {
@@ -96,9 +99,9 @@ const CartPreview = ({ checkoutDisable }) => {
               borderRadius: 20,
 
               "&:hover, &:focus": {
-                border: "2px solid #000",
+                border: `2px solid ${theme.palette.basicText.main}`,
               },
-              border: "2px solid rgba(0,0,0,0.1)",
+              border: `2px solid ${theme.palette.border.main}`,
               minWidth: "100%",
               padding: "12px 22px",
               fontSize: 18,

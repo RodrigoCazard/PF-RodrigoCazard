@@ -1,19 +1,13 @@
-import {
-  Box,
-  Breadcrumbs,
-  Button,
-  CircularProgress,
-  Typography,
-} from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
 import ItemList from "./ItemList";
 import { Link, useParams } from "react-router-dom";
 import { db } from "../../services/config";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import { useTheme } from "@emotion/react";
+
 import { getDocs, collection, query, where } from "firebase/firestore";
-import styled from "@emotion/styled";
+
+import BreadCrumbsCustom from "../BreadCrumbsCustom/BreadCrumbsCustom";
 
 const ItemListContainer = () => {
   const [products, setProducts] = useState([]);
@@ -21,21 +15,6 @@ const ItemListContainer = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const { category } = useParams();
-
-  const theme = useTheme();
-  const primaryColor = theme.palette.primary.main;
-
-  const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: black;
-    opacity: 0.6;
-
-    &:hover {
-      text-decoration: underline;
-      opacity: 1;
-      color: ${primaryColor};
-    }
-  `;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,21 +59,18 @@ const ItemListContainer = () => {
     </Box>;
   }
 
+  const formatCategory = category?.charAt(0).toUpperCase() + category?.slice(1);
+
   return (
     <>
-      {category ? (
-        <Breadcrumbs
-          sx={{ margin: "20px 0 40px 0" }}
-          separator={<NavigateNextIcon fontSize="small" />}
-          aria-label="breadcrumb"
-        >
-          <StyledLink to="/">Home page</StyledLink>
-          <StyledLink to="/category/all">Category</StyledLink>
-          <Typography color="text.primary">
-            {category?.charAt(0).toUpperCase() + category?.slice(1)}
-          </Typography>
-        </Breadcrumbs>
-      ) : null}
+      {category && (
+        <BreadCrumbsCustom
+          breadCrumbs={[
+            { name: "Category", link: "/category/all" },
+            formatCategory,
+          ]}
+        ></BreadCrumbsCustom>
+      )}
 
       <Box component={"main"} mb={"120px"}>
         <Typography variant="body1" color={"primary"} component={"p"} mb={1}>

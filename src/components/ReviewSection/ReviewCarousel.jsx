@@ -112,11 +112,11 @@ const SimpleSlider = () => {
           height="40px"
           onClick={previous}
           borderRadius="50%"
-          border="2px solid rgba(0,0,0,0.1)"
           sx={{
             transition: "all 0.5s ease",
+            border: `2px solid ${theme.palette.border.main}`,
             cursor: "pointer",
-            "&:hover": { border: "2px solid rgba(0,0,0,1)" },
+            "&:hover": { border: `2px solid ${theme.palette.basicText.main}` },
           }}
         >
           <KeyboardArrowLeftIcon fontSize="large" />
@@ -130,11 +130,11 @@ const SimpleSlider = () => {
           width="40px"
           height="40px"
           borderRadius="50%"
-          border="2px solid rgba(0,0,0,0.1)"
           sx={{
             transition: "all 0.5s ease",
+            border: `2px solid ${theme.palette.border.main}`,
             cursor: "pointer",
-            "&:hover": { border: "2px solid rgba(0,0,0,1)" },
+            "&:hover": { border: `2px solid ${theme.palette.basicText.main}` },
           }}
         >
           <KeyboardArrowRightIcon fontSize="large" />

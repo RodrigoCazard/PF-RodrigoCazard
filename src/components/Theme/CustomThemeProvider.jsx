@@ -3,18 +3,29 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { purple, green } from "@mui/material/colors";
 import PropTypes from "prop-types";
 
-const CustomThemeProvider = ({ children }) => {
+const CustomThemeProvider = ({ children, darkMode }) => {
   const theme = createTheme({
     palette: {
       primary: {
-        main: purple[500],
+        main: darkMode ? purple[700] : purple[500],
       },
       secondary: {
-        main: green[500],
+        main: darkMode ? green[700] : green[500],
       },
       warning: {
-        main: "rgba(0,0,0,0.9)",
+        main: !darkMode ? "rgba(0,0,0,0.9)" : "rgba(255,255,255,0.9)",
       },
+      customColor1: {
+        main: darkMode ? "#1e1e27" : "rgba(0,0,0,0.03)",
+      },
+      basicText: {
+        main: !darkMode ? "black" : "white",
+      },
+      border: {
+        main: darkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
+      },
+
+      mode: darkMode ? "dark" : "light",
     },
     breakpoints: {
       values: {
@@ -155,6 +166,7 @@ const CustomThemeProvider = ({ children }) => {
 
 CustomThemeProvider.propTypes = {
   children: PropTypes.node.isRequired,
+  darkMode: PropTypes.bool.isRequired,
 };
 
 export default CustomThemeProvider;

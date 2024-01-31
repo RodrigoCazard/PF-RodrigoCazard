@@ -2,8 +2,11 @@ import { Box, Button, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import emailjs from "emailjs-com";
 import { toast } from "sonner";
+import { useTheme } from "@emotion/react";
 
 const Newsletter = () => {
+  const theme = useTheme();
+
   const [email, setEmail] = useState("");
 
   const sendMessage = (e) => {
@@ -56,7 +59,7 @@ const Newsletter = () => {
     <Box
       component={"section"}
       my={"160px"}
-      bgcolor={"rgba(0,0,0,0.03)"}
+      bgcolor={theme.palette.customColor1.main}
       paddingY={"120px"}
       paddingX={"20px"}
       borderRadius={10}

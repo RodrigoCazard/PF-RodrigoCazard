@@ -2,15 +2,17 @@ import { Grid } from "@mui/material";
 import React from "react";
 import ReviewTitle from "./ReviewTitle";
 import ReviewComents from "./ReviewComents";
+import { useTheme } from "@emotion/react";
 
 const ReviewContainer = ({ variant }) => {
+  const theme = useTheme();
   return (
     <Grid
       px={"8%"}
       py={"8%"}
       container
       sx={{
-        backgroundColor: "rgba(0,0,0,0.03)",
+        backgroundColor: theme.palette.customColor1.main,
         borderRadius: 10,
         mb: "68px",
 

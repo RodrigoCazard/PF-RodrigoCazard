@@ -13,7 +13,6 @@ import { db } from "../../services/config";
 import {
   Backdrop,
   Box,
-  Breadcrumbs,
   Button,
   CircularProgress,
   Grid,
@@ -23,9 +22,8 @@ import {
   Typography,
 } from "@mui/material";
 import CartContext from "../../context/CartContext";
-import { Link, useNavigate } from "react-router-dom";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import styled from "@emotion/styled";
+import { useNavigate } from "react-router-dom";
+
 import { useTheme } from "@emotion/react";
 import { toast } from "sonner";
 import CartPreview from "../Cart/CartPreview";
@@ -33,6 +31,7 @@ import Login from "../Login/Login";
 import ProfileDetails from "../Profile/ProfileDetails";
 import PaymentDetails from "../PaymentDetails/PaymentDetails";
 import Order from "../Orders/Order";
+import BreadCrumbsCustom from "../BreadCrumbsCustom/BreadCrumbsCustom";
 
 const Checkout = () => {
   const { isAuthenticated, user } = useAuth();
@@ -205,19 +204,6 @@ const Checkout = () => {
   };
 
   const theme = useTheme();
-  const primaryColor = theme.palette.primary.main;
-
-  const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: black;
-    opacity: 0.6;
-
-    &:hover {
-      text-decoration: underline;
-      opacity: 1;
-      color: ${primaryColor};
-    }
-  `;
 
   return (
     <Box>
@@ -229,15 +215,9 @@ const Checkout = () => {
           <CircularProgress color="primary" />
         </Backdrop>
       )}
-      <Breadcrumbs
-        sx={{ margin: "20px 0 40px 0" }}
-        separator={<NavigateNextIcon fontSize="small" />}
-        aria-label="breadcrumb"
-      >
-        <StyledLink to="/">Home page</StyledLink>
-        <StyledLink to="/cart">Cart</StyledLink>
-        <Typography color="text.primary">Checkout</Typography>
-      </Breadcrumbs>
+      <BreadCrumbsCustom
+        breadCrumbs={[{ name: "Cart", link: "/cart" }, "Checkout"]}
+      />
 
       <Box>
         <Typography variant="body1" color={"primary"} component={"p"} mb={1}>
@@ -280,7 +260,7 @@ const Checkout = () => {
                 border={
                   allStepsCompleted() && activeStep === 3
                     ? "0"
-                    : "2px solid rgba(0,0,0,0.1)"
+                    : `2px solid ${theme.palette.border.main}`
                 }
                 borderRadius={15}
               >
@@ -315,9 +295,9 @@ const Checkout = () => {
                           borderRadius: 20,
 
                           "&:hover, &:focus": {
-                            border: "2px solid #000",
+                            border: `2px solid ${theme.palette.basicText.main}`,
                           },
-                          border: "2px solid rgba(0,0,0,0.1)",
+                          border: `2px solid ${theme.palette.border.main}`,
                           width: "45%",
                           padding: "12px 22px",
                           fontSize: 18,
@@ -383,7 +363,7 @@ const Checkout = () => {
             ) : (
               <Box
                 padding={"40px 80px"}
-                border={"2px solid rgba(0,0,0,0.1)"}
+                border={`2px solid ${theme.palette.border.main}`}
                 borderRadius={15}
               >
                 <Typography
@@ -405,7 +385,7 @@ const Checkout = () => {
               <Box
                 padding={"40px 80px"}
                 height={"fit-content"}
-                border={"2px solid rgba(0,0,0,0.1)"}
+                border={`2px solid ${theme.palette.border.main}`}
                 borderRadius={15}
               >
                 <Typography

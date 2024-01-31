@@ -4,29 +4,15 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../../services/config";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Box, Breadcrumbs, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import Item from "../Items/Item.jsx";
-import styled from "@emotion/styled";
+
 import { useTheme } from "@emotion/react";
 import { Link } from "react-router-dom";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+
 import NotLogged from "../NotLogged/NotLogged.jsx";
+import BreadCrumbsCustom from "../BreadCrumbsCustom/BreadCrumbsCustom.jsx";
 const Favorites = () => {
-  const theme = useTheme();
-  const primaryColor = theme.palette.primary.main;
-
-  const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: black;
-    opacity: 0.6;
-
-    &:hover {
-      text-decoration: underline;
-      opacity: 1;
-      color: ${primaryColor};
-    }
-  `;
-
   const { user, isAuthenticated } = useAuth();
 
   const [idProducts, setIdProducts] = useState([]);
@@ -71,15 +57,9 @@ const Favorites = () => {
 
   return (
     <>
-      <Breadcrumbs
-        sx={{ margin: "20px 0 40px 0" }}
-        separator={<NavigateNextIcon fontSize="small" />}
-        aria-label="breadcrumb"
-      >
-        <StyledLink to="/">Home page</StyledLink>
-        <StyledLink to="/profile">Profile</StyledLink>
-        <Typography color="text.primary">Favorites</Typography>
-      </Breadcrumbs>
+      <BreadCrumbsCustom
+        breadCrumbs={[{ name: "Profile", link: "/profile" }, "Favorites"]}
+      />
       <Box>
         <Typography variant="body1" color={"primary"} component={"p"} mb={1}>
           - Favorites

@@ -25,6 +25,11 @@ import AppRoutes from "./routes/Routes.jsx";
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setDarkMode((prevMode) => !prevMode);
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -55,14 +60,13 @@ function App() {
     <AuthProvider>
       <CartProvider>
         <>
-          <CustomThemeProvider>
+          <CustomThemeProvider darkMode={darkMode}>
             <HashRouter>
               <ScrollToTopOnRefresh />
               <Toaster
                 position="bottom-left"
                 richColors
                 offset="64px"
-                closeButton
                 duration={3000}
                 toastOptions={{
                   style: { fontSize: "1.4rem" },
@@ -73,17 +77,29 @@ function App() {
                 <Loader />
               ) : (
                 <>
-                  <MainNavBar isOpen={isOpen} toggleMenu={toggleMenu} />
+                  <MainNavBar
+                    isOpen={isOpen}
+                    toggleMenu={toggleMenu}
+                    darkMode={darkMode}
+                  />
 
                   {isOpen ? (
-                    <NavMenu isOpen={isOpen} toggleMenu={toggleMenu}></NavMenu>
+                    <NavMenu
+                      isOpen={isOpen}
+                      toggleMenu={toggleMenu}
+                      toggleDarkMode={toggleDarkMode}
+                      darkMode={darkMode}
+                    ></NavMenu>
                   ) : (
                     <Box style={{ padding: "0 10%" }}>
                       <ScrollTopRoute />
 
                       <AppRoutes />
 
-                      <Footer></Footer>
+                      <Footer
+                        toggleDarkMode={toggleDarkMode}
+                        darkMode={darkMode}
+                      ></Footer>
                       <ScrollToTop showUnder={400}>
                         <IconButton
                           color="primary"

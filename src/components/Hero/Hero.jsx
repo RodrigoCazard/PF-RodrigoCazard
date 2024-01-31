@@ -3,7 +3,10 @@ import Typography from "@mui/material/Typography";
 
 import { Link } from "react-router-dom";
 import Carousel from "./Carousel";
+import { useTheme } from "@emotion/react";
 const Hero = () => {
+  const theme = useTheme();
+
   const styledHero = {
     styledButton: {
       width: 300,
@@ -19,7 +22,7 @@ const Hero = () => {
       objectFit: "contain",
     },
     styledGridContainer: {
-      backgroundColor: "rgba(0,0,0,0.03)",
+      backgroundColor: theme.palette.customColor1.main,
       borderRadius: 10,
 
       width: "100%",

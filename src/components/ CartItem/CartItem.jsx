@@ -5,8 +5,12 @@ import CartContext from "../../context/CartContext";
 import ClearIcon from "@mui/icons-material/Clear";
 import Counter from "../Counter/Counter";
 import { Link } from "react-router-dom";
+import { useTheme } from "@emotion/react";
 
 const CartItem = ({ img, id, name, price, quantityProp, stock, variant }) => {
+  const theme = useTheme();
+  const borderColor = theme.palette.border.main;
+
   const { cartRemove } = useContext(CartContext);
   const { cartUpdate } = useContext(CartContext);
   const handleCartRemove = () => {
@@ -57,7 +61,10 @@ const CartItem = ({ img, id, name, price, quantityProp, stock, variant }) => {
           {" "}
           <Link
             to={`/item/${id}`}
-            style={{ textDecoration: "none", color: "rgba(0,0,0,0.9)" }}
+            style={{
+              textDecoration: "none",
+              color: theme.palette.basicText.main,
+            }}
           >
             <Typography
               fontWeight={"bold"}
@@ -86,14 +93,14 @@ const CartItem = ({ img, id, name, price, quantityProp, stock, variant }) => {
                 disableElevation
                 disableRipple
                 sx={{
-                  color: "black",
-                  border: "2px solid rgba(0,0,0,0.1)",
+                  color: theme.palette.basicText.main,
+                  border: `2px solid ${borderColor}`,
                   transition: "border 0.3s, color 0.3s",
                   height: "60px",
                   width: "60px",
 
                   "&:hover, &:focus": {
-                    border: "2px solid #000",
+                    border: `2px solid ${theme.palette.basicText.main}`,
                   },
                 }}
               >
@@ -108,15 +115,15 @@ const CartItem = ({ img, id, name, price, quantityProp, stock, variant }) => {
             disableElevation
             disableRipple
             sx={{
-              color: "black",
-              border: "2px solid rgba(0,0,0,0.01)",
+              color: theme.palette.basicText.main,
+              border: `2px solid ${borderColor}`,
               transition: "border 0.3s, color 0.3s",
               height: "40px",
               width: "40px",
               my: "auto",
               ml: "auto",
               "&:hover, &:focus": {
-                border: "2px solid #000",
+                border: `2px solid ${theme.palette.basicText.main}`,
               },
             }}
           >

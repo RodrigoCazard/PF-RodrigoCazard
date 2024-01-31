@@ -19,6 +19,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { toast } from "sonner";
 import { fetchUserData, updateUser } from "../Utils/users";
 import NotLogged from "../NotLogged/NotLogged";
+import BreadCrumbsCustom from "../BreadCrumbsCustom/BreadCrumbsCustom";
 
 const UpdateUser = () => {
   const [displayName, setDisplayName] = useState("");
@@ -152,15 +153,12 @@ const UpdateUser = () => {
           <CircularProgress color="primary" />
         </Backdrop>
       )}
-      <Breadcrumbs
-        sx={{ margin: "20px 0 40px 0" }}
-        separator={<NavigateNextIcon fontSize="small" />}
-        aria-label="breadcrumb"
-      >
-        <StyledLink to="/">Home page</StyledLink>
-        <StyledLink to="/profile">Profile</StyledLink>
-        <Typography color="text.primary">Update information</Typography>
-      </Breadcrumbs>
+      <BreadCrumbsCustom
+        breadCrumbs={[
+          { name: "Profile", link: "/profile" },
+          "Update Information",
+        ]}
+      />
       <Box>
         <Typography variant="body1" color={"primary"} component={"p"} mb={1}>
           - Update information
@@ -250,6 +248,7 @@ const UpdateUser = () => {
                     }}
                     style={{
                       height: "65px",
+                      backgroundColor: "white",
                       marginBottom: "50px",
                       ...inputPhoneStyle,
                       transition: "all 0.5s ease",
@@ -303,6 +302,7 @@ const UpdateUser = () => {
                     styles={{
                       option: (base) => ({
                         ...base,
+                        color: "black",
                         fontSize: "20px",
                       }),
                       clearIndicator: (base) => ({

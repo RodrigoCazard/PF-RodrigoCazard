@@ -2,19 +2,14 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { getOrdersByUser } from "../Utils/users";
 
-import {
-  Box,
-  Breadcrumbs,
-  Button,
-  CircularProgress,
-  Typography,
-} from "@mui/material";
-import styled from "@emotion/styled";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
+
 import { Link } from "react-router-dom";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+
 import { useTheme } from "@emotion/react";
 import NotLogged from "../NotLogged/NotLogged";
 import OrderTable from "./OrderTable";
+import BreadCrumbsCustom from "../BreadCrumbsCustom/BreadCrumbsCustom";
 const Orders = () => {
   const [orders, setOrders] = useState([]);
 
@@ -39,32 +34,11 @@ const Orders = () => {
     fetchData();
   }, [user?.uid, isAuthenticated]);
 
-  const theme = useTheme();
-  const primaryColor = theme.palette.primary.main;
-
-  const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: black;
-    opacity: 0.6;
-
-    &:hover {
-      text-decoration: underline;
-      opacity: 1;
-      color: ${primaryColor};
-    }
-  `;
-
   return (
     <>
-      <Breadcrumbs
-        sx={{ margin: "20px 0 40px 0" }}
-        separator={<NavigateNextIcon fontSize="small" />}
-        aria-label="breadcrumb"
-      >
-        <StyledLink to="/">Home page</StyledLink>
-        <StyledLink to="/profile">Profile</StyledLink>
-        <Typography color="text.primary">Orders</Typography>
-      </Breadcrumbs>
+      <BreadCrumbsCustom
+        breadCrumbs={[{ name: "Profile", link: "/profile" }, "Orders"]}
+      />
       <Box>
         <Typography variant="body1" color={"primary"} component={"p"} mb={1}>
           - Orders

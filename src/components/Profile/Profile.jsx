@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useTheme } from "@emotion/react";
 import { useAuth } from "../../context/AuthContext.jsx";
 import NotLogged from "../NotLogged/NotLogged.jsx";
+import BreadCrumbsCustom from "../BreadCrumbsCustom/BreadCrumbsCustom.jsx";
 const Profile = () => {
   const { user, isAuthenticated } = useAuth();
 
@@ -28,14 +29,7 @@ const Profile = () => {
 
   return (
     <>
-      <Breadcrumbs
-        sx={{ margin: "20px 0 40px 0" }}
-        separator={<NavigateNextIcon fontSize="small" />}
-        aria-label="breadcrumb"
-      >
-        <StyledLink to="/">Home page</StyledLink>
-        <Typography color="text.primary">Profile</Typography>
-      </Breadcrumbs>
+      <BreadCrumbsCustom breadCrumbs={["Profile"]} />
       <Box>
         <Typography variant="body1" color={"primary"} component={"p"} mb={1}>
           - Profile
@@ -51,7 +45,7 @@ const Profile = () => {
               width={"100%"}
               mr={7}
               padding={"40px 80px"}
-              border={"2px solid rgba(0,0,0,0.1)"}
+              border={`2px solid ${theme.palette.border.main}`}
               borderRadius={15}
               mb={"40px"}
             >

@@ -33,6 +33,7 @@ import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { Link, useNavigate } from "react-router-dom";
+import BreadCrumbsCustom from "../BreadCrumbsCustom/BreadCrumbsCustom";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -56,11 +57,11 @@ const Register = () => {
     setCountry(country);
   };
   const styleIcon = {
-    backgroundColor: "white",
     opacity: 0.4,
     "&:hover": {
       opacity: 0.8,
     },
+    color: `black`,
     position: "absolute",
     right: "20px",
     top: "22%",
@@ -190,40 +191,44 @@ const Register = () => {
   });
 
   const inputEmailStyle = {
-    border: isFocused.email ? "2px solid #9c27b0" : "2px solid rgba(0,0,0,0.1)",
+    border: isFocused.email
+      ? "2px solid #9c27b0"
+      : `2px solid ${theme.palette.border.main}`,
   };
   const inputPasswordStyle = {
     border: isFocused.password
       ? "2px solid #9c27b0"
-      : "2px solid rgba(0,0,0,0.1)",
+      : `2px solid ${theme.palette.border.main}`,
   };
   const inputCountryStyle = {
     border: isFocused.country
       ? "2px solid #9c27b0"
-      : "2px solid rgba(0,0,0,0.1)",
+      : `2px solid ${theme.palette.border.main}`,
     "&:hover": {
       border: isFocused.country
         ? "2px solid #9c27b0"
-        : "2px solid rgba(0,0,0,0.1)",
+        : `2px solid ${theme.palette.border.main}`,
     },
   };
   const inputConfirmPasswordStyle = {
     border: isFocused.confirmPassword
       ? "2px solid #9c27b0"
-      : "2px solid rgba(0,0,0,0.1)",
+      : `2px solid ${theme.palette.border.main}`,
   };
   const inputDisplayNameStyle = {
     border: isFocused.displayName
       ? "2px solid #9c27b0"
-      : "2px solid rgba(0,0,0,0.1)",
+      : `2px solid ${theme.palette.border.main}`,
   };
   const inputPhoneStyle = {
-    border: isFocused.phone ? "2px solid #9c27b0" : "2px solid rgba(0,0,0,0.1)",
+    border: isFocused.phone
+      ? "2px solid #9c27b0"
+      : `2px solid ${theme.palette.border.main}`,
   };
   const inputAddressStyle = {
     border: isFocused.address
       ? "2px solid #9c27b0"
-      : "2px solid rgba(0,0,0,0.1)",
+      : `2px solid ${theme.palette.border.main}`,
   };
 
   const handleFocus = (field) => {
@@ -246,15 +251,9 @@ const Register = () => {
           <CircularProgress color="primary" />
         </Backdrop>
       )}
-      <Breadcrumbs
-        sx={{ margin: "20px 0 40px 0" }}
-        separator={<NavigateNextIcon fontSize="small" />}
-        aria-label="breadcrumb"
-      >
-        <StyledLink to="/">Home page</StyledLink>
-        <StyledLink to="/login">Login</StyledLink>
-        <Typography color="text.primary">Register</Typography>
-      </Breadcrumbs>
+      <BreadCrumbsCustom
+        breadCrumbs={[{ name: "Login", link: "/login" }, "Register"]}
+      />
       <Box>
         <Typography variant="body1" color={"primary"} component={"p"} mb={1}>
           - Sign Up
@@ -328,6 +327,7 @@ const Register = () => {
               },
             }}
             style={{
+              backgroundColor: "white",
               height: "65px",
               marginBottom: "50px",
               ...inputPhoneStyle,
@@ -377,7 +377,9 @@ const Register = () => {
               option: (base) => ({
                 ...base,
                 fontSize: "20px",
+                color: "black",
               }),
+
               clearIndicator: (base) => ({
                 ...base,
                 color: "rgba(0,0,0,0.2)",
@@ -397,7 +399,7 @@ const Register = () => {
                 ...inputStyle,
                 cursor: "pointer",
 
-                border: "2px solid rgba(0,0,0,0.1)",
+                border: `2px solid ${theme.palette.border.main}`,
                 transition: "all 0.5s ease",
                 boxShadow: "none",
                 ...inputCountryStyle,
@@ -482,7 +484,9 @@ const Register = () => {
           label={
             <Typography variant="h5">
               I have read and agree to{" "}
-              <Link style={{ color: "black" }}>terms & conditions</Link>
+              <Link style={{ color: theme.palette.basicText.main }}>
+                terms & conditions
+              </Link>
             </Typography>
           }
         />
@@ -518,9 +522,9 @@ const Register = () => {
                 borderRadius: 20,
 
                 "&:hover, &:focus": {
-                  border: "2px solid #000",
+                  border: `2px solid ${theme.palette.basicText.main}`,
                 },
-                border: "2px solid rgba(0,0,0,0.1)",
+                border: `2px solid ${theme.palette.border.main}`,
 
                 padding: "10px 75px",
                 fontSize: 18,

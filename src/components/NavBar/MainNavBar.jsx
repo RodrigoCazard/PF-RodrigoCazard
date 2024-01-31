@@ -15,7 +15,7 @@ import ProfileActionsOverlay from "../Profile/ProfileActionsOverlay.jsx";
 import VerificationMessage from "../VerificationMessage/VerificationMessage.jsx";
 import { Grid } from "@mui/material";
 
-const MainNavBar = ({ isOpen, toggleMenu }) => {
+const MainNavBar = ({ isOpen, toggleMenu, darkMode }) => {
   const { user } = useAuth();
   const verify = user?.reloadUserInfo.emailVerified;
   let authState;
@@ -45,7 +45,7 @@ const MainNavBar = ({ isOpen, toggleMenu }) => {
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
-      if (offset > 70) {
+      if (offset > 20) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -72,11 +72,16 @@ const MainNavBar = ({ isOpen, toggleMenu }) => {
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
-
+      backgroundColor: !darkMode ? "white" : "rgb(18, 18, 18)",
       transition: "background-color 0.3s, padding 0.3s, box-shadow 0.3s",
-      backgroundColor: "white",
+
       padding: scrolled ? "10px 10%" : "30px 10%",
-      boxShadow: scrolled ? "0px 2px 5px rgba(0, 0, 0, 0.1)" : "none",
+      boxShadow:
+        scrolled && darkMode
+          ? "0px 2px 5px rgba(255, 255, 255, 0.1)"
+          : scrolled
+          ? "0px 2px 5px rgba(0, 0, 0, 0.1)"
+          : "none",
     },
     styledIcon: {
       transition: "all 0.5s ease",
@@ -94,7 +99,13 @@ const MainNavBar = ({ isOpen, toggleMenu }) => {
   return (
     <>
       <Box height={authState ? "170px" : "120px"}>
-        <Box component={"header"} position={"fixed"} width={"100%"} zIndex={1}>
+        <Box
+          component={"header"}
+          position={"fixed"}
+          width={"100%"}
+          zIndex={1}
+          bgcolor={!theme.palette.basicText.main}
+        >
           <Box>
             {" "}
             <VerificationMessage
@@ -103,7 +114,7 @@ const MainNavBar = ({ isOpen, toggleMenu }) => {
             ></VerificationMessage>
           </Box>
           <Box style={styledMainNavBar.styledHeader}>
-            <NavWidget isOpen={isOpen} toggleMenu={handleToggle} sx={{}} />{" "}
+            <NavWidget isOpen={isOpen} toggleMenu={handleToggle} />{" "}
             <Link to="/" style={{ textDecoration: "none", color: "black" }}>
               <Box
                 display={"flex"}
@@ -119,6 +130,7 @@ const MainNavBar = ({ isOpen, toggleMenu }) => {
                   variant="body1"
                   component="h1"
                   sx={{
+                    color: theme.palette.basicText.main,
                     display: {
                       xs: "none",
                       sm: "block",
@@ -141,6 +153,7 @@ const MainNavBar = ({ isOpen, toggleMenu }) => {
                   onMouseLeave={handleMouseLeave}
                   fontSize="large"
                   sx={{
+                    color: theme.palette.basicText.main,
                     ...styledMainNavBar.styledIcon,
                     display: {
                       xs: "none",

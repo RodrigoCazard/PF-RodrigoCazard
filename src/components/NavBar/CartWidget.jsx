@@ -13,7 +13,7 @@ const StyledLink = styled(Link)`
   cursor: pointer;
   transition: all 0.5s ease;
   opacity: 0.8;
-  color: black;
+  color: ${(props) => props.secondaryColor};
 
   &.overlay-visible {
     opacity: 1;
@@ -34,7 +34,7 @@ const CartWidget = ({ scrolled, authState }) => {
 
   const theme = useTheme();
   const primaryColor = theme.palette.primary.main;
-
+  const secondaryColor = theme.palette.basicText.main;
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
 
   const handleMouseEnter = () => {
@@ -54,6 +54,7 @@ const CartWidget = ({ scrolled, authState }) => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         primaryColor={primaryColor}
+        secondaryColor={secondaryColor}
         className={isOverlayVisible ? "overlay-visible" : ""}
       >
         <Badge

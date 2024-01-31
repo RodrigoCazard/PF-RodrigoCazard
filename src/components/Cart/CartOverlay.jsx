@@ -1,23 +1,12 @@
 import React, { useEffect, useState } from "react";
 import CartPreview from "./CartPreview";
-import { Box, Hidden } from "@mui/material";
+import { Box } from "@mui/material";
+import { useTheme } from "@emotion/react";
 
 const CartOverlay = ({ scrolled, isVisible, authState }) => {
-  const [overlayStyle, setOverlayStyle] = useState({
-    opacity: 0,
-    visibility: "hidden",
-  });
-  const [isMouseOver, setIsMouseOver] = useState(false);
+  const theme = useTheme();
 
-  useEffect(() => {
-    if (!isMouseOver) {
-      setOverlayStyle({
-        opacity: isVisible ? 1 : 0,
-        visibility: isVisible ? "visible" : "hidden",
-        transition: "all 0.2s ease",
-      });
-    }
-  }, [isVisible, isMouseOver]);
+  const [isMouseOver, setIsMouseOver] = useState(false);
 
   const handleMouseEnter = () => {
     setIsMouseOver(true);
@@ -37,6 +26,12 @@ const CartOverlay = ({ scrolled, isVisible, authState }) => {
     topValue = scrolled ? 100 : 115;
   }
 
+  const overlayStyle = {
+    opacity: isMouseOver || isVisible ? 1 : 0,
+    visibility: isMouseOver || isVisible ? "visible" : "hidden",
+    transition: "all 0.2s ease",
+  };
+
   const topStyle = {
     top: topValue,
   };
@@ -47,28 +42,25 @@ const CartOverlay = ({ scrolled, isVisible, authState }) => {
       onMouseLeave={handleMouseLeave}
       marginRight={"7%"}
       sx={{
-        bgcolor: "transparent",
         paddingTop: scrolled ? 2 : 4,
         position: "fixed",
         right: 0,
         ...topStyle,
-        top: topStyle,
-        ...overlayStyle,
         alignItems: "center",
         justifyContent: "center",
         zIndex: "1000",
+        ...overlayStyle,
       }}
     >
       <Box
         width={"500px"}
         maxHeight={"80vh"}
-        bgcolor={"white"}
         borderRadius={7}
-        border="2px solid rgba(0,0,0,0.1)"
+        border={`2px solid ${theme.palette.border.main}`}
         paddingX={5}
         paddingY={3}
         className="cart-overlay"
-        sx={{ overflowY: "auto" }}
+        sx={{ overflowY: "auto", bgcolor: theme.palette.background.paper }}
       >
         <CartPreview checkoutDisable={false} />
       </Box>

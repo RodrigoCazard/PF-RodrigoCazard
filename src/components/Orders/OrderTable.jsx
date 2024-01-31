@@ -1,3 +1,4 @@
+import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
@@ -5,6 +6,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function OrderTable({ ordersDetails }) {
+  const theme = useTheme();
+
   const navigate = useNavigate();
 
   const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
@@ -83,7 +86,7 @@ export default function OrderTable({ ordersDetails }) {
     <div style={{ width: "100%" }}>
       <StyledDataGrid
         sx={{
-          border: "2px solid rgba(0,0,0,0.1)",
+          border: `2px solid ${theme.palette.border.main}`,
           borderRadius: 5,
           padding: "15px 30px",
         }}

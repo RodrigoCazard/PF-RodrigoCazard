@@ -3,7 +3,10 @@ import React from "react";
 import PersonPinCircleOutlinedIcon from "@mui/icons-material/PersonPinCircleOutlined";
 import StarPurple500OutlinedIcon from "@mui/icons-material/StarPurple500Outlined";
 import AssignmentReturnOutlinedIcon from "@mui/icons-material/AssignmentReturnOutlined";
+import { useTheme } from "@emotion/react";
 const WhyUs = () => {
+  const theme = useTheme();
+
   return (
     <Box component={"section"} my={"120px"}>
       <Box textAlign={"center"}>
@@ -17,7 +20,7 @@ const WhyUs = () => {
       <Grid container spacing={9} justifyContent={"center"} mt={1}>
         <Grid item textAlign={"center"} lg={4} md={6}>
           <Box
-            bgcolor={"rgba(0,0,0,0.05)"}
+            bgcolor={theme.palette.customColor1.main}
             display={"inline-flex"}
             padding={2}
             borderRadius={"50%"}
@@ -40,7 +43,7 @@ const WhyUs = () => {
         </Grid>
         <Grid item textAlign={"center"} lg={4} md={6}>
           <Box
-            bgcolor={"rgba(0,0,0,0.05)"}
+            bgcolor={theme.palette.customColor1.main}
             display={"inline-flex"}
             padding={2}
             borderRadius={"50%"}
@@ -63,7 +66,7 @@ const WhyUs = () => {
         </Grid>
         <Grid item textAlign={"center"} lg={4} md={6}>
           <Box
-            bgcolor={"rgba(0,0,0,0.05)"}
+            bgcolor={theme.palette.customColor1.main}
             display={"inline-flex"}
             padding={2}
             borderRadius={"50%"}

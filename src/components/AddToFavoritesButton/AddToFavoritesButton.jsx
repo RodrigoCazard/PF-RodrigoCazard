@@ -60,9 +60,9 @@ const AddToFavoritesButton = ({ productId }) => {
             width: 60,
             height: 60,
             transition: "border 0.5s ease",
-            border: "2px solid rgba(0,0,0,0.1)",
+            border: `2px solid ${theme.palette.border.main}`,
             "&:hover": {
-              border: "2px solid rgba(0,0,0,1)",
+              border: `2px solid ${theme.palette.basicText.main}`,
             },
             display: "grid",
             placeItems: "center",

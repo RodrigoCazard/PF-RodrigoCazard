@@ -123,6 +123,7 @@ npm install
 A continuación, se detallan las próximas actualizaciones y características planificadas para el proyecto. Ten en cuenta que el roadmap está sujeto a cambios y actualizaciones a medida que evoluciona el proyecto.
 
 - [x] ~~**Modificación de Datos del Usuario:** Permitir a los usuarios actualizar la información de su perfil, como nombre, dirección y otros datos personales.~~
+- [x] **Modo Oscuro:** Implementar un modo oscuro para proporcionar a los usuarios una opción de visualización que reduzca la fatiga ocular durante la noche.
 - [ ] **Modificación de Contraseña:** Implementar la funcionalidad para permitir a los usuarios cambiar sus contraseñas de forma segura.
 - [ ] **Modificación de Email:** Agregar la capacidad de que los usuarios actualicen su dirección de correo electrónico asociada a la cuenta.
 - [ ] **Autenticación de Email:** Reforzar la seguridad mediante la autenticación por correo electrónico, garantizando la validez de las cuentas.
@@ -131,7 +132,6 @@ A continuación, se detallan las próximas actualizaciones y características pl
 - [ ] **Ampliación de Productos y Secciones:** Agregar más productos a la tienda y crear nuevas secciones para una mayor variedad y organización.
 - [ ] **Secciones Faltantes (About, Contact, etc.):** Incluir páginas informativas adicionales como "Acerca de nosotros" y "Contacto" para mejorar la experiencia del usuario.
 - [ ] **Mejorar el Responsive:** Realizar mejoras significativas en la capacidad de respuesta para garantizar una experiencia consistente en una variedad de dispositivos y tamaños de pantalla.
-- [ ] **Modo Oscuro:** Implementar un modo oscuro para proporcionar a los usuarios una opción de visualización que reduzca la fatiga ocular durante la noche.
 - [ ] **Cambio de Idioma:** Introducir la posibilidad de cambiar el idioma de la aplicación para atender a una audiencia más amplia.
 
 Recuerda que estas metas pueden evolucionar con el tiempo según las necesidades y los comentarios de los usuarios. ¡Espero que esta lista sea lo que estás buscando!

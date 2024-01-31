@@ -5,8 +5,11 @@ import UpdateUser from "../UpdateUser/UpdateUser";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import DeleteUserButtomModal from "./DeleteModal";
+import { useTheme } from "@emotion/react";
 
 const ProfileActions = ({ variant }) => {
+  const theme = useTheme();
+
   const isAuthenticated = useAuth().isAuthenticated();
 
   return isAuthenticated ? (
@@ -14,10 +17,10 @@ const ProfileActions = ({ variant }) => {
       <Box
         width={variant ? "200px" : "600px"}
         ml={"auto"}
-        bgcolor={"white"}
+        bgcolor={theme.palette.background.paper}
         height={"fit-content"}
         padding={variant ? "20px 40px" : "40px 80px"}
-        border={"2px solid rgba(0,0,0,0.1)"}
+        border={`2px solid ${theme.palette.border.main}`}
         borderRadius={variant ? 5 : 15}
       >
         {!variant && (
@@ -144,10 +147,10 @@ const ProfileActions = ({ variant }) => {
       <Box
         width={variant ? "260px" : "600px"}
         ml={"auto"}
-        bgcolor={"white"}
+        bgcolor={theme.palette.background.paper}
         height={"fit-content"}
         padding={variant ? "20px 40px" : "40px 80px"}
-        border={"2px solid rgba(0,0,0,0.1)"}
+        border={`2px solid ${theme.palette.border.main}`}
         borderRadius={variant ? 5 : 15}
       >
         <Box
@@ -179,7 +182,7 @@ const ProfileActions = ({ variant }) => {
               disableElevation
               sx={{
                 "&:hover, &:focus": {
-                  border: "2px solid #000",
+                  border: `2px solid ${theme.palette.basicText.main}`,
                 },
                 marginTop: "40px",
                 fontWeight: "bold",
@@ -187,7 +190,7 @@ const ProfileActions = ({ variant }) => {
                 fontSize: "14px",
                 borderRadius: 40,
                 letterSpacing: 1,
-                border: "2px solid rgba(0,0,0,0.1)",
+                border: `2px solid ${theme.palette.border.main}`,
               }}
             >
               Create Account

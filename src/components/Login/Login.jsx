@@ -1,13 +1,9 @@
 // src/components/Login.jsx
 import React, { useEffect, useState } from "react";
 import {
-  TextField,
   Button,
   Typography,
-  Paper,
-  Breadcrumbs,
   Box,
-  InputLabel,
   FormControlLabel,
   Backdrop,
   CircularProgress,
@@ -15,7 +11,7 @@ import {
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "@emotion/react";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+
 import styled from "@emotion/styled";
 import Checkbox from "@mui/material/Checkbox";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
@@ -26,6 +22,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 import Cookies from "js-cookie";
+import BreadCrumbsCustom from "../BreadCrumbsCustom/BreadCrumbsCustom";
 const Login = ({ variant }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -96,11 +93,14 @@ const Login = ({ variant }) => {
     setShowPassword(!showPassword);
   };
 
+  const theme = useTheme();
+  const primaryColor = theme.palette.primary.main;
+
   const styleIcon = {
     "&:hover": {
       opacity: 0.8,
     },
-    backgroundColor: "white",
+    color: `black`,
     opacity: 0.4,
     position: "absolute",
     right: "20px",
@@ -109,12 +109,9 @@ const Login = ({ variant }) => {
     cursor: "pointer",
   };
 
-  const theme = useTheme();
-  const primaryColor = theme.palette.primary.main;
-
   const StyledLink = styled(Link)`
     text-decoration: none;
-    color: black;
+    color: ${theme.palette.basicText.main};
     opacity: 0.6;
 
     &:hover {
@@ -167,14 +164,7 @@ const Login = ({ variant }) => {
       )}
       {!variant && (
         <>
-          <Breadcrumbs
-            sx={{ margin: "20px 0 40px 0" }}
-            separator={<NavigateNextIcon fontSize="small" />}
-            aria-label="breadcrumb"
-          >
-            <StyledLink to="/">Home page</StyledLink>
-            <Typography color="text.primary">Login</Typography>
-          </Breadcrumbs>
+          <BreadCrumbsCustom breadCrumbs={["Login"]} />
           <Box>
             <Typography
               variant="body1"
@@ -302,9 +292,9 @@ const Login = ({ variant }) => {
               sx={{
                 borderRadius: 20,
                 "&:hover, &:focus": {
-                  border: "2px solid #000",
+                  border: `2px solid ${theme.palette.basicText.main}`,
                 },
-                border: "2px solid rgba(0,0,0,0.1)",
+                border: `2px solid ${theme.palette.border.main}`,
                 padding: "12px 22px",
                 fontSize: 18,
                 fontWeight: "bold",

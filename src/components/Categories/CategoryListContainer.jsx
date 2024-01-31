@@ -4,11 +4,13 @@ import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import { getCategoryNames, getIconByCategoryName } from "../Utils/category";
+import { useTheme } from "@emotion/react";
 
 const CategoryListContainer = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const theme = useTheme();
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -34,7 +36,7 @@ const CategoryListContainer = () => {
     flexDirection: "column",
     gap: 10,
     borderRadius: 20,
-    backgroundColor: "rgba(0,0,0,0.03)",
+    backgroundColor: theme.palette.customColor1.main,
     fontWeight: "bold",
     transition: "all 0.2s ease",
     "&:hover": {
@@ -72,7 +74,10 @@ const CategoryListContainer = () => {
             <Link
               key={category.id}
               to={`/category/${category.id}`}
-              style={{ textDecoration: "none", color: "black" }}
+              style={{
+                textDecoration: "none",
+                color: theme.palette.basicText.main,
+              }}
             >
               <StyledBox>
                 {getIconByCategoryName(category.name)}

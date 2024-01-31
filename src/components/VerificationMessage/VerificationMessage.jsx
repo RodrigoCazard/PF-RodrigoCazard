@@ -17,12 +17,13 @@ const VerificationMessage = ({ user, verify }) => {
     <>
       {showMessage && (
         <Alert
-          severity="warning"
+          severity="error"
           sx={{
             display: "flex",
             justifyContent: "center",
             width: "100%",
             background: "rgb(255, 245, 138)",
+            color: "black",
           }}
         >
           Your email is not verified. Please verify your email.

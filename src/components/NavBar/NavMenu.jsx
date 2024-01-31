@@ -7,8 +7,9 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import { useTheme } from "@mui/material/styles";
 import { Link, NavLink, Route, Routes } from "react-router-dom";
 import { getCategoryNames } from "../Utils/category";
+import SwitchMode from "../SwitchMode/SwitchMode";
 
-const NavMenu = ({ isOpen, toggleMenu }) => {
+const NavMenu = ({ isOpen, toggleMenu, toggleDarkMode, darkMode }) => {
   const [showCategoriesMenu, setShowCategoriesMenu] = useState(false);
   const [categories, setCategories] = useState([]);
   const theme = useTheme();
@@ -52,7 +53,7 @@ const NavMenu = ({ isOpen, toggleMenu }) => {
     display: "flex",
     alignItems: "center",
     opacity: 0.8,
-    color: "black",
+    color: theme.palette.basicText.main,
     position: "relative",
     transition: "transform 0.3s ease-in-out",
     "&:hover": {
@@ -83,7 +84,13 @@ const NavMenu = ({ isOpen, toggleMenu }) => {
           sx={styleLink}
           onClick={handleToggle}
         >
-          <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+          <Link
+            to="/"
+            style={{
+              textDecoration: "none",
+              color: theme.palette.basicText.main,
+            }}
+          >
             Home
           </Link>
         </Typography>
@@ -138,17 +145,20 @@ const NavMenu = ({ isOpen, toggleMenu }) => {
       <Box
         position={"absolute"}
         component={"footer"}
-        bgcolor={"white"}
         width={"80%"}
         height={80}
         bottom={"0"}
         display={"flex"}
         alignItems={"center"}
       >
-        <Box display={"flex"} gap={8}>
+        <Box display={"flex"} gap={8} alignItems={"center"}>
           <FacebookIcon sx={styleSocial} fontSize="large"></FacebookIcon>
           <InstagramIcon sx={styleSocial} fontSize="large"></InstagramIcon>
           <TwitterIcon sx={styleSocial} fontSize="large"></TwitterIcon>
+          <SwitchMode
+            toggleDarkMode={toggleDarkMode}
+            darkMode={darkMode}
+          ></SwitchMode>
         </Box>
       </Box>
     </Box>

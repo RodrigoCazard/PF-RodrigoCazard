@@ -2,8 +2,11 @@ import { Box } from "@mui/material";
 import React from "react";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import { useTheme } from "@emotion/react";
 
 const Counter = ({ count, decrement, increment, stock }) => {
+  const theme = useTheme();
+
   const isMinCount = count === 1;
   const isMaxCount = count === stock;
 
@@ -29,7 +32,7 @@ const Counter = ({ count, decrement, increment, stock }) => {
       height={"100%"}
       borderRadius={"50px"}
       padding={"0 10px"}
-      border={"2px solid rgba(0,0,0,0.1)"}
+      border={`2px solid ${theme.palette.border.main}`}
     >
       <KeyboardArrowLeftIcon
         onClick={handleDecrement}

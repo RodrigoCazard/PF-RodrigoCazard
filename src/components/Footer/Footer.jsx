@@ -6,7 +6,8 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import { useTheme } from "@mui/material/styles";
 import { Link } from "react-router-dom";
-const Footer = () => {
+import SwitchMode from "../SwitchMode/SwitchMode";
+const Footer = ({ toggleDarkMode, darkMode }) => {
   const LogoImage = styled("img")(({ theme }) => ({
     width: 35,
     marginRight: "10px",
@@ -19,6 +20,7 @@ const Footer = () => {
   const theme = useTheme();
 
   const primaryColor = theme.palette.primary.main;
+  const linkColor = theme.palette.basicText.main;
 
   const styleSocial = {
     opacity: 0.8,
@@ -68,6 +70,11 @@ const Footer = () => {
             <TwitterIcon sx={styleSocial} fontSize="normal"></TwitterIcon>
           </Box>
         </Box>
+
+        <SwitchMode
+          toggleDarkMode={toggleDarkMode}
+          darkMode={darkMode}
+        ></SwitchMode>
       </Grid>
       <Grid
         item
@@ -80,31 +87,37 @@ const Footer = () => {
         <Typography variant="h5">Categories</Typography>
         <Link
           to={"/category/desktop"}
-          style={{ textDecoration: "none", color: "black" }}
+          style={{ textDecoration: "none", color: linkColor }}
         >
           <Typography variant="body3">Desktop</Typography>{" "}
         </Link>
         <Link
           to={"/category/laptop"}
-          style={{ textDecoration: "none", color: "black" }}
+          style={{ textDecoration: "none", color: linkColor }}
         >
           <Typography variant="body3">Laptop</Typography>{" "}
         </Link>
         <Link
           to={"/category/mobilePhone"}
-          style={{ textDecoration: "none", color: "black" }}
+          style={{ textDecoration: "none", color: linkColor }}
         >
           <Typography variant="body3">Mobile phone</Typography>
         </Link>
         <Link
           to={"/category/printer"}
-          style={{ textDecoration: "none", color: "black" }}
+          style={{ textDecoration: "none", color: linkColor }}
         >
           <Typography variant="body3">Printer</Typography>
         </Link>
         <Link
+          to={"/category/offers"}
+          style={{ textDecoration: "none", color: linkColor }}
+        >
+          <Typography variant="body3">Offers</Typography>
+        </Link>
+        <Link
           to={"/category/others"}
-          style={{ textDecoration: "none", color: "black" }}
+          style={{ textDecoration: "none", color: linkColor }}
         >
           <Typography variant="body3">Others</Typography>
         </Link>

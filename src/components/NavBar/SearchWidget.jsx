@@ -46,7 +46,7 @@ const SearchWidget = () => {
         width: expanded ? "230px" : "35px",
         borderRadius: 10,
         height: 55,
-        border: expanded ? "1px solid rgba(0,0,0,0.20)" : "none",
+        border: expanded ? `2px solid ${theme.palette.border.main}` : "none",
         padding: expanded ? "0px 15px" : 0,
         transition: "all 0.5s",
       }}
@@ -64,7 +64,6 @@ const SearchWidget = () => {
             transform: "scale(1.1)",
             opacity: 1,
           },
-          transition: "all 0.5s ease",
         }}
       />
 
@@ -77,6 +76,7 @@ const SearchWidget = () => {
           transition: "all 0.5s",
           paddingLeft: expanded ? "7px" : "0",
           paddingRight: expanded ? "7px" : "0",
+          backgroundColor: theme.palette.background.paper,
           opacity: expanded ? "1" : "0",
         }}
         placeholder="Search..."

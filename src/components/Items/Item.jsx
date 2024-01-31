@@ -6,7 +6,7 @@ import { styled } from "@mui/system";
 
 const CategoryColors = {
   desktop: "60, 179, 113",
-  laptop: "0, 0, 255",
+  laptop: "23, 120, 255",
   mobilePhone: "255, 165, 0",
   printer: "255, 0, 0",
 };
@@ -27,7 +27,7 @@ const Item = ({ id, category, name, price, img }) => {
     <Box maxHeight={800}>
       <Link to={`/item/${id}`}>
         <Box
-          minHeight={"300px"}
+          minHeight={"350px"}
           borderRadius={10}
           position={"relative"}
           mb={5}
@@ -35,7 +35,8 @@ const Item = ({ id, category, name, price, img }) => {
             backgroundImage: `url(${img})`,
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
-            backgroundSize: "contain",
+            backgroundSize: "cover",
+            borderRadius: 5,
             position: "relative",
             cursor: "pointer",
             display: "flex",
@@ -54,7 +55,7 @@ const Item = ({ id, category, name, price, img }) => {
               whiteSpace: "nowrap",
               width: "fit-content",
               padding: "16px 32px",
-              borderRadius: 15,
+              borderRadius: 20,
               fontSize: "1rem",
               fontWeight: "bold",
 

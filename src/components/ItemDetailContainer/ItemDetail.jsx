@@ -1,24 +1,29 @@
-import { Box, Breadcrumbs, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import React, { useState } from "react";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
-import { useTheme } from "@emotion/react";
 import { useContext } from "react";
 import CartContext from "../../context/CartContext";
 import { Link } from "react-router-dom";
-import styled from "@emotion/styled";
+
 import Counter from "../Counter/Counter";
 import AddToFavoritesButton from "../AddToFavoritesButton/AddToFavoritesButton";
+import BreadCrumbsCustom from "../BreadCrumbsCustom/BreadCrumbsCustom";
 
 const CategoryColors = {
   desktop: "60, 179, 113",
-  laptop: "0, 0, 255",
+  laptop: "23, 120, 255",
   mobilePhone: "255, 165, 0",
   printer: "255, 0, 0",
 };
 
 const ItemDetail = ({ id, name, price, category, stock, img }) => {
   const { cartAdd } = useContext(CartContext);
+
+  const formatName = name
+    .match(/[\w'-]+/g)
+    .slice(0, 3)
+    .join(" ");
+  const formatCategory = category.charAt(0).toUpperCase() + category.slice(1);
 
   const handleCartAdd = () => {
     cartAdd({ id, name, price, category, stock, img }, count);
@@ -41,41 +46,16 @@ const ItemDetail = ({ id, name, price, category, stock, img }) => {
     }
   };
 
-  const theme = useTheme();
-
-  const primaryColor = theme.palette.primary.main;
-
-  const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: black;
-    opacity: 0.6;
-
-    &:hover {
-      text-decoration: underline;
-      opacity: 1;
-      color: ${primaryColor};
-    }
-  `;
-
   return (
     <>
-      <Breadcrumbs
-        sx={{ margin: "20px 0 40px 0" }}
-        separator={<NavigateNextIcon fontSize="small" />}
-        aria-label="breadcrumb"
-      >
-        <StyledLink to="/">Home page</StyledLink>
-        <StyledLink to={`/category/all`}>Category</StyledLink>
-        <StyledLink to={`/category/${category}`}>
-          {category?.charAt(0).toUpperCase() + category?.slice(1)}
-        </StyledLink>
-        <Typography color="text.primary">
-          {name
-            .match(/[\w'-]+/g)
-            .slice(0, 3)
-            .join(" ")}
-        </Typography>
-      </Breadcrumbs>
+      <BreadCrumbsCustom
+        breadCrumbs={[
+          { name: "Category", link: "/category/all" },
+          { name: formatCategory, link: `/category/${category}` },
+          formatName,
+        ]}
+      ></BreadCrumbsCustom>
+
       <Grid container>
         <Grid item sm={12} lg={6} margin={"20px 0px 150px"}>
           <Box textAlign={"center"}>

@@ -23,7 +23,7 @@ export default class SimpleSlider extends Component {
     };
     return (
       <div>
-        <Slider {...settings}>
+        <Slider {...settings} arrows={false}>
           <Box>
             <img
               src={ImgComputer}
