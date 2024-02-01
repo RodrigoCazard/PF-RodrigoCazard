@@ -135,7 +135,16 @@ const NavMenu = ({ isOpen, toggleMenu, toggleDarkMode, darkMode }) => {
           )}
         </Typography>
         <Typography component={"li"} sx={styleLink}>
-          About
+          <Link
+            onClick={handleToggle}
+            to="/about"
+            style={{
+              textDecoration: "none",
+              color: theme.palette.basicText.main,
+            }}
+          >
+            About
+          </Link>
         </Typography>
         <Typography component={"li"} sx={styleLink}>
           <Link

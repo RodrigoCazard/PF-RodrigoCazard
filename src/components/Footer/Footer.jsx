@@ -146,7 +146,14 @@ const Footer = ({ toggleDarkMode, darkMode }) => {
         gap={2}
       >
         <Typography variant="h5">Company</Typography>
-        <Typography variant="body3">About</Typography>
+        <Typography variant="body3">
+          <Link
+            to={"/about"}
+            style={{ textDecoration: "none", color: linkColor }}
+          >
+            About
+          </Link>
+        </Typography>
         <Typography variant="body3">Faq</Typography>
         <Typography variant="body3">
           {" "}

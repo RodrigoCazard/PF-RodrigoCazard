@@ -22,6 +22,7 @@ import UpdatePassword from "../components/UpdateUser/UpdatePassword.jsx";
 import Search from "../components/Search/Search.jsx";
 import RelatedItems from "../components/RelatedItems/RelatedItems.jsx";
 import Contact from "../components/Contact/Contact.jsx";
+import About from "../components/About/About.jsx";
 
 const AppRoutes = () => {
   return (
@@ -99,6 +100,16 @@ const AppRoutes = () => {
           <>
             {" "}
             <Contact />
+            <Newsletter></Newsletter>
+          </>
+        }
+      />
+      <Route
+        path="/about"
+        element={
+          <>
+            {" "}
+            <About />
             <Newsletter></Newsletter>
           </>
         }
