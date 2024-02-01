@@ -50,7 +50,7 @@ const ItemDetail = ({ id, name, price, category, stock, img }) => {
     <>
       <BreadCrumbsCustom
         breadCrumbs={[
-          { name: "Category", link: "/category/all" },
+          { name: "Categories", link: "/categories" },
           { name: formatCategory, link: `/category/${category}` },
           formatName,
         ]}

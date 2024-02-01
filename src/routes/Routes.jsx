@@ -19,6 +19,7 @@ import Order from "../components/Orders/Order.jsx";
 import UpdateEmail from "../components/UpdateUser/UpdateEmail.jsx";
 import ReviewContainer from "../components/ReviewSection/ReviewContainer.jsx";
 import UpdatePassword from "../components/UpdateUser/UpdatePassword.jsx";
+import Search from "../components/Search/Search.jsx";
 
 const AppRoutes = () => {
   return (
@@ -58,6 +59,16 @@ const AppRoutes = () => {
         }
       />
       <Route
+        path="/search/:search"
+        element={
+          <>
+            {" "}
+            <Search variant></Search>
+            <Newsletter></Newsletter>
+          </>
+        }
+      />
+      <Route
         path="/item/:idItem"
         element={
           <>
@@ -67,7 +78,8 @@ const AppRoutes = () => {
       />
       <Route
         path="/profile/orders/:idOrder"
-        element={<Order variant></Order>}
+        el
+        ement={<Order variant></Order>}
       />
       <Route path="/login" element={<Login></Login>} />
       <Route path="/register" element={<Register></Register>} />

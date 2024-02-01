@@ -2,13 +2,31 @@ import { useState, useRef, useEffect } from "react";
 import { Box } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { useTheme } from "@emotion/react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const SearchWidget = () => {
   const [expanded, setExpanded] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const searchInputRef = useRef(null);
+
+  const navigate = useNavigate();
 
   const handleExpand = () => {
     setExpanded(!expanded);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      if (searchTerm.trim() === "") {
+        toast.error("Please enter a search term");
+      } else {
+        const searchTermWithUnderscores = searchTerm.replace(/\s+/g, "_");
+        setSearchTerm("");
+
+        navigate(`/search/${searchTermWithUnderscores}`);
+      }
+    }
   };
 
   useEffect(() => {
@@ -28,6 +46,15 @@ const SearchWidget = () => {
       document.removeEventListener("click", handleClickOutside, true);
     };
   }, [expanded]);
+
+  useEffect(() => {
+    // Agrega un event listener para manejar la tecla Enter
+    document.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [searchTerm]); // Asegúrate de que searchTerm esté en la dependencia para obtener el valor actualizado
 
   const theme = useTheme();
 
@@ -69,7 +96,9 @@ const SearchWidget = () => {
 
       <input
         ref={searchInputRef}
+        value={searchTerm}
         style={{
+          color: theme.palette.basicText.main,
           width: expanded ? "165px" : "0",
           border: "none",
           outline: "none",
@@ -81,6 +110,7 @@ const SearchWidget = () => {
         }}
         placeholder="Search..."
         onClick={(e) => e.stopPropagation()}
+        onChange={(e) => setSearchTerm(e.target.value)}
       />
     </Box>
   );
