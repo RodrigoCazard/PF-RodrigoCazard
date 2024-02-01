@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
-import { useState, useEffect } from "react";
-import emailjs from "emailjs-com";
+import { useState } from "react";
+
 import { toast } from "sonner";
 import { useTheme } from "@emotion/react";
 
@@ -9,28 +9,24 @@ const Newsletter = () => {
 
   const [email, setEmail] = useState("");
 
-  const sendMessage = (e) => {
-    e.preventDefault();
+  const isEmailValid = (email) => {
+    // Expresión regular para validar el formato del correo electrónico
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  };
 
-    const templateParams = {
-      from_email: email,
-    };
+  const handleFakeSend = () => {
+    if (!email) {
+      toast.error("Please enter your email");
+      return;
+    }
 
-    emailjs
-      .send(
-        "service_i5eo9f8",
-        "template_221t5rd",
-        templateParams,
-        "WMwpX2LtjWyOa7YTs"
-      )
-      .then(() => {
-        toast.success("You have successfully subscribed");
-      })
-      .catch((e) => {
-        toast.error("Event has not been created", e);
-      });
+    if (!isEmailValid(email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
 
-    setEmail("");
+    toast.success("You have successfully subscribed");
   };
 
   const [isFocused, setIsFocused] = useState(false);
@@ -79,7 +75,6 @@ const Newsletter = () => {
           flexWrap={"wrap"}
           gap={5}
           component={"form"}
-          onSubmit={sendMessage}
         >
           <input
             onChange={(e) => setEmail(e.target.value)}
@@ -91,7 +86,7 @@ const Newsletter = () => {
             onBlur={handleBlur}
           />
           <Button
-            onClick={() => {}}
+            onClick={handleFakeSend}
             type="submit"
             variant="contained"
             disableElevation

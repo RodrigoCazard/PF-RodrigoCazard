@@ -138,7 +138,16 @@ const NavMenu = ({ isOpen, toggleMenu, toggleDarkMode, darkMode }) => {
           About
         </Typography>
         <Typography component={"li"} sx={styleLink}>
-          Contact
+          <Link
+            onClick={handleToggle}
+            to="/contact"
+            style={{
+              textDecoration: "none",
+              color: theme.palette.basicText.main,
+            }}
+          >
+            Contact
+          </Link>
         </Typography>
       </Box>
 
@@ -156,6 +165,7 @@ const NavMenu = ({ isOpen, toggleMenu, toggleDarkMode, darkMode }) => {
           <InstagramIcon sx={styleSocial} fontSize="large"></InstagramIcon>
           <TwitterIcon sx={styleSocial} fontSize="large"></TwitterIcon>
           <SwitchMode
+            onClick={handleToggle}
             toggleDarkMode={toggleDarkMode}
             darkMode={darkMode}
           ></SwitchMode>

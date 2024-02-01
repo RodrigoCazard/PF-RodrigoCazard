@@ -21,6 +21,7 @@ import ReviewContainer from "../components/ReviewSection/ReviewContainer.jsx";
 import UpdatePassword from "../components/UpdateUser/UpdatePassword.jsx";
 import Search from "../components/Search/Search.jsx";
 import RelatedItems from "../components/RelatedItems/RelatedItems.jsx";
+import Contact from "../components/Contact/Contact.jsx";
 
 const AppRoutes = () => {
   return (
@@ -92,6 +93,16 @@ const AppRoutes = () => {
       <Route path="/profile/orders" element={<OrdersContainer />} />
       <Route path="/profile/email" element={<UpdateEmail />} />
       <Route path="/profile/password" element={<UpdatePassword />} />
+      <Route
+        path="/contact"
+        element={
+          <>
+            {" "}
+            <Contact />
+            <Newsletter></Newsletter>
+          </>
+        }
+      />
       {<Route path="*" element={<Navigate to={"/"} />} />}
     </Routes>
   );
