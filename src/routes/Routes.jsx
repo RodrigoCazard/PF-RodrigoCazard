@@ -69,6 +69,11 @@ const AppRoutes = () => {
         }
       />
       <Route
+        path="/profile/orders/:idOrder"
+        el
+        element={<Order variant></Order>}
+      />
+      <Route
         path="/item/:idItem"
         element={
           <>
@@ -76,11 +81,7 @@ const AppRoutes = () => {
           </>
         }
       />
-      <Route
-        path="/profile/orders/:idOrder"
-        el
-        ement={<Order variant></Order>}
-      />
+
       <Route path="/login" element={<Login></Login>} />
       <Route path="/register" element={<Register></Register>} />
       <Route path="/cart" element={<Cart></Cart>} />
