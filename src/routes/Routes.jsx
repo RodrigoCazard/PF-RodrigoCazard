@@ -20,6 +20,7 @@ import UpdateEmail from "../components/UpdateUser/UpdateEmail.jsx";
 import ReviewContainer from "../components/ReviewSection/ReviewContainer.jsx";
 import UpdatePassword from "../components/UpdateUser/UpdatePassword.jsx";
 import Search from "../components/Search/Search.jsx";
+import RelatedItems from "../components/RelatedItems/RelatedItems.jsx";
 
 const AppRoutes = () => {
   return (
@@ -70,7 +71,6 @@ const AppRoutes = () => {
       />
       <Route
         path="/profile/orders/:idOrder"
-        el
         element={<Order variant></Order>}
       />
       <Route

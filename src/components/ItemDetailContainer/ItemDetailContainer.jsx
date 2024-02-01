@@ -7,6 +7,7 @@ import { collection, doc, getDoc } from "firebase/firestore";
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import ItemFeature from "./ItemFeature";
 import ReviewContainer from "../ReviewSection/ReviewContainer";
+import RelatedItems from "../RelatedItems/RelatedItems";
 
 const ItemDetailContainer = () => {
   const [product, setProduct] = useState(null);
@@ -60,6 +61,11 @@ const ItemDetailContainer = () => {
           <ItemFeature {...product}></ItemFeature>
 
           <ReviewContainer variant></ReviewContainer>
+
+          <RelatedItems
+            category={product.category}
+            currentProductId={product.id}
+          ></RelatedItems>
         </div>
       ) : (
         <Box

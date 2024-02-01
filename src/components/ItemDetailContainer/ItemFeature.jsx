@@ -6,12 +6,13 @@ const ItemFeature = ({ description }) => {
 
   return (
     <Box>
-      <Typography variant="h3" component="h2" mb={2}>
-        Explore the Features
-      </Typography>
       <Typography variant="body1" color="primary" component="p" mb={2}>
         - Product Features
       </Typography>
+      <Typography variant="h3" component="h2" mb={2}>
+        Explore the Features
+      </Typography>
+
       <List sx={{ listStyleType: "disc", margin: "60px 0" }}>
         {lines.map((line, index) => (
           <Typography
