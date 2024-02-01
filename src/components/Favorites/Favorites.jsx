@@ -36,7 +36,7 @@ const Favorites = () => {
                 id: docSnap.id,
               };
             } else {
-              console.error(`El producto con ID ${id} no existe.`);
+              console.error(`The product  ${id} didnt exist.`);
               return null;
             }
           })
@@ -44,7 +44,7 @@ const Favorites = () => {
 
         setProducts(productsData.filter((product) => product !== null));
       } catch (error) {
-        console.error("Error al obtener los productos favoritos:", error);
+        console.error("Error :", error);
       } finally {
         setIsLoading(false);
       }
@@ -112,7 +112,7 @@ const Favorites = () => {
                 </Box>
               ) : (
                 <>
-                  <Grid container spacing={6} my={3} marginY={"80px"}>
+                  <Grid container spacing={6} my={3} mb={20}>
                     {products.map((product, index) => (
                       <Grid item xs={12} sm={6} lg={3} xl={3} key={index}>
                         <Item {...product}></Item>

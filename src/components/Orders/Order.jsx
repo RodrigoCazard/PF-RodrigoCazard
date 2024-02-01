@@ -299,20 +299,23 @@ const Order = ({ orderId: propOrderId, variant }) => {
                 <Box
                   display={"flex"}
                   alignItems={"center"}
+                  justifyContent={"space-between"}
                   gap={5}
                   key={index}
                   mt={2}
                 >
-                  <img src={product.img} width={"100px"}></img>
-                  <Typography variant={"body2"}> {product?.name}</Typography>
-                  <Typography variant={"body2"}>
-                    Quantity: {product?.quantity}
-                  </Typography>
-                  <Typography variant={"body2"}>
-                    Price: {product?.price}$
-                  </Typography>
-
-                  <hr />
+                  <Box display={"flex"} gap={2} alignItems={"center"}>
+                    <img src={product.img} width={"100px"}></img>
+                    <Typography variant={"body2"}> {product?.name}</Typography>
+                  </Box>
+                  <Box display={"flex"} gap={10} alignItems={"center"}>
+                    <Typography variant={"body2"}>
+                      Price: {product?.price}$
+                    </Typography>
+                    <Typography variant={"body2"}>
+                      Quantity: {product?.quantity}
+                    </Typography>
+                  </Box>
                 </Box>
               ))}
             </Box>
